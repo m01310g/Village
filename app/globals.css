@@ -19,3 +19,49 @@ body {
   color: var(--foreground);
   font-family: var(--font-pretendard);
 }
+
+@layer components {
+  .text-display-1 {
+    @apply text-[24px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-title-1 {
+    @apply text-[20px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-title-2 {
+    @apply text-[18px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-title-3 {
+    @apply text-[16px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-body-1 {
+    @apply text-[18px] font-medium leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-body-2 {
+    @apply text-[16px] font-medium leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-body-3 {
+    @apply text-[14px] font-normal leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-caption-1 {
+    @apply text-[14px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-caption-2 {
+    @apply text-[12px] font-semibold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-caption-3 {
+    @apply text-[12px] font-medium leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-caption-4 {
+    @apply text-[10px] font-normal leading-[130%] tracking-[-0.02em];
+  }
+}
