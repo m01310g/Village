@@ -3,14 +3,64 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* text */
+  --color-text-primary: #171717; /* neutral/900 */
+  --color-text-secondary: #404040; /* neutral/700 */
+  --color-text-tertiary: #737373; /* neutral/500 */
+  --color-text-disabled: #d4d4d4; /* neutral/300 */
+  --color-text-info: #067aff; /* blue/600 */
+  --color-text-warning: #d08700; /* yellow/600 */
+  --color-text-success: #259431; /* green/600 */
+  --color-text-danger: #ed152e; /* red/600 */
+  --color-text-onprimary: #ffffff;
+  --color-text-onsecondary: #4f39f6; /* indigo/600 */
+
+  /* background */
+  --color-bg-brand: #4f46e5; /* indigo/600 */
+  --color-bg-brand-secondary: #eef2ff; /* indigo/50 */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5; /* neutral/100 */
+  --color-bg-tertiary: #e5e5e5; /* neutral/200 */
+  --color-bg-info: #dbeafe; /* blue/100 */
+  --color-bg-warning: #fef9c3; /* yellow/100 */
+  --color-bg-success: #dcfce7; /* green/100 */
+  --color-bg-danger: #fee2e2; /* red/100 */
+  --color-bg-inverse: #18181b; /* neutral/900 */
+
+  /* border */
+  --color-border-brand: #4f46e5; /* indigo/600 */
+  --color-border-primary: #e5e7eb; /* neutral/200 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* text */
+    --color-text-primary: #f4f4f5; /* neutral/100 */
+    --color-text-secondary: #d4d4d4; /* neutral/300 */
+    --color-text-tertiary: #9f9fa9; /* neutral/400 */
+    --color-text-disabled: #71717b; /* neutral/500 */
+    --color-text-info: #1e9aff; /* blue/500 */
+    --color-text-warning: #f0b100; /* yellow/500 */
+    --color-text-success: #33b441; /* green/500 */
+    --color-text-danger: #ff243d; /* red/500 */
+    --color-text-onprimary: #ffffff;
+    --color-text-onsecondary: #4f39f6; /* indigo/500 */
+
+    /* background */
+    --color-bg-brand: #615fff; /* indigo/500 */
+    --color-bg-brand-secondary: #eef2ff; /* indigo/50 */
+    --color-bg-primary: #262626; /* neutral/800 */
+    --color-bg-secondary: #2e2e2e;
+    --color-bg-tertiary: #3a3a3a;
+    --color-bg-info: #1e9aff; /* blue/500 */
+    --color-bg-warning: #f0b100; /* yellow/500 */
+    --color-bg-success: #33b441; /* green/500 */
+    --color-bg-danger: #ff243d; /* red/500 */
+    --color-bg-inverse: #ffffff;
+
+    /* border */
+    --color-border-brand: #615fff; /* indigo/500 */
+    --color-border-primary: #40404080; /* neutral/700/80 */
   }
 }
 
@@ -35,6 +85,10 @@ body {
 
   .text-title-3 {
     @apply text-[16px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-title-4 {
+    @apply text-[14px] font-bold leading-[130%] tracking-[-0.02em];
   }
 
   .text-body-1 {
