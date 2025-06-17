@@ -21,7 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryProvider>
-        <body className={`${pretendard.variable} antialiased`}>{children}</body>
+        <body className={`${pretendard.variable} antialiased`}>
+          <main className="mx-auto h-screen w-[344px] bg-white shadow-md">
+            {children}
+          </main>
+        </body>
       </QueryProvider>
     </html>
   );
