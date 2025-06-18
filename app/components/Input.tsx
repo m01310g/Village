@@ -26,7 +26,7 @@ const Input = ({
   const hasError = Boolean(errorMessage);
 
   return (
-    <form className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3">
       <label className="text-title-3 text-text-primary">
         {label}
         {required && <span className="text-text-danger">*</span>}
@@ -40,10 +40,11 @@ const Input = ({
           placeholder={placeholder}
           maxLength={maxLength}
           className={clsx(
-            "text-body-2 border-border-secondary h-[45px] w-[343px] rounded-[4px] border bg-background-primary p-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none",
+            "text-body-2 border-border-secondary h-[45px] w-[343px] rounded-[4px] border bg-background-primary p-3 placeholder:text-neutral-400 focus:outline-none",
             hasError && "border-border-danger text-text-danger",
-            disabled &&
-              "cursor-not-allowed bg-background-tertiary text-neutral-50",
+            disabled
+              ? "cursor-not-allowed bg-background-secondary text-neutral-400"
+              : "text-neutral-900",
           )}
           disabled={disabled}
         />
@@ -62,7 +63,7 @@ const Input = ({
           )}
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 
