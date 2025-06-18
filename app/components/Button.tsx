@@ -45,17 +45,17 @@ const Button = ({
   return (
     <button
       className={clsx(
-        "items-center justify-self-center",
+        "flex items-center justify-center",
         sizeClasses[size],
         disabled ? disabledColorClasses[color] : colorClasses[color],
       )}
       disabled={disabled}
       onClick={onClick}
     >
-      <span className="relative">
-        {children}
+      <span className="relative flex items-center justify-center">
+        <span className="inline-block">{children}</span>
         {showDot && (
-          <span className="bg-border-danger absolute -right-2 -top-0.5 h-[4px] w-[4px] rounded-full" />
+          <span className="bg-border-danger absolute -right-2 top-0.5 h-[4px] w-[4px] rounded-full" />
         )}
       </span>
     </button>
