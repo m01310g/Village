@@ -35,7 +35,7 @@ const Header = ({
       <div className="flex flex-1 justify-center">
         <h1 className="text-title-2">{title}</h1>
       </div>
-      <div className="flex h-full w-[46px]">
+      <div className="flex h-full w-[46px] items-center justify-center">
         {/* 각 버튼에 onClick 함수 추가 예정 */}
         {showSearchButton && (
           <button>
@@ -47,6 +47,8 @@ const Header = ({
             />
           </button>
         )}
+      </div>
+      <div className="flex h-full w-[46px] items-center justify-center">
         {showNotificationButton && (
           <button>
             <Image
