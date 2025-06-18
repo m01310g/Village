@@ -10,6 +10,8 @@ interface InputProps {
   errorMessage?: string;
   maxLength?: number;
   disabled?: boolean;
+  onCompositionStart?: React.CompositionEventHandler<HTMLInputElement>;
+  onCompositionEnd?: React.CompositionEventHandler<HTMLInputElement>;
 }
 
 const Input = ({
@@ -22,6 +24,8 @@ const Input = ({
   errorMessage,
   maxLength,
   disabled = false,
+  onCompositionStart,
+  onCompositionEnd,
 }: InputProps) => {
   const hasError = Boolean(errorMessage);
 
@@ -40,13 +44,16 @@ const Input = ({
           placeholder={placeholder}
           maxLength={maxLength}
           className={clsx(
-            "text-body-2 border-border-secondary h-[45px] w-[343px] rounded-[4px] border bg-background-primary p-3 placeholder:text-neutral-400 focus:outline-none",
-            hasError && "border-border-danger text-text-danger",
-            disabled
-              ? "cursor-not-allowed bg-background-secondary text-neutral-400"
-              : "text-neutral-900",
+            "text-body-2 h-[45px] w-[343px] rounded-[4px] border bg-background-primary p-3 placeholder:text-neutral-400 focus:outline-none",
+            hasError
+              ? "border-border-danger text-text-danger"
+              : disabled
+                ? "border-border-secondary bg-neutral-100 text-neutral-400"
+                : "border-border-secondary text-text-primary",
           )}
           disabled={disabled}
+          onCompositionStart={onCompositionStart}
+          onCompositionEnd={onCompositionEnd}
         />
         <div className="text-caption-3 flex justify-between">
           {(description || errorMessage) && (
