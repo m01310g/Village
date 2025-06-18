@@ -19,7 +19,7 @@ const Header = ({
 }: HeaderProps) => {
   const router = useRouter();
   return (
-    <header className="flex h-[46px] items-center justify-between border-b border-neutral-100 px-1">
+    <header className="flex h-[46px] items-center justify-between border-b border-border-primary px-1">
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
           <button onClick={() => router.back()}>
@@ -35,9 +35,9 @@ const Header = ({
       <div className="flex flex-1 justify-center">
         <h1 className="text-title-2">{title}</h1>
       </div>
-      <div className="flex h-full w-[46px] items-center justify-center">
-        {/* 각 버튼에 onClick 함수 추가 예정 */}
-        {showSearchButton && (
+      {/* 각 버튼에 onClick 함수 추가 예정 */}
+      {showSearchButton && (
+        <div className="flex h-full w-[46px] items-center justify-center">
           <button>
             <Image
               src={"/icons/icn_search.svg"}
@@ -46,8 +46,8 @@ const Header = ({
               height={24}
             />
           </button>
-        )}
-      </div>
+        </div>
+      )}
       <div className="flex h-full w-[46px] items-center justify-center">
         {showNotificationButton && (
           <button>
