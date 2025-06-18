@@ -11,26 +11,117 @@ const ProfileCreatePage = () => {
   const [nickname, setNickname] = useState("");
   const [introduce, setIntroduece] = useState("");
 
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [nicknameError, setNicknameError] = useState<string | null>(null);
+
+  const [isNameComposing, setIsNameComposing] = useState(false);
+  const [isNicknameComposing, setIsNicknameComposing] = useState(false);
+
+  const isValidName = (value: string) => /^[가-힣a-zA-Z]+$/.test(value);
+  const isValidNickname = (value: string) => {
+    const allowed = /^[가-힣a-zA-Z0-9._-]+$/;
+    const containsEmoji =
+      /[\p{Emoji}]/u.test(value) ||
+      /[\uD800-\uDBFF][\uDC00-\uDFFF]/.test(value);
+    return allowed.test(value) && !containsEmoji;
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setName(value);
+
+    if (value === "") {
+      setNameError("이름을 입력해주세요.");
+    } else if (!isValidName(value)) {
+      setNameError("숫자 및 특수문자는 입력이 불가능합니다.");
+    } else {
+      setNameError(null);
+    }
+  };
+
+  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setNickname(value);
+
+    if (value === "") {
+      setNicknameError("닉네임을 입력해주세요.");
+    } else if (!isValidNickname(e.currentTarget.value)) {
+      setNicknameError(
+        "밑줄, 점, 하이픈 외 특수문자, 이모지는 입력이 불가능합니다.",
+      );
+    } else {
+      setNicknameError(null);
+    }
+  };
+
+  const isFormValid =
+    name !== "" &&
+    nickname !== "" &&
+    !nameError &&
+    !nicknameError &&
+    !isNameComposing &&
+    !isNicknameComposing;
+
+  const handleNameCompositionStart = () => {
+    setIsNameComposing(true);
+  };
+
+  const handleNameCompositionEnd = (
+    e: React.CompositionEvent<HTMLInputElement>,
+  ) => {
+    setIsNameComposing(false);
+    console.log(isValidName(e.currentTarget.value));
+
+    if (!isValidName(e.currentTarget.value)) {
+      setNameError("숫자 및 특수문자는 입력이 불가능합니다.");
+    } else {
+      setNameError(null);
+    }
+  };
+
+  const handleNicknameCompositionStart = () => {
+    setIsNicknameComposing(true);
+  };
+
+  const handleNicknameCompositionEnd = (
+    e: React.CompositionEvent<HTMLInputElement>,
+  ) => {
+    setIsNicknameComposing(false);
+    if (!isValidNickname(e.currentTarget.value)) {
+      setNicknameError(
+        "밑줄, 점, 하이픈 외 특수문자, 이모지는 입력이 불가능합니다.",
+      );
+    } else {
+      setNicknameError(null);
+    }
+  };
+
   return (
     <div className="flex h-full flex-col items-center">
       <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
         <Input
           label={"이름"}
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
           required
           placeholder="실명을 입력해주세요."
           maxLength={10}
           description="내 이력과 프로필에만 표시됩니다."
+          errorMessage={nameError!}
+          onCompositionEnd={handleNameCompositionEnd}
+          onCompositionStart={handleNameCompositionStart}
         />
         <Input
           label={"닉네임"}
           value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
+          onChange={handleNicknameChange}
           required
           placeholder="닉네임을 입력해주세요"
           maxLength={15}
           description="커뮤니티 활동 시 표시됩니다."
+          errorMessage={nicknameError!}
+          onCompositionEnd={handleNicknameCompositionEnd}
+          onCompositionStart={handleNicknameCompositionStart}
         />
         <Input
           label="업종"
@@ -71,7 +162,9 @@ const ProfileCreatePage = () => {
       </form>
 
       <div className="sticky bottom-0 left-1/2 w-full max-w-[375px] bg-background-primary px-4 py-3">
-        <Button size="lg">등록 완료</Button>
+        <Button size="lg" disabled={!isFormValid}>
+          등록 완료
+        </Button>
       </div>
     </div>
   );
