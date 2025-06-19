@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
       __dirname,
       "tailwind.config.js",
     );
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
     return config;
   },
 };
