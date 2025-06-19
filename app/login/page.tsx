@@ -1,11 +1,11 @@
 "use client";
 
-import LoginButton from "./components/LoginButton";
+import KakaoLoginButton from "./components/KakaoLoginButton";
 
 const LoginPage = () => {
   return (
     <>
-      <LoginButton />
+      <KakaoLoginButton />
     </>
   );
 };
