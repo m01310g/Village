@@ -14,6 +14,10 @@ const KakaoCallbackPage = () => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/kakao/code?code=${code}`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
         );
 
         const result = await response.json();

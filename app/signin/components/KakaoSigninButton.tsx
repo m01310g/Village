@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const KakaoSigninButton = () => {
+  const router = useRouter();
   const handleSignin = () => {
     const kakaoAuthUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/kakao`;
-    window.location.href = kakaoAuthUrl;
+    router.replace(kakaoAuthUrl);
   };
 
   return (
