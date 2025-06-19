@@ -1,5 +1,21 @@
 "use client";
 
+type SigninResponse = {
+  message: string;
+  statusCode: number;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    webUser: {
+      id: number;
+      nickname: string;
+      email: string;
+      role: "USER";
+    };
+  };
+};
+
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -7,6 +23,7 @@ const KakaoCallbackPage = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -20,8 +37,10 @@ const KakaoCallbackPage = () => {
           },
         );
 
-        const result = await response.json();
+        const result: SigninResponse = await response.json();
         console.log("로그인 결과:", result);
+
+        setUser(result.data.webUser);
 
         router.push("/");
       } catch (err: any) {
