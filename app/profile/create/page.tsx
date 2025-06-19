@@ -5,6 +5,7 @@ import { useState } from "react";
 import ProfileLabel from "./components/ProfileLabel";
 import AddButton from "./components/AddButton";
 import Button from "@/app/components/Button";
+import ProfileImageSection from "./components/ProfileImageSection";
 
 const ProfileCreatePage = () => {
   const [name, setName] = useState("");
@@ -99,6 +100,7 @@ const ProfileCreatePage = () => {
   return (
     <div className="flex h-full flex-col items-center">
       <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
+        <ProfileImageSection />
         <Input
           label={"이름"}
           value={name}
@@ -135,7 +137,7 @@ const ProfileCreatePage = () => {
             <ProfileLabel label="경력사항" bold />
             <AddButton />
           </div>
-          <div className="bg-border-secondary h-[1px] w-full" />
+          <div className="h-[1px] w-full bg-border-secondary" />
           <p className="text-body-2 py-3 text-center text-neutral-400">
             경력사항을 자유롭게 작성해주세요!
             <br />
@@ -148,7 +150,7 @@ const ProfileCreatePage = () => {
             <textarea
               name="자기소개"
               id="introduce"
-              className="border-border-secondary text-body-2 h-[163px] resize-none rounded-[4px] border p-3 text-text-primary outline-none placeholder:text-neutral-400"
+              className="text-body-2 h-[163px] resize-none rounded-[4px] border border-border-secondary p-3 text-text-primary outline-none placeholder:text-neutral-400"
               placeholder="자신을 소개해주세요."
               value={introduce}
               onChange={(e) => setIntroduece(e.target.value)}
