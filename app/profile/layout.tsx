@@ -13,7 +13,11 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <Header title={getTitleByPath(pathname) || "프로필"} showBackButton />
+      <Header
+        title={getTitleByPath(pathname) || "프로필"}
+        showBackButton
+        showNotificationButton={pathname === "/profile"}
+      />
       <main className="h-[calc(100vh-46px)] overflow-y-auto">{children}</main>
     </>
   );
