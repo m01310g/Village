@@ -1,14 +1,14 @@
 import Image from "next/image";
 
-const KakaoLoginButton = () => {
-  const handleLogin = () => {
+const KakaoSigninButton = () => {
+  const handleSignin = () => {
     const kakaoAuthUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/kakao`;
     window.location.href = kakaoAuthUrl;
   };
 
   return (
     <button
-      onClick={handleLogin}
+      onClick={handleSignin}
       className="flex w-full items-center justify-center gap-2 rounded-[12px] bg-[#FEE500] px-2 py-3"
     >
       <Image
@@ -22,4 +22,4 @@ const KakaoLoginButton = () => {
   );
 };
 
-export default KakaoLoginButton;
+export default KakaoSigninButton;
