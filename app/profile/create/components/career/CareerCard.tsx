@@ -2,7 +2,14 @@ import EditIcon from "@/public/icons/icn_edit1.svg";
 import TrashIcon from "@/public/icons/icn_trash.svg";
 import { CareerCardProps } from "../../types/careerCard";
 
-const CareerCard = ({ workplace, startDate, endDate }: CareerCardProps) => {
+const CareerCard = ({
+  id,
+  workplace,
+  startDate,
+  endDate,
+  onEdit,
+  onDelete,
+}: CareerCardProps) => {
   return (
     <div className="flex justify-between py-3">
       <div className="flex flex-col gap-1">
@@ -12,10 +19,15 @@ const CareerCard = ({ workplace, startDate, endDate }: CareerCardProps) => {
         </span>
       </div>
       <div className="flex items-center gap-3">
-        <button onClick={(e) => e.preventDefault()}>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onEdit({ id, workplace, startDate, endDate });
+          }}
+        >
           <EditIcon color="#737373" width="24px" height="24px" />
         </button>
-        <button onClick={(e) => e.preventDefault()}>
+        <button onClick={onDelete}>
           <TrashIcon color="#737373" width="24px" height="24px" />
         </button>
       </div>

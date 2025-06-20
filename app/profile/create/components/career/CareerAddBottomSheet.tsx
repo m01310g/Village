@@ -3,25 +3,29 @@ import Input from "@/app/components/Input";
 import Image from "next/image";
 import { useState } from "react";
 import DateInput from "./date/DateInput";
-import { CareerCardProps } from "../../types/careerCard";
+import { CareerData } from "../../types/careerCard";
+import { v4 as uuidv4 } from "uuid";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;
-  onSave: (career: CareerCardProps) => void;
+  onSave: (career: CareerData) => void;
   onClose: () => void;
+  initialData?: CareerData | null;
 }
 
 const CareerAddBottomSheet = ({
   setOpen,
   onSave,
   onClose,
+  initialData,
 }: CareerAddBottomSheetProps) => {
-  const [center, setCenter] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [center, setCenter] = useState(initialData?.workplace ?? "");
+  const [startDate, setStartDate] = useState(initialData?.startDate ?? "");
+  const [endDate, setEndDate] = useState(initialData?.endDate ?? "");
 
   const handleSave = () => {
     onSave({
+      id: initialData?.id ?? uuidv4(),
       workplace: center,
       startDate,
       endDate,
