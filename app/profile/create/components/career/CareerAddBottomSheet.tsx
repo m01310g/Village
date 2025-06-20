@@ -2,7 +2,7 @@ import Button from "@/app/components/Button";
 import Input from "@/app/components/Input";
 import Image from "next/image";
 import { useState } from "react";
-import DateInput from "./DateInput";
+import DateInput from "./date/DateInput";
 import { CareerCardProps } from "../../types/careerCard";
 
 interface CareerAddBottomSheetProps {
