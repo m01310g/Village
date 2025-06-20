@@ -6,9 +6,21 @@ interface DateInputProps {
   placeholder: string;
   value: string;
   setDate: (newDate: string) => void;
+  isStartDate?: boolean;
+  isEndDate?: boolean;
+  startDate?: string;
+  endDate?: string;
 }
 
-const DateInput = ({ placeholder, value, setDate }: DateInputProps) => {
+const DateInput = ({
+  placeholder,
+  value,
+  setDate,
+  isStartDate,
+  isEndDate,
+  startDate,
+  endDate,
+}: DateInputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const getToday = () => {
@@ -43,9 +55,11 @@ const DateInput = ({ placeholder, value, setDate }: DateInputProps) => {
       {isOpen && (
         <DatePickerBottomSheet
           placeholder={placeholder}
-          initialDate={value || getToday()}
+          initialDate={value}
           onSelect={handleDateSelect}
           onClose={() => setIsOpen(false)}
+          minDate={isEndDate && startDate ? startDate : undefined}
+          maxDate={isStartDate && endDate ? endDate : undefined}
         />
       )}
     </>

@@ -20,12 +20,10 @@ const CareerSection = () => {
       {careerList &&
         (careerList.length !== 0 ? (
           careerList.map((career, idx) => (
-            <>
-              <>
-                <CareerCard key={idx} {...career} />
-              </>
+            <div key={idx}>
+              <CareerCard {...career} />
               <div className="h-[1px] w-full bg-border-secondary" />
-            </>
+            </div>
           ))
         ) : (
           <>
