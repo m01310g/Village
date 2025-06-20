@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
-interface ProfileImageBottomSheet {
+interface ProfileImageBottomSheetProps {
   setSelectedImageUrl: (imgUrl: string) => void;
   setStep: Dispatch<SetStateAction<"select" | "gallery" | "camera" | "crop">>;
 }
@@ -9,7 +9,7 @@ interface ProfileImageBottomSheet {
 const ProfileImageBottomSheet = ({
   setSelectedImageUrl,
   setStep,
-}: ProfileImageBottomSheet) => {
+}: ProfileImageBottomSheetProps) => {
   return (
     <div className="flex w-full flex-col gap-3 py-2">
       <h2 className="text-title-1 px-4 py-2 text-text-primary">사진 올리기</h2>
