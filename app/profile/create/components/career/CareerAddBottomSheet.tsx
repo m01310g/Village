@@ -65,12 +65,16 @@ const CareerAddBottomSheet = ({
               placeholder="근무 시작일"
               value={startDate}
               setDate={setStartDate}
+              isStartDate
+              endDate={endDate}
             />
             <div className="h-[1px] w-3 bg-border-secondary" />
             <DateInput
               placeholder="근무 종료일"
               value={endDate}
               setDate={setEndDate}
+              isEndDate
+              startDate={startDate}
             />
           </div>
         </main>
