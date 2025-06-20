@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import EditIcon from "@/public/icons/icn_edit2.svg";
 
-const ProfileImageInput = () => {
+const ProfileImageSection = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,4 +70,4 @@ const ProfileImageInput = () => {
   );
 };
 
-export default ProfileImageInput;
+export default ProfileImageSection;
