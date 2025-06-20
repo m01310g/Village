@@ -15,6 +15,10 @@ const ProfileImageSection = ({
   onClickOpen,
 }: ProfileImageSectionProps) => {
   const [image, setImage] = useState<File | null>(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState("");
+  const [step, setStep] = useState<"select" | "gallery" | "camera" | "crop">(
+    "select",
+  );
 
   return (
     <>
@@ -25,7 +29,10 @@ const ProfileImageSection = ({
               <label
                 htmlFor="profile-image-upload"
                 className="absolute left-[102px] top-1 z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-[69.3px] border border-white bg-background-brand"
-                onClick={onClickOpen}
+                onClick={() => {
+                  setStep("select");
+                  onClickOpen();
+                }}
               >
                 <EditIcon color="white" width="18px" height="18px" />
               </label>
@@ -61,6 +68,10 @@ const ProfileImageSection = ({
         <ProfileImageUploader
           setImage={setImage}
           setIsBottomSheetOpen={setIsBottomSheetOpen}
+          selectedImageUrl={selectedImageUrl}
+          setSelectedImageUrl={setSelectedImageUrl}
+          step={step}
+          setStep={setStep}
         />
       )}
     </>

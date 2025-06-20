@@ -1,23 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import ProfileImageBottomSheet from "./ProfileImageBottomSheet";
 import ProfileImageCropper from "./ProfileImageCropper";
 
 interface ProfileImageUploaderProps {
   setImage: (file: File) => void;
   setIsBottomSheetOpen: (isOpen: boolean) => void;
+  selectedImageUrl: string;
+  setSelectedImageUrl: (imgUrl: string) => void;
+  step: string;
+  setStep: Dispatch<SetStateAction<"select" | "gallery" | "camera" | "crop">>;
 }
 
 const ProfileImageUploader = ({
   setImage,
   setIsBottomSheetOpen,
+  selectedImageUrl,
+  setSelectedImageUrl,
+  step,
+  setStep,
 }: ProfileImageUploaderProps) => {
-  const [step, setStep] = useState<"select" | "gallery" | "camera" | "crop">(
-    "select",
-  );
-  const [selectedImageUrl, setSelectedImageUrl] = useState("");
-
   const handleClose = () => {
     setIsBottomSheetOpen(false);
   };

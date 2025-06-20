@@ -35,6 +35,14 @@ const ProfileImageBottomSheet = ({
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) {
+                const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+
+                if (file.size > maxSizeInBytes) {
+                  alert("이미지 크기는 5MB 이하만 업로드할 수 있습니다.");
+                  e.target.value = ""; // 선택 초기화
+                  return;
+                }
+
                 const imageUrl = URL.createObjectURL(file);
                 setSelectedImageUrl(imageUrl);
                 setStep("crop");
