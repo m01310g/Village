@@ -5,6 +5,7 @@ import { useState } from "react";
 import DateInput from "./date/DateInput";
 import { CareerData } from "../../types/careerCard";
 import { v4 as uuidv4 } from "uuid";
+import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;
@@ -43,8 +44,7 @@ const CareerAddBottomSheet = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex h-full items-end justify-center">
-      <div className="absolute z-0 h-full w-full max-w-[375px] bg-neutral-950/45" />
+    <BottomSheetWrapper onClose={() => setOpen(false)} className="h-full">
       <div className="relative flex h-full w-full max-w-[375px] flex-col gap-3 rounded-t-[20px] bg-background-primary px-4 pb-10 pt-5">
         <header className="flex w-full gap-2 py-2">
           <button onClick={handleCloseButton}>
@@ -96,7 +96,7 @@ const CareerAddBottomSheet = ({
           </Button>
         </div>
       </div>
-    </div>
+    </BottomSheetWrapper>
   );
 };
 
