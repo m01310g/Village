@@ -1,14 +1,12 @@
+import BottomSheetWrapper from "../BottomSheetWrapper";
+
 interface PostManageBottomSheetProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
 const PostManageBottomSheet = ({ setIsOpen }: PostManageBottomSheetProps) => {
   return (
-    <div className="fixed inset-0 z-50 flex h-full items-end justify-center">
-      <div
-        className="absolute z-0 h-full w-full max-w-[375px] bg-neutral-950/45"
-        onClick={() => setIsOpen(false)}
-      />
+    <BottomSheetWrapper onClose={() => setIsOpen(false)}>
       <div
         className="fixed bottom-0 z-50 w-full max-w-[375px] rounded-t-[20px] bg-background-primary py-5"
         onClick={(e) => e.stopPropagation()}
@@ -23,7 +21,7 @@ const PostManageBottomSheet = ({ setIsOpen }: PostManageBottomSheetProps) => {
           </li>
         </ul>
       </div>
-    </div>
+    </BottomSheetWrapper>
   );
 };
 
