@@ -19,7 +19,7 @@ const CareerAddButton = () => {
         <Image src={"/icons/plus.svg"} width={16} height={16} alt="추가 버튼" />
         추가
       </button>
-      {open && <CareerAddBottomSheet />}
+      {open && <CareerAddBottomSheet setOpen={setOpen} />}
     </>
   );
 };
