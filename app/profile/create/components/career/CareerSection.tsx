@@ -1,14 +1,29 @@
 import CareerAddButton from "./CareerAddButton";
 import ProfileLabel from "../ProfileLabel";
 import CareerCard from "./CareerCard";
-import { CareerCardProps } from "../../types/careerCard";
+import { CareerData } from "../../types/careerCard";
 import { useState } from "react";
+import CareerAddBottomSheet from "./CareerAddBottomSheet";
 
 const CareerSection = () => {
-  const [careerList, setCareerList] = useState<CareerCardProps[]>([]);
+  const [careerList, setCareerList] = useState<CareerData[]>([]);
+  const [editTarget, setEditTarget] = useState<CareerData | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleAddCareer = (newCareer: CareerCardProps) => {
-    setCareerList((prev) => [...prev, newCareer]);
+  const handleAddCareer = (newCareer: CareerData) => {
+    // setCareerList((prev) => [...prev, newCareer]);
+    setCareerList((prev) => {
+      const exists = prev.find((c) => c.id === newCareer.id);
+      if (exists) {
+        return prev.map((c) => (c.id === newCareer.id ? newCareer : c));
+      }
+      return [...prev, newCareer];
+    });
+  };
+
+  const handleEdit = (career: CareerData) => {
+    setEditTarget(career);
+    setIsOpen(true);
   };
 
   return (
@@ -21,7 +36,13 @@ const CareerSection = () => {
         (careerList.length !== 0 ? (
           careerList.map((career, idx) => (
             <div key={idx}>
-              <CareerCard {...career} />
+              <CareerCard
+                {...career}
+                onEdit={handleEdit}
+                onDelete={() => {
+                  setCareerList((prev) => prev.filter((_, i) => i !== idx));
+                }}
+              />
               <div className="h-[1px] w-full bg-border-secondary" />
             </div>
           ))
@@ -35,6 +56,14 @@ const CareerSection = () => {
             </p>
           </>
         ))}
+      {isOpen && (
+        <CareerAddBottomSheet
+          setOpen={setIsOpen}
+          onSave={handleAddCareer}
+          onClose={() => setIsOpen(false)}
+          initialData={editTarget}
+        />
+      )}
     </section>
   );
 };
