@@ -4,7 +4,7 @@ import Input from "@/app/components/Input";
 import { useState } from "react";
 import Button from "@/app/components/Button";
 import ProfileImageSection from "./components/ProfileImageSection";
-import CareerSection from "./components/CareerSection";
+import CareerSection from "./components/career/CareerSection";
 import IntroduceSection from "./components/IntroduceSection";
 import CreateButton from "./components/CreateButton";
 
