@@ -1,8 +1,13 @@
 import Image from "next/image";
 import { useState } from "react";
 import CareerAddBottomSheet from "./CareerAddBottomSheet";
+import { CareerCardProps } from "../../types/careerCard";
 
-const CareerAddButton = () => {
+interface CareerAddButtonProps {
+  onAddCareer: (newCareer: CareerCardProps) => void;
+}
+
+const CareerAddButton = ({ onAddCareer }: CareerAddButtonProps) => {
   const [open, setOpen] = useState(false);
 
   const handleAddButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,7 +24,13 @@ const CareerAddButton = () => {
         <Image src={"/icons/plus.svg"} width={16} height={16} alt="추가 버튼" />
         추가
       </button>
-      {open && <CareerAddBottomSheet setOpen={setOpen} />}
+      {open && (
+        <CareerAddBottomSheet
+          setOpen={setOpen}
+          onSave={onAddCareer}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </>
   );
 };

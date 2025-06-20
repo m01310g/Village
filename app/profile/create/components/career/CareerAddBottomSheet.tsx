@@ -3,13 +3,34 @@ import Input from "@/app/components/Input";
 import Image from "next/image";
 import { useState } from "react";
 import DateInput from "./DateInput";
+import { CareerCardProps } from "../../types/careerCard";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;
+  onSave: (career: CareerCardProps) => void;
+  onClose: () => void;
 }
 
-const CareerAddBottomSheet = ({ setOpen }: CareerAddBottomSheetProps) => {
+const CareerAddBottomSheet = ({
+  setOpen,
+  onSave,
+  onClose,
+}: CareerAddBottomSheetProps) => {
   const [center, setCenter] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const handleSave = () => {
+    onSave({
+      workplace: center,
+      startDate,
+      endDate,
+    });
+
+    onClose();
+  };
+
+  const isCareerValid = !!center && !!startDate && !!endDate;
 
   const handleCloseButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -40,16 +61,29 @@ const CareerAddBottomSheet = ({ setOpen }: CareerAddBottomSheetProps) => {
             onChange={(e) => setCenter(e.target.value)}
           />
           <div className="flex w-full items-center justify-center gap-4">
-            <DateInput placeholder="근무 시작일" />
+            <DateInput
+              placeholder="근무 시작일"
+              value={startDate}
+              setDate={setStartDate}
+            />
             <div className="h-[1px] w-3 bg-border-secondary" />
-            <DateInput placeholder="근무 종료일" />
+            <DateInput
+              placeholder="근무 종료일"
+              value={endDate}
+              setDate={setEndDate}
+            />
           </div>
         </main>
         <div className="fixed bottom-0 flex justify-center gap-[6px] py-5">
           <Button size="md" color="secondaryColor" onClick={handleCloseButton}>
             취소
           </Button>
-          <Button size="md" color="primary">
+          <Button
+            size="md"
+            color="primary"
+            onClick={handleSave}
+            disabled={!isCareerValid}
+          >
             저장
           </Button>
         </div>
