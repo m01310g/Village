@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 interface InputProps {
-  label: string;
+  label?: string;
   required?: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -31,10 +31,12 @@ const Input = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <label className="text-title-3 text-text-primary">
-        {label}
-        {required && <span className="text-text-danger">*</span>}
-      </label>
+      {label && (
+        <label className="text-title-3 text-text-primary">
+          {label}
+          {required && <span className="text-text-danger">*</span>}
+        </label>
+      )}
       <div className="flex flex-col gap-2">
         <input
           name="input"
@@ -55,20 +57,20 @@ const Input = ({
           onCompositionStart={onCompositionStart}
           onCompositionEnd={onCompositionEnd}
         />
-        <div className="text-caption-3 flex justify-between">
-          {(description || errorMessage) && (
+        {(description || errorMessage) && (
+          <div className="text-caption-3 flex justify-between">
             <p
               className={clsx(hasError ? "text-text-danger" : "text-text-info")}
             >
               {hasError ? errorMessage : description}
             </p>
-          )}
-          {maxLength !== undefined && (
-            <p className="text-neutral-400">
-              {value.length}/{maxLength}
-            </p>
-          )}
-        </div>
+            {maxLength !== undefined && (
+              <p className="text-neutral-400">
+                {value.length}/{maxLength}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
