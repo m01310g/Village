@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 interface InputProps {
-  label: string;
+  label?: string;
   required?: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -10,6 +10,8 @@ interface InputProps {
   errorMessage?: string;
   maxLength?: number;
   disabled?: boolean;
+  onCompositionStart?: React.CompositionEventHandler<HTMLInputElement>;
+  onCompositionEnd?: React.CompositionEventHandler<HTMLInputElement>;
 }
 
 const Input = ({
@@ -22,15 +24,19 @@ const Input = ({
   errorMessage,
   maxLength,
   disabled = false,
+  onCompositionStart,
+  onCompositionEnd,
 }: InputProps) => {
   const hasError = Boolean(errorMessage);
 
   return (
-    <form className="flex flex-col gap-3">
-      <label className="text-title-3 text-text-primary">
-        {label}
-        {required && <span className="text-text-danger">*</span>}
-      </label>
+    <div className="flex flex-col gap-3">
+      {label && (
+        <label className="text-title-3 text-text-primary">
+          {label}
+          {required && <span className="text-text-danger">*</span>}
+        </label>
+      )}
       <div className="flex flex-col gap-2">
         <input
           name="input"
@@ -40,29 +46,33 @@ const Input = ({
           placeholder={placeholder}
           maxLength={maxLength}
           className={clsx(
-            "text-body-2 border-border-secondary h-[45px] w-[343px] rounded-[4px] border bg-background-primary p-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none",
-            hasError && "border-border-danger text-text-danger",
-            disabled &&
-              "cursor-not-allowed bg-background-tertiary text-neutral-50",
+            "text-body-2 h-[45px] w-[343px] rounded-[4px] border bg-background-primary p-3 placeholder:text-neutral-400 focus:outline-none",
+            hasError
+              ? "border-border-danger text-text-danger"
+              : disabled
+                ? "border-border-secondary bg-neutral-100 text-neutral-400"
+                : "border-border-secondary text-text-primary",
           )}
           disabled={disabled}
+          onCompositionStart={onCompositionStart}
+          onCompositionEnd={onCompositionEnd}
         />
-        <div className="text-caption-3 flex justify-between">
-          {(description || errorMessage) && (
+        {(description || errorMessage) && (
+          <div className="text-caption-3 flex justify-between">
             <p
               className={clsx(hasError ? "text-text-danger" : "text-text-info")}
             >
               {hasError ? errorMessage : description}
             </p>
-          )}
-          {maxLength !== undefined && (
-            <p className="text-neutral-400">
-              {value.length}/{maxLength}
-            </p>
-          )}
-        </div>
+            {maxLength !== undefined && (
+              <p className="text-neutral-400">
+                {value.length}/{maxLength}
+              </p>
+            )}
+          </div>
+        )}
       </div>
-    </form>
+    </div>
   );
 };
 
