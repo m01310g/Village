@@ -4,15 +4,25 @@ import Image from "next/image";
 import { useState } from "react";
 import DateInput from "./DateInput";
 
-const CareerAddBottomSheet = () => {
+interface CareerAddBottomSheetProps {
+  setOpen: (open: boolean) => void;
+}
+
+const CareerAddBottomSheet = ({ setOpen }: CareerAddBottomSheetProps) => {
   const [center, setCenter] = useState("");
+
+  const handleCloseButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setOpen(false);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex h-full items-end justify-center">
       <div className="absolute z-0 h-full w-full max-w-[375px] bg-neutral-950/45" />
       <div className="relative flex h-full w-full max-w-[375px] flex-col gap-3 rounded-t-[20px] bg-background-primary px-4 pb-10 pt-5">
         <header className="flex w-full gap-2 py-2">
-          <button>
+          <button onClick={handleCloseButton}>
             <Image
               src={"/icons/close-2.svg"}
               width={24}
@@ -36,7 +46,7 @@ const CareerAddBottomSheet = () => {
           </div>
         </main>
         <div className="fixed bottom-0 flex justify-center gap-[6px] py-5">
-          <Button size="md" color="secondaryColor">
+          <Button size="md" color="secondaryColor" onClick={handleCloseButton}>
             취소
           </Button>
           <Button size="md" color="primary">
