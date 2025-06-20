@@ -24,42 +24,40 @@ const ProfileCreatePage = () => {
     !nicknameInput.isComposing;
 
   return (
-    <>
-      <div className="flex h-full flex-col items-center">
-        <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
-          <ProfileImageSection
-            isBottomSheetOpen={isBottomSheetOpen}
-            setIsBottomSheetOpen={setIsBottomSheetOpen}
-            onClickOpen={() => setIsBottomSheetOpen(true)}
-          />
-          <NameSection
-            name={nameInput.value}
-            error={nameInput.error}
-            onChange={nameInput.handleChange}
-            onCompositionStart={nameInput.handleCompositionStart}
-            onCompositionEnd={nameInput.handleCompositionEnd}
-          />
-          <NicknameSection
-            nickname={nicknameInput.value}
-            error={nicknameInput.error}
-            onChange={nicknameInput.handleChange}
-            onCompositionStart={nicknameInput.handleCompositionStart}
-            onCompositionEnd={nicknameInput.handleCompositionEnd}
-          />
-          <Input
-            label="업종"
-            required
-            value="트레이너"
-            disabled
-            onChange={() => {}}
-          />
-          <CareerSection />
-          <IntroduceSection />
-        </form>
+    <div className="flex h-full flex-col items-center">
+      <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
+        <ProfileImageSection
+          isBottomSheetOpen={isBottomSheetOpen}
+          setIsBottomSheetOpen={setIsBottomSheetOpen}
+          onClickOpen={() => setIsBottomSheetOpen(true)}
+        />
+        <NameSection
+          name={nameInput.value}
+          error={nameInput.error}
+          onChange={nameInput.handleChange}
+          onCompositionStart={nameInput.handleCompositionStart}
+          onCompositionEnd={nameInput.handleCompositionEnd}
+        />
+        <NicknameSection
+          nickname={nicknameInput.value}
+          error={nicknameInput.error}
+          onChange={nicknameInput.handleChange}
+          onCompositionStart={nicknameInput.handleCompositionStart}
+          onCompositionEnd={nicknameInput.handleCompositionEnd}
+        />
+        <Input
+          label="업종"
+          required
+          value="트레이너"
+          disabled
+          onChange={() => {}}
+        />
+        <CareerSection />
+        <IntroduceSection />
+      </form>
 
-        <CreateButton isFormValid={isFormValid} />
-      </div>
-    </>
+      <CreateButton isFormValid={isFormValid} />
+    </div>
   );
 };
 
