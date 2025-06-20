@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import EditIcon from "@/public/icons/icn_edit2.svg";
-import ProfileImageBottomSheet from "./ProfileImageBottomSheet";
+import ProfileImageUploader from "./ProfileImageUploader";
 
 interface ProfileImageSectionProps {
   isBottomSheetOpen: boolean;
@@ -58,7 +58,7 @@ const ProfileImageSection = ({
         </div>
       </section>
       {isBottomSheetOpen && (
-        <ProfileImageBottomSheet
+        <ProfileImageUploader
           setImage={setImage}
           setIsBottomSheetOpen={setIsBottomSheetOpen}
         />
