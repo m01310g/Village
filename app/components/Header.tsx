@@ -8,6 +8,7 @@ interface HeaderProps {
   showBackButton?: boolean;
   showSearchButton?: boolean;
   showNotificationButton?: boolean;
+  showSettingButton?: boolean;
 }
 
 // 로고 확정 시 로고 추가
@@ -16,6 +17,7 @@ const Header = ({
   showBackButton = false,
   showSearchButton = false,
   showNotificationButton = false,
+  showSettingButton = false,
 }: HeaderProps) => {
   const router = useRouter();
   return (
@@ -54,6 +56,16 @@ const Header = ({
             <Image
               src={"/icons/icn_alert_on.svg"}
               alt="알림 버튼"
+              width={24}
+              height={24}
+            />
+          </button>
+        )}
+        {showSettingButton && (
+          <button>
+            <Image
+              src={"/icons/icn_settings.svg"}
+              alt="설정 버튼"
               width={24}
               height={24}
             />
