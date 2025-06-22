@@ -11,7 +11,6 @@ const CareerSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleAddCareer = (newCareer: CareerData) => {
-    // setCareerList((prev) => [...prev, newCareer]);
     setCareerList((prev) => {
       const exists = prev.find((c) => c.id === newCareer.id);
       if (exists) {
