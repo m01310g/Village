@@ -1,14 +1,9 @@
 "use client";
 
-import Input from "@/app/components/Input";
-import ProfileImageSection from "./components/profileImage/ProfileImageSection";
-import CareerSection from "./components/career/CareerSection";
-import IntroduceSection from "./components/IntroduceSection";
 import CreateButton from "./components/CreateButton";
-import NameSection from "./components/NameSection";
-import NicknameSection from "./components/NicknameSection";
-import { useInputValidation } from "./hooks/useInputValidation";
+import { useInputValidation } from "../hooks/useInputValidation";
 import { useState } from "react";
+import ProfileForm from "../components/ProfileForm";
 
 const ProfileCreatePage = () => {
   const nameInput = useInputValidation("name");
@@ -25,37 +20,20 @@ const ProfileCreatePage = () => {
 
   return (
     <div className="flex h-full flex-col items-center">
-      <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
-        <ProfileImageSection
-          isBottomSheetOpen={isBottomSheetOpen}
-          setIsBottomSheetOpen={setIsBottomSheetOpen}
-          onClickOpen={() => setIsBottomSheetOpen(true)}
-        />
-        <NameSection
-          name={nameInput.value}
-          error={nameInput.error}
-          onChange={nameInput.handleChange}
-          onCompositionStart={nameInput.handleCompositionStart}
-          onCompositionEnd={nameInput.handleCompositionEnd}
-        />
-        <NicknameSection
-          nickname={nicknameInput.value}
-          error={nicknameInput.error}
-          onChange={nicknameInput.handleChange}
-          onCompositionStart={nicknameInput.handleCompositionStart}
-          onCompositionEnd={nicknameInput.handleCompositionEnd}
-        />
-        <Input
-          label="업종"
-          required
-          value="트레이너"
-          disabled
-          onChange={() => {}}
-        />
-        <CareerSection />
-        <IntroduceSection />
-      </form>
-
+      <ProfileForm
+        name={nameInput.value}
+        nickname={nicknameInput.value}
+        nameError={nameInput.error}
+        nicknameError={nicknameInput.error}
+        onChangeName={nameInput.handleChange}
+        onChangeNickname={nicknameInput.handleChange}
+        onCompositionStartName={nameInput.handleCompositionStart}
+        onCompositionEndName={nameInput.handleCompositionEnd}
+        onCompositionStartNickname={nicknameInput.handleCompositionStart}
+        onCompositionEndNickname={nicknameInput.handleCompositionEnd}
+        isBottomSheetOpen={isBottomSheetOpen}
+        setIsBottomSheetOpen={setIsBottomSheetOpen}
+      />
       <CreateButton isFormValid={isFormValid} />
     </div>
   );

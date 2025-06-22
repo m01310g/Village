@@ -4,8 +4,8 @@ interface NicknameSectionProps {
   nickname: string;
   error: string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onCompositionStart: () => void;
-  onCompositionEnd: (e: React.CompositionEvent<HTMLInputElement>) => void;
+  onCompositionStart?: () => void;
+  onCompositionEnd?: (e: React.CompositionEvent<HTMLInputElement>) => void;
 }
 
 const NicknameSection = ({
