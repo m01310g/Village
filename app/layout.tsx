@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import QueryProvider from "./providers/QueryProvider";
+import NavigationBar from "./components/NavigationBar";
+import clsx from "clsx";
 
 const pretendard = localFont({
   src: "../public/fonts/pretendard/PretendardVariable.woff2",
@@ -21,10 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryProvider>
-        <body className={`${pretendard.variable} antialiased`}>
-          <main className="mx-auto h-screen w-[375px] bg-white shadow-md">
-            {children}
-          </main>
+        <body
+          className={clsx(
+            pretendard.variable,
+            "mx-auto h-screen w-[375px] bg-background-tertiary antialiased shadow-md",
+          )}
+        >
+          <main className="h-screen bg-background-primary">{children}</main>
+          <NavigationBar />
         </body>
       </QueryProvider>
     </html>
