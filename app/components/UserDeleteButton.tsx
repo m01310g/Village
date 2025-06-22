@@ -1,28 +1,37 @@
-type UserDeleteResponse = {
-  message: string;
-  statusCode: number;
-};
+import { useAuthStore } from "@/store/useAuthStore";
+import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { useRouter } from "next/navigation";
 
-type UserDeleteErrorResponse = {
+interface UserDeleteResponse {
   message: string;
   statusCode: number;
-  error: string;
-};
+}
 
 const UserDeleteButton = () => {
+  const refreshToken = useAuthStore((state) => state.refreshToken);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const router = useRouter();
+
   const handleUserDelete = async () => {
     try {
-      const res = await fetch("/web-auth/delete", {
-        method: "POST",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/delete`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ refreshToken }),
+        },
+      );
 
-      if (res.status === 201) {
+      if (res.status === 200) {
         const data: UserDeleteResponse = await res.json();
         console.log(data.message);
-        window.location.href = "/";
+        router.replace("/");
       } else if (res.status === 401) {
-        const error: UserDeleteErrorResponse = await res.json();
+        const error: ErrorResponse = await res.json();
         console.error("권한 오류:", error.message);
         alert("로그인 상태가 만료되었습니다. 다시 로그인해주세요.");
       } else {
