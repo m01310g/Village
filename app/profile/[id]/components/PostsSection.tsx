@@ -1,18 +1,19 @@
 import PostCard from "@/app/components/post/PostCard";
+import { Board } from "../hooks/useUserProfile";
 
 interface PostsSectionProps {
   nickname: string;
+  posts: Board[];
   isMyProfile: boolean;
 }
 
-const PostsSection = ({ nickname, isMyProfile }: PostsSectionProps) => {
+const PostsSection = ({ posts, isMyProfile }: PostsSectionProps) => {
   return (
     <>
       <h2 className="text-title-2 px-4 text-text-primary">작성한 글</h2>
-      <PostCard
-        nickname={isMyProfile ? nickname : "닉네임"}
-        isMyProfile={isMyProfile}
-      />
+      {posts.map((post, _) => {
+        <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />;
+      })}
     </>
   );
 };
