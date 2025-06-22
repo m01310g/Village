@@ -7,14 +7,16 @@ interface ProfileImageSectionProps {
   isBottomSheetOpen: boolean;
   setIsBottomSheetOpen: (isOpen: boolean) => void;
   onClickOpen: () => void;
+  onUploadSuccess: (url: string) => void;
 }
 
 const ProfileImageSection = ({
   isBottomSheetOpen,
   setIsBottomSheetOpen,
   onClickOpen,
+  onUploadSuccess,
 }: ProfileImageSectionProps) => {
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<string | null>(null);
   const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const [step, setStep] = useState<"select" | "gallery" | "camera" | "crop">(
     "select",
@@ -38,7 +40,7 @@ const ProfileImageSection = ({
               </label>
               <div className="relative flex h-[118px] w-[118px] items-center justify-center overflow-hidden rounded-[4px]">
                 <Image
-                  src={URL.createObjectURL(image)}
+                  src={image}
                   alt="프로필 사진 미리보기"
                   width={118}
                   height={118}
@@ -72,6 +74,7 @@ const ProfileImageSection = ({
           setSelectedImageUrl={setSelectedImageUrl}
           step={step}
           setStep={setStep}
+          onUploadSuccess={onUploadSuccess}
         />
       )}
     </>

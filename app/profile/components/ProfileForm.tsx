@@ -4,8 +4,20 @@ import NicknameSection from "./NicknameSection";
 import ProfileImageSection from "./profileImage/ProfileImageSection";
 import CareerSection from "./career/CareerSection";
 import IntroduceSection from "./IntroduceSection";
+import { WebCareer } from "../types/webCareer";
 
 interface ProfileFormProps {
+  formData: {
+    name: string;
+    nickname: string;
+    webCareers: WebCareer[];
+    introduction: string;
+    profileImage: string;
+  };
+  onChangeField: (
+    field: keyof ProfileFormProps["formData"],
+    value: string | WebCareer[],
+  ) => void;
   name: string;
   nickname: string;
   nameError?: string | null;
@@ -23,6 +35,8 @@ interface ProfileFormProps {
 }
 
 const ProfileForm = ({
+  formData,
+  onChangeField,
   name,
   nickname,
   nameError,
@@ -42,6 +56,7 @@ const ProfileForm = ({
         isBottomSheetOpen={isBottomSheetOpen}
         setIsBottomSheetOpen={setIsBottomSheetOpen}
         onClickOpen={() => setIsBottomSheetOpen(true)}
+        onUploadSuccess={(url) => onChangeField("profileImage", url)}
       />
       <NameSection
         name={name}
@@ -64,8 +79,17 @@ const ProfileForm = ({
         disabled
         onChange={() => {}}
       />
-      <CareerSection />
-      <IntroduceSection />
+      <CareerSection
+        onChangeCareers={(updatedCareers: WebCareer[]) =>
+          onChangeField("webCareers", updatedCareers)
+        }
+      />
+      <IntroduceSection
+        introduction={formData.introduction}
+        onChangeIntroduction={(value: string) =>
+          onChangeField("introduction", value)
+        }
+      />
     </form>
   );
 };

@@ -2,21 +2,38 @@ import CareerAddButton from "./CareerAddButton";
 import ProfileLabel from "../ProfileLabel";
 import CareerCard from "./CareerCard";
 import { CareerData } from "../../types/careerCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CareerAddBottomSheet from "./CareerAddBottomSheet";
+import { WebCareer } from "../../types/webCareer";
 
-const CareerSection = () => {
+interface CareerSectionProps {
+  onChangeCareers: (careers: WebCareer[]) => void;
+}
+
+const CareerSection = ({ onChangeCareers }: CareerSectionProps) => {
   const [careerList, setCareerList] = useState<CareerData[]>([]);
   const [editTarget, setEditTarget] = useState<CareerData | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    const webCareers: WebCareer[] = careerList.map(
+      ({ workplace, startDate, endDate }) => ({
+        where: workplace,
+        start: startDate,
+        end: endDate,
+      }),
+    );
+    onChangeCareers(webCareers);
+  }, [careerList]);
+
   const handleAddCareer = (newCareer: CareerData) => {
     setCareerList((prev) => {
       const exists = prev.find((c) => c.id === newCareer.id);
-      if (exists) {
-        return prev.map((c) => (c.id === newCareer.id ? newCareer : c));
-      }
-      return [...prev, newCareer];
+      const updated = exists
+        ? prev.map((c) => (c.id === newCareer.id ? newCareer : c))
+        : [...prev, newCareer];
+
+      return updated;
     });
   };
 
@@ -38,8 +55,10 @@ const CareerSection = () => {
               <CareerCard
                 {...career}
                 onEdit={handleEdit}
-                onDelete={() => {
-                  setCareerList((prev) => prev.filter((_, i) => i !== idx));
+                onDelete={(e) => {
+                  e.preventDefault();
+                  const updated = careerList.filter((_, i) => i !== idx);
+                  setCareerList(updated);
                 }}
               />
               <div className="h-[1px] w-full bg-border-secondary" />

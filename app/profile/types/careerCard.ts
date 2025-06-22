@@ -7,5 +7,5 @@ export interface CareerData {
 
 export interface CareerCardProps extends CareerData {
   onEdit: (updatedCareer: CareerData) => void;
-  onDelete: () => void;
+  onDelete: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }

@@ -6,12 +6,13 @@ import ProfileImageCropper from "./ProfileImageCropper";
 import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
 
 interface ProfileImageUploaderProps {
-  setImage: (file: File) => void;
+  setImage: (image: string) => void;
   setIsBottomSheetOpen: (isOpen: boolean) => void;
   selectedImageUrl: string;
   setSelectedImageUrl: (imgUrl: string) => void;
   step: string;
   setStep: Dispatch<SetStateAction<"select" | "gallery" | "camera" | "crop">>;
+  onUploadSuccess: (url: string) => void;
 }
 
 const ProfileImageUploader = ({
@@ -21,6 +22,7 @@ const ProfileImageUploader = ({
   setSelectedImageUrl,
   step,
   setStep,
+  onUploadSuccess,
 }: ProfileImageUploaderProps) => {
   const handleClose = () => {
     setStep("select");
@@ -35,8 +37,12 @@ const ProfileImageUploader = ({
         return (
           <ProfileImageCropper
             selectedImageUrl={selectedImageUrl}
-            setImage={setImage}
+            setImage={(url) => {
+              setImage(url);
+              onUploadSuccess(url);
+            }}
             onClose={handleClose}
+            onUploadSuccess={onUploadSuccess}
           />
         );
       default:

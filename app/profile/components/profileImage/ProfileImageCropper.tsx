@@ -1,18 +1,20 @@
-import Button from "@/app/components/Button";
 import Header from "@/app/components/Header";
 import { useEffect, useRef, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
+import ProfileImageFooter from "./ProfileImageFooter";
 
 interface ProfileImageCropperProps {
   selectedImageUrl: string;
-  setImage: (file: File) => void;
+  setImage: (image: string) => void;
   onClose: () => void;
+  onUploadSuccess: (url: string) => void;
 }
 
 const ProfileImageCropper = ({
   selectedImageUrl,
   setImage,
   onClose,
+  onUploadSuccess,
 }: ProfileImageCropperProps) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -25,7 +27,6 @@ const ProfileImageCropper = ({
   };
 
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const cropSize = 300;
 
   useEffect(() => {
     const image = new Image();
@@ -60,41 +61,6 @@ const ProfileImageCropper = ({
     };
   }, [selectedImageUrl]);
 
-  const getCroppedImage = async (): Promise<void> => {
-    if (!selectedImageUrl || !croppedAreaPixels) return;
-
-    const image = document.createElement("img");
-    image.src = selectedImageUrl;
-    await new Promise((resolve) => (image.onload = resolve));
-
-    const canvas = document.createElement("canvas");
-    canvas.width = croppedAreaPixels.width;
-    canvas.height = croppedAreaPixels.height;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.drawImage(
-      image,
-      croppedAreaPixels.x,
-      croppedAreaPixels.y,
-      croppedAreaPixels.width,
-      croppedAreaPixels.height,
-      0,
-      0,
-      croppedAreaPixels.width,
-      croppedAreaPixels.height,
-    );
-
-    canvas.toBlob((blob) => {
-      if (blob) {
-        const file = new File([blob], `${selectedImageUrl}_cropped.jpeg`, {
-          type: "image/jpeg",
-        });
-        setImage(file);
-      }
-    }, "image/jpeg");
-  };
-
   return (
     <div className="fixed inset-0 z-50 mx-auto flex max-w-[375px] flex-col bg-background-primary">
       <Header title="사진 자르기" showBackButton />
@@ -121,22 +87,12 @@ const ProfileImageCropper = ({
           }}
         />
       </main>
-      <footer className="flex items-center justify-center gap-[6px] px-4 py-5">
-        <Button size="md" color="secondaryColor" onClick={onClose}>
-          취소
-        </Button>
-        <Button
-          size="md"
-          color="primary"
-          onClick={async (e) => {
-            e.preventDefault();
-            await getCroppedImage();
-            onClose();
-          }}
-        >
-          등록
-        </Button>
-      </footer>
+      <ProfileImageFooter
+        onClose={onClose}
+        croppedAreaPixels={croppedAreaPixels!}
+        selectedImageUrl={selectedImageUrl}
+        setImage={setImage}
+      />
     </div>
   );
 };
