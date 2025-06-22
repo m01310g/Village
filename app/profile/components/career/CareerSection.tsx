@@ -46,7 +46,9 @@ const CareerSection = ({ onChangeCareers }: CareerSectionProps) => {
     <section className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <ProfileLabel label="경력사항" bold />
-        <CareerAddButton onAddCareer={handleAddCareer} />
+        {careerList.length < 10 && (
+          <CareerAddButton onAddCareer={handleAddCareer} />
+        )}
       </div>
       {careerList &&
         (careerList.length !== 0 ? (
