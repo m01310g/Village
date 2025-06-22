@@ -16,6 +16,7 @@ const ProfileImageCropper = ({
 }: ProfileImageCropperProps) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [minZoom, setMinZoom] = useState(1);
 
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
@@ -51,9 +52,11 @@ const ProfileImageCropper = ({
       }
 
       const shorterRenderedSide = Math.min(renderedWidth, renderedHeight);
-      const zoom = cropSize / shorterRenderedSide;
+      const zoomRatio = shorterRenderedSide / 300;
+      const initialZoom = 1 / zoomRatio;
 
-      setZoom(zoom);
+      setZoom(initialZoom);
+      setMinZoom(initialZoom);
     };
   }, [selectedImageUrl]);
 
@@ -106,6 +109,7 @@ const ProfileImageCropper = ({
           onCropComplete={onCropComplete}
           cropShape="rect"
           showGrid={false}
+          minZoom={minZoom}
           cropSize={{ width: 300, height: 300 }}
           classes={{
             containerClassName: "bg-neutral-950/45",
