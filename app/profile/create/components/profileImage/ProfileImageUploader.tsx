@@ -23,6 +23,7 @@ const ProfileImageUploader = ({
   setStep,
 }: ProfileImageUploaderProps) => {
   const handleClose = () => {
+    setStep("select");
     setIsBottomSheetOpen(false);
   };
 

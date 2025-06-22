@@ -1,6 +1,6 @@
 import Button from "@/app/components/Button";
 import Header from "@/app/components/Header";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 
 interface ProfileImageCropperProps {
@@ -22,6 +22,40 @@ const ProfileImageCropper = ({
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const cropSize = 300;
+
+  useEffect(() => {
+    const image = new Image();
+    image.src = selectedImageUrl;
+
+    image.onload = () => {
+      const imgWidth = image.naturalWidth;
+      const imgHeight = image.naturalHeight;
+
+      const containerWidth = containerRef.current?.offsetWidth ?? 375;
+      const containerHeight = containerRef.current?.offsetHeight ?? 666;
+
+      const imageAspectRatio = imgWidth / imgHeight;
+      const containerAspectRatio = containerWidth / containerHeight;
+
+      let renderedWidth, renderedHeight;
+
+      if (imageAspectRatio > containerAspectRatio) {
+        renderedWidth = containerWidth;
+        renderedHeight = containerWidth / imageAspectRatio;
+      } else {
+        renderedHeight = containerHeight;
+        renderedWidth = containerHeight * imageAspectRatio;
+      }
+
+      const shorterRenderedSide = Math.min(renderedWidth, renderedHeight);
+      const zoom = cropSize / shorterRenderedSide;
+
+      setZoom(zoom);
+    };
+  }, [selectedImageUrl]);
 
   const getCroppedImage = async (): Promise<void> => {
     if (!selectedImageUrl || !croppedAreaPixels) return;
@@ -61,7 +95,7 @@ const ProfileImageCropper = ({
   return (
     <div className="fixed inset-0 z-50 mx-auto flex max-w-[375px] flex-col bg-background-primary">
       <Header title="사진 자르기" showBackButton />
-      <main className="relative flex-1">
+      <main className="relative flex-1" ref={containerRef}>
         <Cropper
           image={selectedImageUrl}
           crop={crop}
