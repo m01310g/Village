@@ -3,6 +3,7 @@ import ProfileInfoCard from "./ProfileInfoCard";
 import ProfileIntroduce from "./ProfileIntroduce";
 
 interface ProfileViewSectionProps {
+  profileImage: string;
   nickname: string;
   name: string;
   role: string;
@@ -12,6 +13,7 @@ interface ProfileViewSectionProps {
 }
 
 const ProfileViewSection = ({
+  profileImage,
   nickname,
   name,
   role,
@@ -22,6 +24,7 @@ const ProfileViewSection = ({
   return (
     <section className="flex flex-col gap-4 p-4">
       <ProfileInfoCard
+        profileImage={profileImage}
         nickname={nickname}
         role={role}
         name={name}

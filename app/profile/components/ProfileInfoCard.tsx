@@ -1,4 +1,7 @@
+import Image from "next/image";
+
 interface ProfileInfoCardProps {
+  profileImage: string;
   nickname: string;
   name: string;
   role: string;
@@ -6,6 +9,7 @@ interface ProfileInfoCardProps {
 }
 
 const ProfileInfoCard = ({
+  profileImage,
   nickname,
   name,
   role,
@@ -13,7 +17,9 @@ const ProfileInfoCard = ({
 }: ProfileInfoCardProps) => {
   return (
     <div className="flex items-center justify-between">
-      <div className="h-20 w-20 rounded-full bg-background-tertiary" />
+      <div className="h-20 w-20 overflow-hidden rounded-full">
+        <Image src={profileImage} width={80} height={80} alt="내 프로필 사진" />
+      </div>
       <div className="flex flex-1 flex-col gap-2 pl-7">
         <div className="flex items-center gap-2">
           <h3 className="text-title-2 text-text-primary">{nickname}</h3>

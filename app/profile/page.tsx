@@ -36,6 +36,7 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-col gap-4">
       <ProfileViewSection
+        profileImage={profile.profileImage}
         isMyProfile={isMyProfile}
         nickname={profile.nickname}
         name={profile.name}
