@@ -53,6 +53,7 @@ const ProfileImageSection = ({
                   width={118}
                   height={118}
                   unoptimized
+                  priority
                 />
               </div>
             </>

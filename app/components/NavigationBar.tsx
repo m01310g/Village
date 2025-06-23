@@ -6,15 +6,13 @@ import HomeIcon from "@/public/icons/icn_home.svg";
 import JobListingIcon from "@/public/icons/icn_job_listing.svg";
 import UserProfileIcon from "@/public/icons/icn_user-profile-02.svg";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect } from "react";
 
 const NavigationBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
-  const profileId = params?.id;
-  const { user } = useAuthStore();
 
+  // 내비게이션 바 숨길 라우트
   const hiddenPatterns = [
     /^\/profile\/create/,
     /^\/signin/,
@@ -25,13 +23,7 @@ const NavigationBar = () => {
     pattern.test(pathname),
   );
 
-  const isMyProfile =
-    pathname.startsWith("/profile/") && user?.id === profileId;
-
-  if (
-    shouldHideByPattern ||
-    (!isMyProfile && pathname.startsWith("/profile/"))
-  ) {
+  if (shouldHideByPattern || pathname.startsWith("/profile/")) {
     return null;
   }
 
