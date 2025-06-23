@@ -1,19 +1,18 @@
 "use client";
 
-import { useInputValidation } from "../hooks/useInputValidation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUserProfile } from "../hooks/useUserProfile";
 import ProfileForm from "../components/ProfileForm";
+import { ProfileFormData } from "../types/profileFormData";
+import { createFormFieldChangeHandler } from "../utils/formUtils";
+import { useInputValidation } from "../hooks/useInputValidation";
+import CompleteButton from "../components/CompleteButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
-import CompleteButton from "../components/CompleteButton";
-import { createFormFieldChangeHandler } from "../utils/formUtils";
-import { ProfileFormData } from "../types/profileFormData";
 
-const ProfileCreatePage = () => {
-  const nameInput = useInputValidation("name");
-  const nicknameInput = useInputValidation("nickname");
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+const ProfileEditPage = () => {
+  const { data: profile, isLoading, error } = useUserProfile();
   const [formData, setFormData] = useState<ProfileFormData>({
     profileImage: "",
     name: "",
@@ -23,21 +22,37 @@ const ProfileCreatePage = () => {
   });
   const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
+  const nameInput = useInputValidation("name");
+  const nicknameInput = useInputValidation("nickname");
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const isFormValid =
-    !!nameInput.value &&
-    !!nicknameInput.value &&
-    !nameInput.error &&
-    !nicknameInput.error &&
-    !nameInput.isComposing &&
-    !nicknameInput.isComposing;
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        profileImage: profile.profileImage || "",
+        name: profile.name || "",
+        nickname: profile.nickname || "",
+        webCareers: profile.webCareers || [],
+        introduction: profile.introduction || "",
+      });
+    }
+  }, [profile]);
+
+  const isFormChanged =
+    profile &&
+    (profile.name !== formData.name ||
+      profile.nickname !== formData.nickname ||
+      profile.profileImage !== formData.profileImage ||
+      profile.introduction !== formData.introduction ||
+      JSON.stringify(profile.webCareers) !==
+        JSON.stringify(formData.webCareers));
 
   const handleChange = createFormFieldChangeHandler(setFormData);
 
-  const handleSubmit = async () => {
+  const handleModify = async () => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -58,16 +73,18 @@ const ProfileCreatePage = () => {
           );
         } else if (error.statusCode === 403) {
           throw new Error(`유저 회원이 아닙니다: ${error.message}`);
-        } else if (error.statusCode === 409) {
-          throw new Error(`이미 등록된 프로필이 있습니다: ${error.message}`);
+        } else if (error.statusCode === 404) {
+          throw new Error(`등록된 프로필 없음: ${error.message}`);
         } else {
           throw new Error(error.message);
         }
       }
 
-      router.replace(`/profile`);
+      router.push("/profile");
     } catch (err: any) {
-      console.error(err instanceof Error ? err.message : "알 수 없는 오류");
+      console.error(
+        err instanceof Error ? err.message : "프로필 수정 중 오류 발생",
+      );
     }
   };
 
@@ -76,8 +93,8 @@ const ProfileCreatePage = () => {
       <ProfileForm
         formData={formData}
         onChangeField={handleChange}
-        name={nameInput.value}
-        nickname={nicknameInput.value}
+        name={formData.name}
+        nickname={formData.nickname}
         nameError={nameInput.error}
         nicknameError={nicknameInput.error}
         onChangeName={(e) => {
@@ -94,12 +111,13 @@ const ProfileCreatePage = () => {
         onCompositionEndNickname={nicknameInput.handleCompositionEnd}
         isBottomSheetOpen={isBottomSheetOpen}
         setIsBottomSheetOpen={setIsBottomSheetOpen}
+        initialImage={profile?.profileImage}
       />
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
-        등록 완료
+      <CompleteButton isFormValid={!!isFormChanged} onClick={handleModify}>
+        수정 완료
       </CompleteButton>
     </div>
   );
 };
 
-export default ProfileCreatePage;
+export default ProfileEditPage;

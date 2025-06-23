@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+  images: {
+    domains: ["sehyeon-gym-images.s3.ap-northeast-2.amazonaws.com"],
+  },
 };
 
 export default nextConfig;

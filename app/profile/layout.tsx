@@ -12,8 +12,9 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const userId = user?.id;
 
   const getTitleByPath = (path: string) => {
-    if (path === "/profile") return "빌리지";
+    if (path === "/profile") return "프로필";
     if (path === "/profile/create") return "프로필 등록";
+    if (path === "/profile/edit") return "프로필 수정";
   };
 
   return (

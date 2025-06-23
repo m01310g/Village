@@ -11,9 +11,8 @@ const NavigationBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
-  const profileId = params?.id;
-  const { user } = useAuthStore();
 
+  // 내비게이션 바 숨길 라우트
   const hiddenPatterns = [
     /^\/profile\/create/,
     /^\/signin/,
@@ -24,13 +23,7 @@ const NavigationBar = () => {
     pattern.test(pathname),
   );
 
-  const isMyProfile =
-    pathname.startsWith("/profile/") && user?.id === profileId;
-
-  if (
-    shouldHideByPattern
-    // ||(!isMyProfile && pathname.startsWith("/profile/"))
-  ) {
+  if (shouldHideByPattern || pathname.startsWith("/profile/")) {
     return null;
   }
 
