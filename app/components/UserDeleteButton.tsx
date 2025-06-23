@@ -26,18 +26,21 @@ const UserDeleteButton = () => {
         },
       );
 
-      if (res.status === 200) {
-        const data: UserDeleteResponse = await res.json();
-        console.log(data.message);
-        router.replace("/");
-      } else if (res.status === 401) {
+      if (!res.ok) {
         const error: ErrorResponse = await res.json();
-        console.error("권한 오류:", error.message);
-        alert("로그인 상태가 만료되었습니다. 다시 로그인해주세요.");
-      } else {
-        const error = await res.json();
-        console.error("알 수 없는 오류:", error.message || res.statusText);
+
+        if (error.statusCode === 401) {
+          console.error("권한 오류:", error.message);
+          alert("로그인 상태가 만료되었습니다. 다시 로그인해주세요.");
+        } else {
+          const error = await res.json();
+          console.error("알 수 없는 오류:", error.message || res.statusText);
+        }
       }
+
+      const data: UserDeleteResponse = await res.json();
+      console.log(data.message);
+      router.replace("/");
     } catch (err: any) {
       console.error(
         err instanceof Error
