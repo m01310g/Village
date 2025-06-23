@@ -55,6 +55,48 @@ const Page = () => {
       commentNumber: 1,
       likeNumber: 1,
     },
+    {
+      id: 4,
+      type: 0,
+      content: "스크롤 테스트",
+      writtenAt: "2025-06-21T14:23:55",
+      writtenBy: {
+        id: 1,
+        profileImage: "/icons/icn_user-profile-02.svg",
+        nickname: "trainer_123",
+        name: "홍길동",
+      },
+      commentNumber: 1,
+      likeNumber: 1,
+    },
+    {
+      id: 5,
+      type: 1,
+      content: "스크롤 테스트",
+      writtenAt: "2025-06-21T14:23:55",
+      writtenBy: {
+        id: 1,
+        profileImage: "/icons/icn_user-profile-02.svg",
+        nickname: "trainer_123",
+        name: "홍길동",
+      },
+      commentNumber: 1,
+      likeNumber: 1,
+    },
+    {
+      id: 6,
+      type: 2,
+      content: "스크롤 테스트",
+      writtenAt: "2025-06-21T14:23:55",
+      writtenBy: {
+        id: 1,
+        profileImage: "/icons/icn_user-profile-02.svg",
+        nickname: "trainer_123",
+        name: "홍길동",
+      },
+      commentNumber: 1,
+      likeNumber: 1,
+    },
   ];
 
   useEffect(() => {
@@ -76,8 +118,8 @@ const Page = () => {
         });
 
   return (
-    <>
-      <div className="flex gap-1 overflow-y-auto px-4 py-3">
+    <div className="flex h-full max-w-[375px] flex-col">
+      <div className="flex w-full max-w-[375px] gap-1 bg-background-primary px-4 py-3">
         {filters.map((filter, i) => (
           <FilteringButton
             key={i}
@@ -87,13 +129,15 @@ const Page = () => {
           />
         ))}
       </div>
-      {filteredPosts.map((post, i) => (
-        <PostCard key={i} post={post} isMyProfile={false} />
-      ))}
-      <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4">
+      <div className="h-full overflow-y-auto">
+        {filteredPosts.map((post, i) => (
+          <PostCard key={i} post={post} isMyProfile={false} />
+        ))}
+      </div>
+      <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
         <FloatingButton />
       </div>
-    </>
+    </div>
   );
 };
 
