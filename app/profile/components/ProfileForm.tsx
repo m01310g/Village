@@ -32,6 +32,7 @@ interface ProfileFormProps {
   ) => void;
   isBottomSheetOpen: boolean;
   setIsBottomSheetOpen: (value: boolean) => void;
+  initialImage?: string;
 }
 
 const ProfileForm = ({
@@ -49,6 +50,7 @@ const ProfileForm = ({
   onCompositionStartNickname,
   isBottomSheetOpen,
   setIsBottomSheetOpen,
+  initialImage,
 }: ProfileFormProps) => {
   return (
     <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
@@ -57,6 +59,7 @@ const ProfileForm = ({
         setIsBottomSheetOpen={setIsBottomSheetOpen}
         onClickOpen={() => setIsBottomSheetOpen(true)}
         onUploadSuccess={(url) => onChangeField("profileImage", url)}
+        initialImage={initialImage}
       />
       <NameSection
         name={name}

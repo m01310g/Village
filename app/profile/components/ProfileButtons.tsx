@@ -15,13 +15,17 @@ const ProfileButtons = ({ isMyProfile }: ProfileButtonProps) => {
     <div className="flex gap-2">
       {isMyProfile ? (
         <>
-          <Button size="md" color="secondaryColor">
+          <Button
+            size="md"
+            color="secondaryColor"
+            onClick={() => router.push("/profile/edit")}
+          >
             프로필 수정
           </Button>
           <Button
             size="md"
             color="primary"
-            onClick={() => router.push(`/profile/neighbors`)}
+            onClick={() => router.push("/profile/neighbors")}
           >
             내 이웃 목록
           </Button>

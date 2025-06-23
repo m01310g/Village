@@ -71,6 +71,7 @@ const ProfileEditPage = () => {
         onCompositionEndNickname={nicknameInput.handleCompositionEnd}
         isBottomSheetOpen={isBottomSheetOpen}
         setIsBottomSheetOpen={setIsBottomSheetOpen}
+        initialImage={profile?.profileImage}
       />
       <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
         수정 완료

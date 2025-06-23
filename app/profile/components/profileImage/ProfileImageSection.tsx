@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditIcon from "@/public/icons/icn_edit2.svg";
 import ProfileImageUploader from "./ProfileImageUploader";
 
@@ -8,6 +8,7 @@ interface ProfileImageSectionProps {
   setIsBottomSheetOpen: (isOpen: boolean) => void;
   onClickOpen: () => void;
   onUploadSuccess: (url: string) => void;
+  initialImage?: string;
 }
 
 const ProfileImageSection = ({
@@ -15,12 +16,19 @@ const ProfileImageSection = ({
   setIsBottomSheetOpen,
   onClickOpen,
   onUploadSuccess,
+  initialImage,
 }: ProfileImageSectionProps) => {
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(initialImage ?? null);
   const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const [step, setStep] = useState<"select" | "gallery" | "camera" | "crop">(
     "select",
   );
+
+  useEffect(() => {
+    if (initialImage) {
+      setImage(initialImage);
+    }
+  }, [initialImage]);
 
   return (
     <>

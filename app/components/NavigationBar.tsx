@@ -6,6 +6,7 @@ import HomeIcon from "@/public/icons/icn_home.svg";
 import JobListingIcon from "@/public/icons/icn_job_listing.svg";
 import UserProfileIcon from "@/public/icons/icn_user-profile-02.svg";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 const NavigationBar = () => {
   const pathname = usePathname();
