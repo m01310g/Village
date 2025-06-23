@@ -28,8 +28,8 @@ const NavigationBar = () => {
     pathname.startsWith("/profile/") && user?.id === profileId;
 
   if (
-    shouldHideByPattern
-    // ||(!isMyProfile && pathname.startsWith("/profile/"))
+    shouldHideByPattern ||
+    (!isMyProfile && pathname.startsWith("/profile/"))
   ) {
     return null;
   }

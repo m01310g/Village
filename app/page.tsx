@@ -1,9 +1,15 @@
 "use client";
 
 import SignoutButton from "./components/SignoutButton";
+import UserDeleteButton from "./components/UserDeleteButton";
 
 const Page = () => {
-  return <SignoutButton />;
+  return (
+    <>
+      <UserDeleteButton />
+      <SignoutButton />
+    </>
+  );
 };
 
 export default Page;

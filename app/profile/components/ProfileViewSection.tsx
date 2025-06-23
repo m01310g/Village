@@ -5,6 +5,7 @@ import ProfileIntroduce from "./ProfileIntroduce";
 interface ProfileViewSectionProps {
   nickname: string;
   role: string;
+  introduction: string;
   neighborCount: number;
   isMyProfile: boolean;
 }
@@ -12,6 +13,7 @@ interface ProfileViewSectionProps {
 const ProfileViewSection = ({
   nickname,
   role,
+  introduction,
   neighborCount,
   isMyProfile,
 }: ProfileViewSectionProps) => {
@@ -23,7 +25,7 @@ const ProfileViewSection = ({
         name="김민경"
         neighborCount={neighborCount}
       />
-      <ProfileIntroduce />
+      <ProfileIntroduce introduction={introduction} />
       <ProfileButtons isMyProfile={isMyProfile} />
     </section>
   );

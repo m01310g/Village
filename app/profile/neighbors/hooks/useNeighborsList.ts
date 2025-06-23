@@ -16,15 +16,12 @@ interface NeighborsList {
   neighbors: Neighbor[];
 }
 
-const getNeighbors = async (): Promise<NeighborsList> => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-
+const getNeighbors = async (accessToken: string): Promise<NeighborsList> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/myNeighbor`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
       },
     },
   );
@@ -46,8 +43,14 @@ const getNeighbors = async (): Promise<NeighborsList> => {
 };
 
 export const useNeighborsList = () => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
   return useQuery({
     queryKey: ["neighbors"],
-    queryFn: getNeighbors,
+    queryFn: () => {
+      if (!accessToken) throw new Error("No access token");
+      return getNeighbors(accessToken);
+    },
+    enabled: !!accessToken,
   });
 };

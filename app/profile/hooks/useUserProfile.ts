@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { WebCareer } from "../../types/webCareer";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useQuery } from "@tanstack/react-query";
+import { ProfileFormData } from "../types/profileFormData";
 
 interface BoardProfile {
   id: number;
@@ -20,28 +20,20 @@ export interface Board {
   likeNumber: number;
 }
 
-interface UserProfile {
+interface UserProfile extends ProfileFormData {
   id: number;
-  profileImage: string;
-  name: string;
-  nickname: string;
   type: string;
-  webCareers: WebCareer[];
-  introduction: string;
   neighbor: number;
   boards: Board[];
 }
 
-const getProfile = async (): Promise<UserProfile> => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-
+const getProfile = async (accessToken: string): Promise<UserProfile> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/getMyWebProfile`,
     {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
       },
     },
   );
@@ -61,12 +53,19 @@ const getProfile = async (): Promise<UserProfile> => {
   }
 
   const result = await res.json();
-  return result.data;
+  const data: UserProfile = result.data;
+  return data;
 };
 
 export const useUserProfile = () => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
   return useQuery({
     queryKey: ["userProfile"],
-    queryFn: getProfile,
+    queryFn: () => {
+      if (!accessToken) throw new Error("No access token");
+      return getProfile(accessToken);
+    },
+    enabled: !!accessToken,
   });
 };

@@ -3,6 +3,7 @@ import AddNeighborButton from "./AddNeighborButton";
 import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
+import Image from "next/image";
 
 interface PostHeaderProps {
   profileImage?: string;
@@ -24,7 +25,12 @@ const PostHeader = ({
     <>
       <header className="flex justify-between">
         <div className="flex items-center gap-2">
-          <div className="h-10 w-10 rounded-full bg-background-secondary" />
+          <Image
+            src={profileImage || ""}
+            width={40}
+            height={40}
+            alt={`${nickname}의 프로필 사진`}
+          />
           <h3 className="text-title-3">{nickname}</h3>
         </div>
         {pathname.includes("/profile") ? (

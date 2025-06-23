@@ -1,4 +1,4 @@
-import { Board } from "@/app/profile/[id]/hooks/useUserProfile";
+import { Board } from "@/app/profile/hooks/useUserProfile";
 import PostCardFooter from "./PostCardFooter";
 import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";

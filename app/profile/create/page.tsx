@@ -1,19 +1,20 @@
 "use client";
 
-import CreateButton from "./components/CreateButton";
 import { useInputValidation } from "../hooks/useInputValidation";
 import { useState } from "react";
 import ProfileForm from "../components/ProfileForm";
-import { WebCareer } from "../types/webCareer";
 import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
+import CompleteButton from "../components/CompleteButton";
+import { createFormFieldChangeHandler } from "../utils/formUtils";
+import { ProfileFormData } from "../types/profileFormData";
 
 const ProfileCreatePage = () => {
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProfileFormData>({
     profileImage: "",
     name: "",
     nickname: "",
@@ -31,12 +32,7 @@ const ProfileCreatePage = () => {
     !nameInput.isComposing &&
     !nicknameInput.isComposing;
 
-  const handleChange = (
-    field: keyof typeof formData,
-    value: string | WebCareer[],
-  ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  const handleChange = createFormFieldChangeHandler(setFormData);
 
   const handleSubmit = async () => {
     try {
@@ -70,9 +66,8 @@ const ProfileCreatePage = () => {
       }
 
       const result = await res.json();
-      const userId = result.data.id;
 
-      router.replace(`/profile/${userId}`);
+      router.replace(`/profile`);
     } catch (err: any) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
     }
@@ -102,7 +97,9 @@ const ProfileCreatePage = () => {
         isBottomSheetOpen={isBottomSheetOpen}
         setIsBottomSheetOpen={setIsBottomSheetOpen}
       />
-      <CreateButton isFormValid={isFormValid} onClick={handleSubmit} />
+      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
+        등록 완료
+      </CompleteButton>
     </div>
   );
 };

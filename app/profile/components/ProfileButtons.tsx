@@ -21,7 +21,7 @@ const ProfileButtons = ({ isMyProfile }: ProfileButtonProps) => {
           <Button
             size="md"
             color="primary"
-            onClick={() => router.push(`/profile/${id}/neighbors`)}
+            onClick={() => router.push(`/profile/neighbors`)}
           >
             내 이웃 목록
           </Button>
