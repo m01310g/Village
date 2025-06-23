@@ -4,6 +4,7 @@ import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
+import CommentManageBottomSheet from "@/app/post/[postId]/components/comments/CommentManageBottomSheet";
 
 interface PostHeaderProps {
   profileImage?: string;
@@ -19,7 +20,9 @@ const PostHeader = ({
   isMyProfile,
 }: PostHeaderProps) => {
   const pathname = usePathname();
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
+  const [isCommentBottomSheetOpen, setIsCommentBottomSheetOpen] =
+    useState(false);
 
   return (
     <>
@@ -39,7 +42,7 @@ const PostHeader = ({
         {pathname === "/profile" ? (
           <button
             className="flex h-10 w-10 items-center justify-center"
-            onClick={() => setIsBottomSheetOpen(true)}
+            onClick={() => setIsPostBottomSheetOpen(true)}
           >
             <ManageIcon color="#737373" width="24px" height="24px" />
           </button>
@@ -55,7 +58,7 @@ const PostHeader = ({
           isMyProfile ? (
             <button
               className="flex h-10 w-10 items-center justify-center"
-              onClick={() => setIsBottomSheetOpen(true)}
+              onClick={() => setIsCommentBottomSheetOpen(true)}
             >
               <ManageIcon color="#737373" width="24px" height="24px" />
             </button>
@@ -66,8 +69,11 @@ const PostHeader = ({
           <div className="h-10 w-10" />
         )}
       </header>
-      {isBottomSheetOpen && (
-        <PostManageBottomSheet setIsOpen={setIsBottomSheetOpen} />
+      {isPostBottomSheetOpen && (
+        <PostManageBottomSheet setIsOpen={setIsPostBottomSheetOpen} />
+      )}
+      {isCommentBottomSheetOpen && (
+        <CommentManageBottomSheet setIsOpen={setIsCommentBottomSheetOpen} />
       )}
     </>
   );
