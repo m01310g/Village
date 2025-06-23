@@ -7,6 +7,9 @@ import { ProfileFormData } from "../types/profileFormData";
 import { createFormFieldChangeHandler } from "../utils/formUtils";
 import { useInputValidation } from "../hooks/useInputValidation";
 import CompleteButton from "../components/CompleteButton";
+import { useAuthStore } from "@/store/useAuthStore";
+import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { useRouter } from "next/navigation";
 
 const ProfileEditPage = () => {
   const { data: profile, isLoading, error } = useUserProfile();
@@ -17,7 +20,8 @@ const ProfileEditPage = () => {
     webCareers: [],
     introduction: "",
   });
-
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const router = useRouter();
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
@@ -34,18 +38,54 @@ const ProfileEditPage = () => {
     }
   }, [profile]);
 
-  const isFormValid =
-    !!nameInput.value &&
-    !!nicknameInput.value &&
-    !nameInput.error &&
-    !nicknameInput.error &&
-    !nameInput.isComposing &&
-    !nicknameInput.isComposing;
+  const isFormChanged =
+    profile &&
+    (profile.name !== formData.name ||
+      profile.nickname !== formData.nickname ||
+      profile.profileImage !== formData.profileImage ||
+      profile.introduction !== formData.introduction ||
+      JSON.stringify(profile.webCareers) !==
+        JSON.stringify(formData.webCareers));
 
   const handleChange = createFormFieldChangeHandler(setFormData);
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleModify = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(formData),
+        },
+      );
+
+      if (!res.ok) {
+        const error: ErrorResponse = await res.json();
+        if (error.statusCode === 400) {
+          throw new Error(`요청 형식 오류: ${error.message}`);
+        } else if (error.statusCode === 401) {
+          throw new Error(
+            `유효하지 않거나 기간이 만료된 토큰: ${error.message}`,
+          );
+        } else if (error.statusCode === 403) {
+          throw new Error(`유저 회원이 아닙니다: ${error.message}`);
+        } else if (error.statusCode === 404) {
+          throw new Error(`등록된 프로필 없음: ${error.message}`);
+        } else {
+          throw new Error(error.message);
+        }
+      }
+
+      router.push("/profile");
+    } catch (err: any) {
+      console.error(
+        err instanceof Error ? err.message : "프로필 수정 중 오류 발생",
+      );
+    }
   };
 
   return (
@@ -73,7 +113,7 @@ const ProfileEditPage = () => {
         setIsBottomSheetOpen={setIsBottomSheetOpen}
         initialImage={profile?.profileImage}
       />
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
+      <CompleteButton isFormValid={!!isFormChanged} onClick={handleModify}>
         수정 완료
       </CompleteButton>
     </div>

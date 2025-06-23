@@ -65,8 +65,6 @@ const ProfileCreatePage = () => {
         }
       }
 
-      const result = await res.json();
-
       router.replace(`/profile`);
     } catch (err: any) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
