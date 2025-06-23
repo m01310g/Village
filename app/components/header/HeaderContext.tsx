@@ -8,6 +8,8 @@ interface HeaderState {
   showNotificationButton?: boolean;
   showSearchButton?: boolean;
   showSettingButton?: boolean;
+  showCreateButton?: boolean;
+  showCreateButtonProps?: { className: string; disabled: boolean };
 }
 
 interface HeaderContextType {
@@ -24,6 +26,8 @@ export const HeaderProvider = ({ children }: { children: React.ReactNode }) => {
     showNotificationButton: false,
     showSearchButton: false,
     showSettingButton: false,
+    showCreateButton: false,
+    showCreateButtonProps: { className: "", disabled: true },
   });
 
   return (

@@ -12,6 +12,8 @@ const HeaderConsumer = () => {
       showSearchButton={header.showSearchButton}
       showNotificationButton={header.showNotificationButton}
       showSettingButton={header.showSettingButton}
+      showCreateButton={header.showCreateButton}
+      showCreateButtonProps={header.showCreateButtonProps}
     />
   );
 };

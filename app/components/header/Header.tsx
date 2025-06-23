@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import clsx from "clsx";
 
 interface HeaderProps {
   title: string;
@@ -9,6 +10,8 @@ interface HeaderProps {
   showSearchButton?: boolean;
   showNotificationButton?: boolean;
   showSettingButton?: boolean;
+  showCreateButton?: boolean;
+  showCreateButtonProps?: { className: string; disabled: boolean };
 }
 
 // 로고 확정 시 로고 추가
@@ -18,6 +21,8 @@ const Header = ({
   showSearchButton = false,
   showNotificationButton = false,
   showSettingButton = false,
+  showCreateButton = false,
+  showCreateButtonProps = { className: "", disabled: true },
 }: HeaderProps) => {
   const router = useRouter();
   return (
@@ -69,6 +74,17 @@ const Header = ({
               width={24}
               height={24}
             />
+          </button>
+        )}
+        {showCreateButton && (
+          <button
+            className={clsx(
+              "text-body-2 h-12 w-12",
+              showCreateButtonProps.className,
+            )}
+            disabled={showCreateButtonProps.disabled}
+          >
+            게시
           </button>
         )}
       </div>
