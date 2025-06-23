@@ -40,7 +40,9 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   }, [pathname, profileId, userId, setHeader]);
 
   return (
-    <main className="h-[calc(100vh-46px)] overflow-y-auto">{children}</main>
+    <main className="h-[calc(100vh-46px-81px)] overflow-y-auto">
+      {children}
+    </main>
   );
 };
 

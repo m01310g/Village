@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSetHeader } from "./components/header/HeaderContext";
 import FilteringButton from "./components/feed/FilteringButton";
 import PostCard from "./components/post/PostCard";
+import FloatingButton from "./components/post/FloatingButton";
 
 const Page = () => {
   const setHeader = useSetHeader();
@@ -76,7 +77,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex gap-1 px-4 py-3">
+      <div className="flex gap-1 overflow-y-auto px-4 py-3">
         {filters.map((filter, i) => (
           <FilteringButton
             key={i}
@@ -89,6 +90,9 @@ const Page = () => {
       {filteredPosts.map((post, i) => (
         <PostCard key={i} post={post} isMyProfile={false} />
       ))}
+      <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4">
+        <FloatingButton />
+      </div>
     </>
   );
 };

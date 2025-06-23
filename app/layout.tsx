@@ -29,11 +29,13 @@ export default function RootLayout({
           <body
             className={clsx(
               pretendard.variable,
-              "mx-auto h-screen w-[375px] bg-background-tertiary antialiased shadow-md",
+              "mx-auto flex h-screen w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
             )}
           >
             <HeaderConsumer />
-            <main className="h-screen bg-background-primary">{children}</main>
+            <main className="h-[calc(100vh-46px-81px)] bg-background-primary">
+              {children}
+            </main>
             <NavigationBar />
           </body>
         </HeaderProvider>
