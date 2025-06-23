@@ -38,6 +38,7 @@ const ProfilePage = () => {
       <ProfileViewSection
         isMyProfile={isMyProfile}
         nickname={profile.nickname}
+        name={profile.name}
         introduction={profile.introduction}
         role={profile.type || "트레이너"}
         neighborCount={profile.neighbor}
