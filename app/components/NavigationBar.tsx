@@ -1,22 +1,21 @@
 "use client";
 
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 import HomeIcon from "@/public/icons/icn_home.svg";
 import JobListingIcon from "@/public/icons/icn_job_listing.svg";
 import UserProfileIcon from "@/public/icons/icn_user-profile-02.svg";
-import { useAuthStore } from "@/store/useAuthStore";
 
 const NavigationBar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const params = useParams();
 
   // 내비게이션 바 숨길 라우트
   const hiddenPatterns = [
     /^\/profile\/create/,
     /^\/signin/,
     /^\/web-auth\/kakao\/callback/,
+    /^\/post/,
   ];
 
   const shouldHideByPattern = hiddenPatterns.some((pattern) =>

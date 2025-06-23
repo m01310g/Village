@@ -18,6 +18,7 @@ export interface Board {
   writtenBy: BoardProfile;
   commentNumber: number;
   likeNumber: number;
+  images?: string[];
 }
 
 interface UserProfile extends ProfileFormData {

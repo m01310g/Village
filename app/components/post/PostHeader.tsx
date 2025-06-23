@@ -35,7 +35,23 @@ const PostHeader = ({
           </div>
           <h3 className="text-title-3">{nickname}</h3>
         </div>
-        {pathname.includes("/profile") ? (
+
+        {pathname === "/profile" ? (
+          <button
+            className="flex h-10 w-10 items-center justify-center"
+            onClick={() => setIsBottomSheetOpen(true)}
+          >
+            <ManageIcon color="#737373" width="24px" height="24px" />
+          </button>
+        ) : pathname.startsWith("/profile/") ? (
+          <div className="h-10 w-10" />
+        ) : pathname === "/" ? (
+          isNeighbor ? (
+            <div className="h-10 w-10" />
+          ) : (
+            <AddNeighborButton />
+          )
+        ) : pathname.startsWith("/post/") ? (
           isMyProfile ? (
             <button
               className="flex h-10 w-10 items-center justify-center"
@@ -43,15 +59,11 @@ const PostHeader = ({
             >
               <ManageIcon color="#737373" width="24px" height="24px" />
             </button>
-          ) : isNeighbor ? (
-            <div className="h-10 w-10" />
           ) : (
             <div className="h-10 w-10" />
           )
-        ) : isNeighbor ? (
-          <div className="h-10 w-10" />
         ) : (
-          <AddNeighborButton />
+          <div className="h-10 w-10" />
         )}
       </header>
       {isBottomSheetOpen && (
