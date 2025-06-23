@@ -23,14 +23,16 @@ const PostHeader = ({
 
   return (
     <>
-      <header className="flex justify-between">
+      <header className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Image
-            src={profileImage || ""}
-            width={40}
-            height={40}
-            alt={`${nickname}의 프로필 사진`}
-          />
+          <div className="h-10 w-10 overflow-hidden rounded-full">
+            <Image
+              src={profileImage || ""}
+              width={40}
+              height={40}
+              alt={`${nickname}의 프로필 사진`}
+            />
+          </div>
           <h3 className="text-title-3">{nickname}</h3>
         </div>
         {pathname.includes("/profile") ? (

@@ -1,10 +1,60 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSetHeader } from "./components/header/HeaderContext";
+import FilteringButton from "./components/feed/FilteringButton";
+import PostCard from "./components/post/PostCard";
 
 const Page = () => {
   const setHeader = useSetHeader();
+  const [activeFilter, setActiveFilter] = useState("전체");
+  const filters = ["전체", "업계정보", "채용", "교육"];
+
+  // type 0: 업계정보, 1: 채용, 2: 교육
+  const posts = [
+    {
+      id: 1,
+      type: 1,
+      content: "채용 테스트",
+      writtenAt: "2025-06-21T14:23:55",
+      writtenBy: {
+        id: 1,
+        profileImage: "/icons/icn_user-profile-02.svg",
+        nickname: "trainer_123",
+        name: "홍길동",
+      },
+      commentNumber: 1,
+      likeNumber: 1,
+    },
+    {
+      id: 2,
+      type: 2,
+      content: "교육 테스트",
+      writtenAt: "2025-06-21T14:23:55",
+      writtenBy: {
+        id: 1,
+        profileImage: "/icons/icn_user-profile-02.svg",
+        nickname: "trainer_123",
+        name: "홍길동",
+      },
+      commentNumber: 1,
+      likeNumber: 1,
+    },
+    {
+      id: 3,
+      type: 0,
+      content: "업계정보 테스트",
+      writtenAt: "2025-06-21T14:23:55",
+      writtenBy: {
+        id: 1,
+        profileImage: "/icons/icn_user-profile-02.svg",
+        nickname: "trainer_123",
+        name: "홍길동",
+      },
+      commentNumber: 1,
+      likeNumber: 1,
+    },
+  ];
 
   useEffect(() => {
     setHeader({
@@ -15,7 +65,32 @@ const Page = () => {
       showSettingButton: false,
     });
   }, [setHeader]);
-  return <></>;
+
+  const filteredPosts =
+    activeFilter === "전체"
+      ? posts
+      : posts.filter((post) => {
+          const typeIndex = filters.indexOf(activeFilter) - 1;
+          return post.type === typeIndex;
+        });
+
+  return (
+    <>
+      <div className="flex gap-1 px-4 py-3">
+        {filters.map((filter, i) => (
+          <FilteringButton
+            key={i}
+            content={filter}
+            isActive={activeFilter === filter}
+            onClick={() => setActiveFilter(filter)}
+          />
+        ))}
+      </div>
+      {filteredPosts.map((post, i) => (
+        <PostCard key={i} post={post} isMyProfile={false} />
+      ))}
+    </>
+  );
 };
 
 export default Page;
