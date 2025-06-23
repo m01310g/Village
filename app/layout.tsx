@@ -33,9 +33,9 @@ export default function RootLayout({
             )}
           >
             <HeaderConsumer />
-            <main className="h-[calc(100vh-46px-81px)] bg-background-primary">
-              {children}
-            </main>
+            {/* <main className="h-[calc(100vh-46px-81px)] bg-background-primary"> */}
+            {children}
+            {/* </main> */}
             <NavigationBar />
           </body>
         </HeaderProvider>

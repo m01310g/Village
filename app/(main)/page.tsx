@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSetHeader } from "./components/header/HeaderContext";
-import FilteringButton from "./components/feed/FilteringButton";
-import PostCard from "./components/post/PostCard";
-import FloatingButton from "./components/post/FloatingButton";
+import { useSetHeader } from "../components/header/HeaderContext";
+import FilteringButton from "../components/feed/FilteringButton";
+import PostCard from "../components/post/PostCard";
+import FloatingButton from "../components/post/FloatingButton";
 
 const Page = () => {
   const setHeader = useSetHeader();

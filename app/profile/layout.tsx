@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
+import clsx from "clsx";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -40,7 +41,14 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   }, [pathname, profileId, userId, setHeader]);
 
   return (
-    <main className="h-[calc(100vh-46px-81px)] overflow-y-auto">
+    <main
+      className={clsx(
+        "overflow-y-auto bg-background-primary",
+        pathname === "/profile/edit"
+          ? "h-[calc(100vh-46px)]"
+          : "h-[calc(100vh-46px-81px)]",
+      )}
+    >
       {children}
     </main>
   );
