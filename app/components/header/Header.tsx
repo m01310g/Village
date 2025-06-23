@@ -21,7 +21,7 @@ const Header = ({
 }: HeaderProps) => {
   const router = useRouter();
   return (
-    <header className="flex h-[46px] items-center justify-between border-b border-border-primary px-1">
+    <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
           <button onClick={() => router.back()}>

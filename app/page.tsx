@@ -1,15 +1,21 @@
 "use client";
 
-import SignoutButton from "./components/SignoutButton";
-import UserDeleteButton from "./components/UserDeleteButton";
+import { useEffect } from "react";
+import { useSetHeader } from "./components/header/HeaderContext";
 
 const Page = () => {
-  return (
-    <>
-      <UserDeleteButton />
-      <SignoutButton />
-    </>
-  );
+  const setHeader = useSetHeader();
+
+  useEffect(() => {
+    setHeader({
+      title: "",
+      showBackButton: false,
+      showSearchButton: true,
+      showNotificationButton: true,
+      showSettingButton: false,
+    });
+  }, [setHeader]);
+  return <></>;
 };
 
 export default Page;

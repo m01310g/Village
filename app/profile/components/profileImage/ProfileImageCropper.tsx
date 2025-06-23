@@ -1,4 +1,4 @@
-import Header from "@/app/components/Header";
+import Header from "@/app/components/header/Header";
 import { useEffect, useRef, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 import ProfileImageFooter from "./ProfileImageFooter";
