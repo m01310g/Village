@@ -25,10 +25,10 @@ const Page = () => {
 
   const filteredPosts =
     activeFilter === "전체"
-      ? (postList ?? [])
+      ? (postList ?? []).filter((post) => post.id !== 1)
       : (postList ?? []).filter((post) => {
           const typeIndex = filters.indexOf(activeFilter) - 1;
-          return post.type === typeIndex;
+          return post.type === typeIndex && post.id !== 1;
         });
 
   return (

@@ -22,7 +22,7 @@ const PostManageBottomSheet = ({
           onClick={(e) => e.stopPropagation()}
         >
           <ul className="flex flex-col">
-            <Link href={"/post/edit"}>
+            <Link href={`/post/${postId}/edit`}>
               <li className="text-body-2 cursor-pointer px-4 py-5 text-neutral-800">
                 글 수정
               </li>

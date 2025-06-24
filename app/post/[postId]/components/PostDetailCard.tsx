@@ -12,12 +12,7 @@ interface PostDetailCardProps {
 const PostDetailCard = ({ post }: PostDetailCardProps) => {
   return (
     <div className="flex flex-col gap-3 border-b-[3px] border-border-secondary px-4 py-3">
-      <PostHeader
-        nickname={post.writtenBy.nickname}
-        isNeighbor={false}
-        profileImage={post.writtenBy.profileImage}
-        isMyProfile={false}
-      />
+      <PostHeader isMyProfile={false} post={post} />
       <PostDetailContent content={post.content} />
       {post.images &&
         post.images.map((image, i) => (

@@ -5,20 +5,14 @@ import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
 import CommentManageBottomSheet from "@/app/post/[postId]/components/comments/CommentManageBottomSheet";
+import { Board } from "@/app/profile/hooks/useUserProfile";
 
 interface PostHeaderProps {
-  profileImage?: string;
-  nickname: string;
-  isNeighbor: boolean;
+  post: Board;
   isMyProfile?: boolean;
 }
 
-const PostHeader = ({
-  profileImage,
-  nickname,
-  isNeighbor,
-  isMyProfile,
-}: PostHeaderProps) => {
+const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const [isCommentBottomSheetOpen, setIsCommentBottomSheetOpen] =
@@ -30,13 +24,13 @@ const PostHeader = ({
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
             <Image
-              src={profileImage || ""}
+              src={post.writtenBy.profileImage || ""}
               width={40}
               height={40}
-              alt={`${nickname}의 프로필 사진`}
+              alt={`${post.writtenBy.nickname}의 프로필 사진`}
             />
           </div>
-          <h3 className="text-title-3">{nickname}</h3>
+          <h3 className="text-title-3">{post.writtenBy.nickname}</h3>
         </div>
 
         {pathname === "/profile" ? (
@@ -53,7 +47,7 @@ const PostHeader = ({
         ) : pathname.startsWith("/profile/") ? (
           <div className="h-10 w-10" />
         ) : pathname === "/" ? (
-          isNeighbor ? (
+          post.isNeighbor ? (
             <div className="h-10 w-10" />
           ) : (
             <AddNeighborButton />
@@ -78,7 +72,10 @@ const PostHeader = ({
         )}
       </header>
       {isPostBottomSheetOpen && (
-        <PostManageBottomSheet setIsOpen={setIsPostBottomSheetOpen} />
+        <PostManageBottomSheet
+          setIsOpen={setIsPostBottomSheetOpen}
+          postId={post.id}
+        />
       )}
       {isCommentBottomSheetOpen && (
         <CommentManageBottomSheet setIsOpen={setIsCommentBottomSheetOpen} />

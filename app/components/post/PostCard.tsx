@@ -13,13 +13,7 @@ interface PostCardProps {
 const PostCard = ({ post, isMyProfile }: PostCardProps) => {
   return (
     <div className="flex cursor-pointer flex-col gap-3 border-b border-border-secondary px-4 py-3">
-      <PostHeader
-        nickname={post.writtenBy.nickname}
-        profileImage={post.writtenBy.profileImage}
-        // 이웃 여부 검증 필요
-        isNeighbor={false}
-        isMyProfile={isMyProfile}
-      />
+      <PostHeader post={post} isMyProfile={isMyProfile} />
       <Link
         href={`/post/${post.id}`}
         onClick={(e) => e.stopPropagation()}

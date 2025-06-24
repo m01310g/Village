@@ -19,6 +19,8 @@ export interface Board {
   commentNumber: number;
   likeNumber: number;
   images?: string[];
+  isNeighbor?: number;
+  isLiked?: number;
 }
 
 interface UserProfile extends ProfileFormData {
