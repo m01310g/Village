@@ -1,9 +1,18 @@
+import SelectedImagesSection from "./SelectedImagesSection";
+
 interface ContentTextareaProps {
   content: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  images?: string[];
+  onRemoveImages?: (idx: number) => void;
 }
 
-const ContentTextarea = ({ content, onChange }: ContentTextareaProps) => {
+const ContentTextarea = ({
+  content,
+  onChange,
+  images,
+  onRemoveImages,
+}: ContentTextareaProps) => {
   return (
     <main className="flex h-full flex-col">
       <textarea
@@ -14,6 +23,9 @@ const ContentTextarea = ({ content, onChange }: ContentTextareaProps) => {
         onChange={onChange}
         maxLength={1000}
       />
+      {images && onRemoveImages && images.length > 0 && (
+        <SelectedImagesSection onRemoveImage={onRemoveImages} images={images} />
+      )}
       <span className="text-caption-3 flex justify-end py-3 text-text-tertiary">
         {content.length}/1000
       </span>
