@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import QueryProvider from "./providers/QueryProvider";
 import NavigationBar from "./components/NavigationBar";
 import clsx from "clsx";
+import { HeaderProvider } from "./components/header/HeaderContext";
+import HeaderConsumer from "./components/header/HeaderConsumer";
 
 const pretendard = localFont({
   src: "../public/fonts/pretendard/PretendardVariable.woff2",
@@ -23,15 +25,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <QueryProvider>
-        <body
-          className={clsx(
-            pretendard.variable,
-            "mx-auto h-screen w-[375px] bg-background-tertiary antialiased shadow-md",
-          )}
-        >
-          <main className="h-screen bg-background-primary">{children}</main>
-          <NavigationBar />
-        </body>
+        <HeaderProvider>
+          <body
+            className={clsx(
+              pretendard.variable,
+              "mx-auto flex h-screen w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
+            )}
+          >
+            <HeaderConsumer />
+            {/* <main className="h-[calc(100vh-46px-81px)] bg-background-primary"> */}
+            {children}
+            {/* </main> */}
+            <NavigationBar />
+          </body>
+        </HeaderProvider>
       </QueryProvider>
     </html>
   );

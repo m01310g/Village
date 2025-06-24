@@ -3,6 +3,7 @@ import PostCardFooter from "./PostCardFooter";
 import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";
 import { getRelativeTime } from "./utils/getRelativeTime";
+import Link from "next/link";
 
 interface PostCardProps {
   post: Board;
@@ -11,19 +12,20 @@ interface PostCardProps {
 
 const PostCard = ({ post, isMyProfile }: PostCardProps) => {
   return (
-    <div className="flex flex-col gap-3 border-b border-border-secondary px-4 py-3">
-      <PostHeader
-        nickname={post.writtenBy.nickname}
-        // 이웃 여부 검증 필요
-        isNeighbor={false}
-        isMyProfile={isMyProfile}
-      />
-      <PostContent content={post.content} />
-      <PostCardFooter
-        likeCount={2}
-        commentCount={4}
-        createdAt={getRelativeTime(post.writtenAt)}
-      />
+    <div className="flex cursor-pointer flex-col gap-3 border-b border-border-secondary px-4 py-3">
+      <PostHeader post={post} isMyProfile={isMyProfile} />
+      <Link
+        href={`/post/${post.id}`}
+        onClick={(e) => e.stopPropagation()}
+        className="flex flex-col gap-3"
+      >
+        <PostContent content={post.content} />
+        <PostCardFooter
+          likeCount={post.likeNumber || 0}
+          commentCount={post.commentNumber || 0}
+          createdAt={getRelativeTime(post.writtenAt)}
+        />
+      </Link>
     </div>
   );
 };

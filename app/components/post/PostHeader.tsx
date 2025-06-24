@@ -4,56 +4,75 @@ import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
+import { Board } from "@/app/profile/hooks/useUserProfile";
 
 interface PostHeaderProps {
-  profileImage?: string;
-  nickname: string;
-  isNeighbor: boolean;
+  post: Board;
   isMyProfile?: boolean;
 }
 
-const PostHeader = ({
-  profileImage,
-  nickname,
-  isNeighbor,
-  isMyProfile,
-}: PostHeaderProps) => {
+const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
   const pathname = usePathname();
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
 
   return (
     <>
-      <header className="flex justify-between">
+      <header className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Image
-            src={profileImage || ""}
-            width={40}
-            height={40}
-            alt={`${nickname}의 프로필 사진`}
-          />
-          <h3 className="text-title-3">{nickname}</h3>
+          <div className="h-10 w-10 overflow-hidden rounded-full">
+            <Image
+              src={post.writtenBy.profileImage || ""}
+              width={40}
+              height={40}
+              alt={`${post.writtenBy.nickname}의 프로필 사진`}
+            />
+          </div>
+          <h3 className="text-title-3">{post.writtenBy.nickname}</h3>
         </div>
-        {pathname.includes("/profile") ? (
+
+        {pathname === "/profile" ? (
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsPostBottomSheetOpen(true);
+            }}
+          >
+            <ManageIcon color="#737373" width="24px" height="24px" />
+          </button>
+        ) : pathname.startsWith("/profile/") ? (
+          <div className="h-10 w-10" />
+        ) : pathname === "/" ? (
+          post.isNeighbor || isMyProfile ? (
+            <div className="h-10 w-10" />
+          ) : (
+            <AddNeighborButton />
+          )
+        ) : pathname.startsWith("/post/") ? (
           isMyProfile ? (
             <button
               className="flex h-10 w-10 items-center justify-center"
-              onClick={() => setIsBottomSheetOpen(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setIsPostBottomSheetOpen(true);
+              }}
             >
               <ManageIcon color="#737373" width="24px" height="24px" />
             </button>
-          ) : isNeighbor ? (
-            <div className="h-10 w-10" />
           ) : (
             <div className="h-10 w-10" />
           )
-        ) : isNeighbor ? (
-          <div className="h-10 w-10" />
         ) : (
-          <AddNeighborButton />
+          <div className="h-10 w-10" />
         )}
       </header>
-      {isBottomSheetOpen && (
-        <PostManageBottomSheet setIsOpen={setIsBottomSheetOpen} />
+      {isPostBottomSheetOpen && (
+        <PostManageBottomSheet
+          setIsOpen={setIsPostBottomSheetOpen}
+          postId={post.id}
+        />
       )}
     </>
   );

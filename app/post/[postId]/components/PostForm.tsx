@@ -1,0 +1,59 @@
+import FilteringButton from "@/app/components/feed/FilteringButton";
+import ContentTextarea from "../../create/components/ContentTextarea";
+import PostCreateFooter from "../../create/components/PostCreateFooter";
+import { Dispatch, SetStateAction } from "react";
+
+interface PostFormProps {
+  isActive: string;
+  setIsActive: Dispatch<SetStateAction<"업계이야기" | "채용" | "교육">>;
+  content: string;
+  setContent: Dispatch<SetStateAction<string>>;
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
+  accessToken: string;
+}
+
+const PostForm = ({
+  isActive,
+  setIsActive,
+  content,
+  setContent,
+  images,
+  setImages,
+  accessToken,
+}: PostFormProps) => {
+  const types = ["업계이야기", "채용", "교육"];
+  const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
+
+  return (
+    <div className="flex h-full max-w-[375px] flex-col overflow-hidden">
+      <div className="flex flex-grow flex-col gap-5 px-4 py-3">
+        <div className="border-b-[1px] border-border-primary pb-3">
+          {types.map((type, i) => (
+            <FilteringButton
+              key={i}
+              content={type}
+              onClick={() => {
+                setIsActive(type as keyof typeof typeMap);
+              }}
+              isActive={isActive === type}
+            />
+          ))}
+        </div>
+        <ContentTextarea
+          content={content}
+          setContent={setContent}
+          images={images}
+          setImages={setImages}
+        />
+      </div>
+      <PostCreateFooter
+        accessToken={accessToken!}
+        setImages={setImages}
+        imageCount={images.length}
+      />
+    </div>
+  );
+};
+
+export default PostForm;
