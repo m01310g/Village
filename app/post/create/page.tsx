@@ -65,6 +65,7 @@ const PostCreatePage = () => {
           ? "text-text-onsecondary"
           : "text-text-disabled",
       disabled: content.trim().length === 0,
+      label: "게시",
     };
 
     setHeader({

@@ -10,7 +10,11 @@ interface HeaderState {
   showSettingButton?: boolean;
   showCreateButton?: boolean;
   showMenuButton?: boolean;
-  showCreateButtonProps?: { className: string; disabled: boolean };
+  showCreateButtonProps?: {
+    className: string;
+    disabled: boolean;
+    label: string;
+  };
   onClick?: () => void;
 }
 
@@ -30,7 +34,7 @@ export const HeaderProvider = ({ children }: { children: React.ReactNode }) => {
     showSettingButton: false,
     showCreateButton: false,
     showMenuButton: false,
-    showCreateButtonProps: { className: "", disabled: true },
+    showCreateButtonProps: { className: "", disabled: true, label: "" },
     onClick: () => {},
   });
 

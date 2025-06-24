@@ -13,7 +13,11 @@ interface HeaderProps {
   showSettingButton?: boolean;
   showCreateButton?: boolean;
   showMenuButton?: boolean;
-  showCreateButtonProps?: { className: string; disabled: boolean };
+  showCreateButtonProps?: {
+    className: string;
+    disabled: boolean;
+    label: string;
+  };
   onClick?: () => void;
 }
 
@@ -26,7 +30,7 @@ const Header = ({
   showSettingButton = false,
   showCreateButton = false,
   showMenuButton = false,
-  showCreateButtonProps = { className: "", disabled: true },
+  showCreateButtonProps = { className: "", disabled: true, label: "" },
   onClick,
 }: HeaderProps) => {
   const router = useRouter();
@@ -85,6 +89,7 @@ const Header = ({
           <HeaderCreateButton
             showCreateButtonProps={showCreateButtonProps}
             onClick={onClick}
+            label={showCreateButtonProps.label}
           />
         )}
         {showMenuButton && <HeaderMenuButton onClick={onClick ?? (() => {})} />}

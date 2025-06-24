@@ -3,11 +3,13 @@ import clsx from "clsx";
 interface HeaderCreateButtonProps {
   showCreateButtonProps: { className: string; disabled: boolean };
   onClick?: () => void;
+  label: string;
 }
 
 const HeaderCreateButton = ({
   showCreateButtonProps,
   onClick,
+  label,
 }: HeaderCreateButtonProps) => {
   return (
     <button
@@ -15,7 +17,7 @@ const HeaderCreateButton = ({
       disabled={showCreateButtonProps.disabled}
       onClick={onClick}
     >
-      게시
+      {label}
     </button>
   );
 };
