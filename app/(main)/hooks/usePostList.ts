@@ -1,5 +1,5 @@
 import { Board } from "@/app/profile/hooks/useUserProfile";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const getPostList = async (): Promise<Board[]> => {
   const res = await fetch(

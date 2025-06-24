@@ -20,7 +20,11 @@ const PostCard = ({ post, isMyProfile }: PostCardProps) => {
         isNeighbor={false}
         isMyProfile={isMyProfile}
       />
-      <Link href={`/post/${post.id}`} onClick={(e) => e.stopPropagation()}>
+      <Link
+        href={`/post/${post.id}`}
+        onClick={(e) => e.stopPropagation()}
+        className="flex flex-col gap-3"
+      >
         <PostContent content={post.content} />
         <PostCardFooter
           likeCount={post.likeNumber}

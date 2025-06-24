@@ -18,7 +18,7 @@ const PostDetailPage = () => {
   const { data: postData, isLoading, error } = usePostData(postId);
   const isMyPost = postData?.writtenBy.id === (userId || 0) + 1;
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
-  const types = ["업계이야기", "채용", "교육"];
+  const types = ["업계정보", "채용", "교육"];
 
   useEffect(() => {
     setHeader({
@@ -50,7 +50,10 @@ const PostDetailPage = () => {
         )}
       </div>
       {isPostBottomSheetOpen && (
-        <PostManageBottomSheet setIsOpen={setIsPostBottomSheetOpen} />
+        <PostManageBottomSheet
+          postId={postData!.id}
+          setIsOpen={setIsPostBottomSheetOpen}
+        />
       )}
     </>
   );
