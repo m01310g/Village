@@ -17,16 +17,20 @@ const PostCardFooter = ({
       <div className="flex gap-[6px]">
         <div className="flex items-center justify-center gap-0.5">
           <HeartIcon color="#737373" width="16px" height="16px" />
-          <span className="text-caption-3 text-text-tertiary">{likeCount}</span>
+          <span className="text-caption-3 leading-none text-text-tertiary">
+            {likeCount}
+          </span>
         </div>
         <div className="flex items-center justify-center gap-0.5">
           <CommentIcon color="#737373" width="16px" height="16px" />
-          <span className="text-caption-3 text-text-tertiary">
+          <span className="text-caption-3 leading-none text-text-tertiary">
             {commentCount}
           </span>
         </div>
       </div>
-      <span className="text-caption-3 text-text-tertiary">{createdAt}</span>
+      <span className="text-caption-3 leading-none text-text-tertiary">
+        {createdAt}
+      </span>
     </footer>
   );
 };

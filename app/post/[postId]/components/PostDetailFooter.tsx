@@ -13,7 +13,7 @@ const PostDetailFooter = ({
   createdAt,
 }: PostDetailFooterProps) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex items-center justify-between">
       <div
         className={clsx(
           "text-caption-3 flex cursor-pointer items-center justify-center gap-1 rounded-[99px] border px-2 py-[6px]",
@@ -27,7 +27,8 @@ const PostDetailFooter = ({
           height="14px"
           color={isLiked ? "#00a6f4" : "#737373"}
         />
-        좋아요<span>{likeCount}</span>
+        <span className="leading-none">좋아요</span>
+        <span className="leading-none">{likeCount}</span>
       </div>
       <span className="text-caption-3 text-text-tertiary">{createdAt}</span>
     </div>
