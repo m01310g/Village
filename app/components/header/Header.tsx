@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import clsx from "clsx";
+import HeaderCreateButton from "./HeaderCreateButton";
 
 interface HeaderProps {
   title: string;
@@ -12,6 +12,7 @@ interface HeaderProps {
   showSettingButton?: boolean;
   showCreateButton?: boolean;
   showCreateButtonProps?: { className: string; disabled: boolean };
+  onClick?: () => void;
 }
 
 // 로고 확정 시 로고 추가
@@ -23,6 +24,7 @@ const Header = ({
   showSettingButton = false,
   showCreateButton = false,
   showCreateButtonProps = { className: "", disabled: true },
+  onClick,
 }: HeaderProps) => {
   const router = useRouter();
   return (
@@ -77,15 +79,10 @@ const Header = ({
           </button>
         )}
         {showCreateButton && (
-          <button
-            className={clsx(
-              "text-body-2 h-12 w-12",
-              showCreateButtonProps.className,
-            )}
-            disabled={showCreateButtonProps.disabled}
-          >
-            게시
-          </button>
+          <HeaderCreateButton
+            showCreateButtonProps={showCreateButtonProps}
+            onClick={onClick}
+          />
         )}
       </div>
     </header>

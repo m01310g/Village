@@ -14,6 +14,7 @@ const HeaderConsumer = () => {
       showSettingButton={header.showSettingButton}
       showCreateButton={header.showCreateButton}
       showCreateButtonProps={header.showCreateButtonProps}
+      onClick={header.onClick}
     />
   );
 };

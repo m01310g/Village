@@ -2,20 +2,59 @@
 
 import FilteringButton from "@/app/components/feed/FilteringButton";
 import { useSetHeader } from "@/app/components/header/HeaderContext";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ContentTextarea from "./components/ContentTextarea";
 import PostCreateFooter from "./components/PostCreateFooter";
-import SelectedImagesSection from "./components/SelectedImagesSection";
 import { useAuthStore } from "@/store/useAuthStore";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
 
 const PostCreatePage = () => {
   const setHeader = useSetHeader();
-  const [isActive, setIsActive] = useState("업계정보");
+  const [isActive, setIsActive] = useState<keyof typeof typeMap>("업계정보");
   const [content, setContent] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const accessToken = useAuthStore((state) => state.accessToken);
   const types = ["업계정보", "채용", "교육"];
+  const typeMap = { 업계정보: 0, 채용: 1, 교육: 2 } as const;
+
+  const handleSubmit = useCallback(async () => {
+    const formData = { type: typeMap[isActive], content, images };
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/registerBoard`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(formData),
+        },
+      );
+
+      if (!res.ok) {
+        const error = await res.json();
+        if (error.statusCode === 400) {
+          throw new Error(`요청 형식 오류: ${error.message}`);
+        } else if (error.statusCode === 401) {
+          throw new Error(
+            `유효하지 않거나 기간이 만료된 토큰: ${error.message}`,
+          );
+        } else if (error.statusCode === 403) {
+          throw new Error(`유저 회원이 아닙니다: ${error.message}`);
+        } else if (error.statusCode === 404) {
+          throw new Error(`등록된 프로필 없음: ${error.message}`);
+        } else {
+          throw new Error(error.message);
+        }
+      }
+
+      const data = await res.json();
+    } catch (err: any) {
+      console.error(
+        err instanceof Error ? `게시글 등록 실패: ${err.message}` : err,
+      );
+    }
+  }, [accessToken, isActive, content, images]);
 
   useEffect(() => {
     const createButtonProps = {
@@ -31,57 +70,9 @@ const PostCreatePage = () => {
       showBackButton: true,
       showCreateButton: true,
       showCreateButtonProps: createButtonProps,
+      onClick: handleSubmit,
     });
-  }, [setHeader, content]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
-
-  const handleImageSelect = async (selectedImages: File[]) => {
-    try {
-      const formData = new FormData();
-      selectedImages.forEach((image) => formData.append("images", image));
-
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/uploadBoardImage`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          method: "POST",
-          body: formData,
-        },
-      );
-
-      if (!res.ok) {
-        const error: ErrorResponse = await res.json();
-        if (error.statusCode === 401) {
-          throw new Error(
-            `유효하지 않거나 기간이 만료된 토큰: ${error.message}`,
-          );
-        } else if (error.statusCode === 403) {
-          throw new Error(`유저 회원이 아닙니다: ${error.message}`);
-        } else {
-          throw new Error(`게시글 사진 업로드 실패: ${error.message}`);
-        }
-      }
-
-      const result = await res.json();
-      const data = result.data;
-      setImages((prev) => [...prev, ...data]);
-    } catch (err: any) {
-      console.error(
-        err instanceof Error
-          ? `이미지 업로드 실패: ${err.message}`
-          : "이미지 업로드에 실패했습니다.",
-      );
-    }
-  };
-
-  const handleRemoveImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
-  };
+  }, [setHeader, content, handleSubmit]);
 
   return (
     <div className="flex h-full max-w-[375px] flex-col overflow-hidden">
@@ -92,7 +83,7 @@ const PostCreatePage = () => {
               key={i}
               content={type}
               onClick={() => {
-                setIsActive(type);
+                setIsActive(type as keyof typeof typeMap);
               }}
               isActive={isActive === type}
             />
@@ -100,14 +91,14 @@ const PostCreatePage = () => {
         </div>
         <ContentTextarea
           content={content}
-          onChange={handleChange}
+          setContent={setContent}
           images={images}
-          onRemoveImages={handleRemoveImage}
+          setImages={setImages}
         />
       </div>
-
       <PostCreateFooter
-        onImageSelect={handleImageSelect}
+        accessToken={accessToken!}
+        setImages={setImages}
         imageCount={images.length}
       />
     </div>

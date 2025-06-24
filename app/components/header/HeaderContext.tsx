@@ -10,6 +10,7 @@ interface HeaderState {
   showSettingButton?: boolean;
   showCreateButton?: boolean;
   showCreateButtonProps?: { className: string; disabled: boolean };
+  onClick?: () => void;
 }
 
 interface HeaderContextType {
@@ -28,6 +29,7 @@ export const HeaderProvider = ({ children }: { children: React.ReactNode }) => {
     showSettingButton: false,
     showCreateButton: false,
     showCreateButtonProps: { className: "", disabled: true },
+    onClick: () => {},
   });
 
   return (
