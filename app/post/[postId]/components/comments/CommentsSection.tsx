@@ -1,5 +1,6 @@
-import { getRelativeTime } from "@/app/components/post/utils/getRelativeTime";
+import { useAuthStore } from "@/store/useAuthStore";
 import CommentCard from "./CommentCard";
+import { useEffect, useState } from "react";
 
 interface CommentsSectionProps {
   commentCount: number;
@@ -7,15 +8,31 @@ interface CommentsSectionProps {
 }
 
 const CommentsSection = ({ commentCount, comments }: CommentsSectionProps) => {
-  console.log(comments);
+  const user = useAuthStore.getState().user;
+  const userId = user?.id;
+  const [commentsList, setCommentsList] = useState<CommentType[]>([]);
+
+  useEffect(() => {
+    setCommentsList(comments);
+  }, [comments]);
+
   return (
     <section>
       <header className="text-caption-3 px-4 py-3 text-text-secondary">
         댓글 <span>{commentCount}</span>
       </header>
-      {comments.map((comment, i) => (
-        <CommentCard key={comment.id} comment={comment} />
-      ))}
+      {commentsList.map((comment) => {
+        const commentUserId = comment.writtenBy.id;
+        const isMyProfile = commentUserId === userId! + 1;
+        return (
+          <CommentCard
+            key={comment.id}
+            comment={comment}
+            setComments={setCommentsList}
+            isMyProfile={isMyProfile}
+          />
+        );
+      })}
     </section>
   );
 };

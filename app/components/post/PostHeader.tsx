@@ -15,8 +15,6 @@ interface PostHeaderProps {
 const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
-  const [isCommentBottomSheetOpen, setIsCommentBottomSheetOpen] =
-    useState(false);
 
   return (
     <>
@@ -76,9 +74,6 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
           setIsOpen={setIsPostBottomSheetOpen}
           postId={post.id}
         />
-      )}
-      {isCommentBottomSheetOpen && (
-        <CommentManageBottomSheet setIsOpen={setIsCommentBottomSheetOpen} />
       )}
     </>
   );
