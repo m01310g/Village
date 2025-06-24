@@ -15,9 +15,7 @@ const CommentsSection = ({ commentCount, comments }: CommentsSectionProps) => {
       {comments.map((comment) => (
         <CommentCard
           key={comment.id}
-          nickname={comment.writtenBy.nickname}
-          isNeighbor={false}
-          profileImage={comment.writtenBy.profileImage}
+          comment={comment}
           createdAt={getRelativeTime(comment.writtenAt)}
         />
       ))}

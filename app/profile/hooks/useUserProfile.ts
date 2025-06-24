@@ -12,12 +12,12 @@ interface BoardProfile {
 
 export interface Board {
   id: number;
-  type: number;
+  type?: number;
   content: string;
   writtenAt: string;
   writtenBy: BoardProfile;
-  commentNumber: number;
-  likeNumber: number;
+  commentNumber?: number;
+  likeNumber?: number;
   images?: string[];
   isNeighbor?: number;
   isLiked?: number;

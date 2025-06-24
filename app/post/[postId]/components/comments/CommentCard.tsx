@@ -3,29 +3,16 @@ import PostHeader from "@/app/components/post/PostHeader";
 import CommentFooter from "./CommentFooter";
 
 interface CommentCardProps {
-  profileImage?: string;
-  nickname: string;
-  isNeighbor: boolean;
+  comment: CommentType;
   isMyProfile?: boolean;
   createdAt: string;
 }
 
-const CommentCard = ({
-  profileImage,
-  nickname,
-  isNeighbor,
-  isMyProfile,
-  createdAt,
-}: CommentCardProps) => {
+const CommentCard = ({ comment, isMyProfile, createdAt }: CommentCardProps) => {
   return (
     <div className="flex flex-col gap-3 border-b-[1px] border-border-secondary px-4 py-3">
-      <PostHeader
-        profileImage={profileImage}
-        nickname={nickname}
-        isNeighbor={isNeighbor}
-        isMyProfile={isMyProfile}
-      />
-      <PostContent content="멋져용" />
+      <PostHeader post={comment} isMyProfile={isMyProfile} />
+      <PostContent content={comment.content} />
       <CommentFooter createdAt={createdAt} />
     </div>
   );

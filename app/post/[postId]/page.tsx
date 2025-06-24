@@ -18,11 +18,15 @@ const PostDetailPage = () => {
   const { data: postData, isLoading, error } = usePostData(postId);
   const [isMyPost, setIsMyPost] = useState(false);
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
+  const [commentsList, setCommentsList] = useState<CommentType[]>([]);
+  const [commentCount, setCommentCount] = useState(0);
   const types = ["업계정보", "채용", "교육"];
 
   useEffect(() => {
-    if (postData && userId) {
-      setIsMyPost(postData.writtenBy.id === userId + 1);
+    if (postData) {
+      setCommentsList(postData?.comments);
+      setCommentCount(postData.commentNumber ?? 0);
+      if (userId) setIsMyPost(postData.writtenBy.id === userId + 1);
     }
   }, [postData, userId]);
 
@@ -43,17 +47,20 @@ const PostDetailPage = () => {
         {/* type으로 변경 */}
         <div className="px-4 py-3">
           <span className="text-caption-2 w-fit rounded-[4px] bg-neutral-50 p-1 text-center text-text-tertiary">
-            {postData ? types[postData.type] : ""}
+            {typeof postData?.type === "number" ? types[postData.type] : ""}
           </span>
         </div>
         {postData && (
           <>
             <PostDetailCard post={postData} />
             <CommentsSection
-              commentCount={postData.commentNumber}
-              comments={postData.comments}
+              commentCount={postData.commentNumber || 0}
+              comments={commentsList}
             />
-            <CommentCreateSection />
+            <CommentCreateSection
+              postId={postId}
+              setComments={setCommentsList}
+            />
           </>
         )}
       </div>
