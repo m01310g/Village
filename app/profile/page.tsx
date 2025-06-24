@@ -6,8 +6,6 @@ import PostsSection from "./components/PostsSection";
 import { useUserProfile } from "./hooks/useUserProfile";
 
 const ProfilePage = () => {
-  const { user } = useAuthStore();
-
   const { data: profile, isLoading, error } = useUserProfile();
 
   if (isLoading) {
@@ -30,14 +28,11 @@ const ProfilePage = () => {
 
   if (!profile) return null;
 
-  const loggedInId = user?.id || 0;
-  const isMyProfile = profile.id === loggedInId + 1;
-
   return (
     <div className="flex flex-col gap-4">
       <ProfileViewSection
         profileImage={profile.profileImage}
-        isMyProfile={isMyProfile}
+        isMyProfile
         nickname={profile.nickname}
         name={profile.name}
         introduction={profile.introduction}
@@ -46,8 +41,8 @@ const ProfilePage = () => {
       />
       <div className="h-[1px] w-full bg-border-tertiary" />
       <PostsSection
-        nickname={isMyProfile ? profile.nickname : "닉네임"}
-        isMyProfile={isMyProfile}
+        nickname={profile.nickname}
+        isMyProfile
         posts={profile.boards}
       />
     </div>

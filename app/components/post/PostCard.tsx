@@ -3,7 +3,7 @@ import PostCardFooter from "./PostCardFooter";
 import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";
 import { getRelativeTime } from "./utils/getRelativeTime";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface PostCardProps {
   post: Board;
@@ -11,13 +11,8 @@ interface PostCardProps {
 }
 
 const PostCard = ({ post, isMyProfile }: PostCardProps) => {
-  const router = useRouter();
-
   return (
-    <div
-      className="flex cursor-pointer flex-col gap-3 border-b border-border-secondary px-4 py-3"
-      onClick={() => router.push(`/post/${post.id}`)}
-    >
+    <div className="flex cursor-pointer flex-col gap-3 border-b border-border-secondary px-4 py-3">
       <PostHeader
         nickname={post.writtenBy.nickname}
         profileImage={post.writtenBy.profileImage}
@@ -25,12 +20,14 @@ const PostCard = ({ post, isMyProfile }: PostCardProps) => {
         isNeighbor={false}
         isMyProfile={isMyProfile}
       />
-      <PostContent content={post.content} />
-      <PostCardFooter
-        likeCount={post.likeNumber}
-        commentCount={post.commentNumber}
-        createdAt={getRelativeTime(post.writtenAt)}
-      />
+      <Link href={`/post/${post.id}`} onClick={(e) => e.stopPropagation()}>
+        <PostContent content={post.content} />
+        <PostCardFooter
+          likeCount={post.likeNumber}
+          commentCount={post.commentNumber}
+          createdAt={getRelativeTime(post.writtenAt)}
+        />
+      </Link>
     </div>
   );
 };

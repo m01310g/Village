@@ -44,7 +44,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     <main
       className={clsx(
         "overflow-y-auto bg-background-primary",
-        pathname === "/profile/edit"
+        pathname === "/profile/edit" || pathname === "/profile/neighbors"
           ? "h-[calc(100vh-46px)]"
           : "h-[calc(100vh-46px-81px)]",
       )}

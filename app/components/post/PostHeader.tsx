@@ -41,8 +41,12 @@ const PostHeader = ({
 
         {pathname === "/profile" ? (
           <button
+            type="button"
             className="flex h-10 w-10 items-center justify-center"
-            onClick={() => setIsPostBottomSheetOpen(true)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsPostBottomSheetOpen(true);
+            }}
           >
             <ManageIcon color="#737373" width="24px" height="24px" />
           </button>
@@ -58,7 +62,11 @@ const PostHeader = ({
           isMyProfile ? (
             <button
               className="flex h-10 w-10 items-center justify-center"
-              onClick={() => setIsCommentBottomSheetOpen(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setIsPostBottomSheetOpen(true);
+              }}
             >
               <ManageIcon color="#737373" width="24px" height="24px" />
             </button>
