@@ -1,12 +1,15 @@
 "use client";
 
-import { useAuthStore } from "@/store/useAuthStore";
 import ProfileViewSection from "./components/ProfileViewSection";
 import PostsSection from "./components/PostsSection";
 import { useUserProfile } from "./hooks/useUserProfile";
 
 const ProfilePage = () => {
   const { data: profile, isLoading, error } = useUserProfile();
+
+  const sortedPosts = [...(profile?.boards ?? [])].sort(
+    (a, b) => new Date(b.writtenAt).getTime() - new Date(a.writtenAt).getTime(),
+  );
 
   if (isLoading) {
     // 로딩 컴포넌트 구현 예정
@@ -43,7 +46,7 @@ const ProfilePage = () => {
       <PostsSection
         nickname={profile.nickname}
         isMyProfile
-        posts={profile.boards}
+        posts={sortedPosts}
       />
     </div>
   );
