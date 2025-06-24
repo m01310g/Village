@@ -21,8 +21,8 @@ const PostCard = ({ post, isMyProfile }: PostCardProps) => {
       >
         <PostContent content={post.content} />
         <PostCardFooter
-          likeCount={post.likeNumber}
-          commentCount={post.commentNumber}
+          likeCount={post.likeNumber || 0}
+          commentCount={post.commentNumber || 0}
           createdAt={getRelativeTime(post.writtenAt)}
         />
       </Link>

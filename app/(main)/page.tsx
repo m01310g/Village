@@ -6,12 +6,14 @@ import FilteringButton from "../components/feed/FilteringButton";
 import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
 import { usePostList } from "./hooks/usePostList";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Page = () => {
   const setHeader = useSetHeader();
   const [activeFilter, setActiveFilter] = useState("전체");
   const filters = ["전체", "업계이야기", "채용", "교육"];
   const { data: postList, isLoading, error } = usePostList();
+  const userId = useAuthStore.getState().user?.id;
 
   useEffect(() => {
     setHeader({
@@ -44,9 +46,11 @@ const Page = () => {
         ))}
       </div>
       <div className="h-full overflow-y-auto">
-        {filteredPosts.map((post) => (
-          <PostCard key={post.id} post={post} isMyProfile={false} />
-        ))}
+        {filteredPosts.map((post) => {
+          const postUserId = post.writtenBy.id;
+          const isMyProfile = postUserId === userId! + 1;
+          return <PostCard key={post.id} post={post} isMyProfile={true} />;
+        })}
       </div>
       <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
         <FloatingButton />

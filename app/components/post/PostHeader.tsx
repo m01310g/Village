@@ -4,7 +4,6 @@ import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
-import CommentManageBottomSheet from "@/app/post/[postId]/components/comments/CommentManageBottomSheet";
 import { Board } from "@/app/profile/hooks/useUserProfile";
 
 interface PostHeaderProps {
@@ -45,7 +44,7 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
         ) : pathname.startsWith("/profile/") ? (
           <div className="h-10 w-10" />
         ) : pathname === "/" ? (
-          post.isNeighbor ? (
+          post.isNeighbor || isMyProfile ? (
             <div className="h-10 w-10" />
           ) : (
             <AddNeighborButton />
