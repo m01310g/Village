@@ -54,12 +54,14 @@ const PostDetailPage = () => {
           <>
             <PostDetailCard post={postData} />
             <CommentsSection
-              commentCount={postData.commentNumber || 0}
+              commentCount={commentCount}
               comments={commentsList}
             />
             <CommentCreateSection
               postId={postId}
               setComments={setCommentsList}
+              commentCount={commentCount}
+              setCommentCount={setCommentCount}
             />
           </>
         )}

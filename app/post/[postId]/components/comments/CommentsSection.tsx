@@ -7,17 +7,14 @@ interface CommentsSectionProps {
 }
 
 const CommentsSection = ({ commentCount, comments }: CommentsSectionProps) => {
+  console.log(comments);
   return (
     <section>
       <header className="text-caption-3 px-4 py-3 text-text-secondary">
         댓글 <span>{commentCount}</span>
       </header>
-      {comments.map((comment) => (
-        <CommentCard
-          key={comment.id}
-          comment={comment}
-          createdAt={getRelativeTime(comment.writtenAt)}
-        />
+      {comments.map((comment, i) => (
+        <CommentCard key={comment.id} comment={comment} />
       ))}
     </section>
   );

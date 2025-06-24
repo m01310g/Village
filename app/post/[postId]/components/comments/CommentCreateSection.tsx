@@ -1,41 +1,40 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import CommentCreateButton from "./CommentCreateButton";
 import clsx from "clsx";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useCreateComment } from "../../hooks/useCreateComment";
 
 interface CommentsCreateSectionProps {
   postId: number;
   setComments: Dispatch<SetStateAction<CommentType[]>>;
+  commentCount: number;
+  setCommentCount: (count: number) => void;
 }
 
 const CommentCreateSection = ({
   postId,
   setComments,
+  commentCount,
+  setCommentCount,
 }: CommentsCreateSectionProps) => {
+  const accessToken = useAuthStore.getState().accessToken;
   const [inputValue, setInputValue] = useState("");
+
+  const createCommentMutation = useCreateComment((newComments) => {
+    console.log(newComments);
+    const newComment = newComments[newComments.length - 1];
+    setComments((prev) => [...prev, newComment]);
+    setCommentCount(commentCount + 1);
+    setInputValue("");
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const handleSubmit = () => {
-    if (!inputValue) return;
-    // const newComment = { id: postId, content: inputValue };
-    if (!inputValue) return;
-
-    const newComment: CommentType = {
-      id: postId,
-      content: inputValue,
-      writtenAt: "1일 전",
-      writtenBy: {
-        id: 1,
-        name: "테스트 이름",
-        nickname: "작성자",
-        profileImage: "/icons/icn_user-profile-02.svg",
-      },
-    };
-
-    setComments((prev) => [...prev, newComment]);
-    setInputValue("");
+    if (!inputValue || !accessToken) return;
+    createCommentMutation.mutate({ postId, comment: inputValue, accessToken });
   };
 
   return (
