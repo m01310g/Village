@@ -1,21 +1,18 @@
 "use client";
 
-import FilteringButton from "@/app/components/feed/FilteringButton";
 import { useSetHeader } from "@/app/components/header/HeaderContext";
 import React, { useCallback, useEffect, useState } from "react";
-import ContentTextarea from "./components/ContentTextarea";
-import PostCreateFooter from "./components/PostCreateFooter";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
+import PostForm from "../[postId]/components/PostForm";
 
 const PostCreatePage = () => {
   const setHeader = useSetHeader();
-  const [isActive, setIsActive] = useState<keyof typeof typeMap>("업계정보");
+  const [isActive, setIsActive] = useState<keyof typeof typeMap>("업계이야기");
   const [content, setContent] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const accessToken = useAuthStore((state) => state.accessToken);
-  const types = ["업계정보", "채용", "교육"];
-  const typeMap = { 업계정보: 0, 채용: 1, 교육: 2 } as const;
+  const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
   const router = useRouter();
 
   const handleSubmit = useCallback(async () => {
@@ -80,33 +77,15 @@ const PostCreatePage = () => {
   }, [setHeader, content, handleSubmit]);
 
   return (
-    <div className="flex h-full max-w-[375px] flex-col overflow-hidden">
-      <div className="flex flex-grow flex-col gap-5 px-4 py-3">
-        <div className="border-b-[1px] border-border-primary pb-3">
-          {types.map((type, i) => (
-            <FilteringButton
-              key={i}
-              content={type}
-              onClick={() => {
-                setIsActive(type as keyof typeof typeMap);
-              }}
-              isActive={isActive === type}
-            />
-          ))}
-        </div>
-        <ContentTextarea
-          content={content}
-          setContent={setContent}
-          images={images}
-          setImages={setImages}
-        />
-      </div>
-      <PostCreateFooter
-        accessToken={accessToken!}
-        setImages={setImages}
-        imageCount={images.length}
-      />
-    </div>
+    <PostForm
+      isActive={isActive}
+      setIsActive={setIsActive}
+      content={content}
+      setContent={setContent}
+      images={images}
+      setImages={setImages}
+      accessToken={accessToken!}
+    />
   );
 };
 

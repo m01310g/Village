@@ -10,7 +10,7 @@ import { usePostList } from "./hooks/usePostList";
 const Page = () => {
   const setHeader = useSetHeader();
   const [activeFilter, setActiveFilter] = useState("전체");
-  const filters = ["전체", "업계정보", "채용", "교육"];
+  const filters = ["전체", "업계이야기", "채용", "교육"];
   const { data: postList, isLoading, error } = usePostList();
 
   useEffect(() => {
