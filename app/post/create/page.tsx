@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import ContentTextarea from "./components/ContentTextarea";
 import PostCreateFooter from "./components/PostCreateFooter";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 const PostCreatePage = () => {
   const setHeader = useSetHeader();
@@ -15,6 +16,7 @@ const PostCreatePage = () => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const types = ["업계정보", "채용", "교육"];
   const typeMap = { 업계정보: 0, 채용: 1, 교육: 2 } as const;
+  const router = useRouter();
 
   const handleSubmit = useCallback(async () => {
     const formData = { type: typeMap[isActive], content, images };
@@ -48,7 +50,10 @@ const PostCreatePage = () => {
         }
       }
 
-      const data = await res.json();
+      const result = await res.json();
+      const data = result.data;
+
+      router.replace(`/post/${data.id}`);
     } catch (err: any) {
       console.error(
         err instanceof Error ? `게시글 등록 실패: ${err.message}` : err,
