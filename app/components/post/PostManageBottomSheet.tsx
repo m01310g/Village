@@ -1,3 +1,4 @@
+import Link from "next/link";
 import BottomSheetWrapper from "../BottomSheetWrapper";
 
 interface PostManageBottomSheetProps {
@@ -12,9 +13,11 @@ const PostManageBottomSheet = ({ setIsOpen }: PostManageBottomSheetProps) => {
         onClick={(e) => e.stopPropagation()}
       >
         <ul className="flex flex-col">
-          <li className="text-body-2 cursor-pointer px-4 py-5 text-neutral-800">
-            글 수정
-          </li>
+          <Link href={"/post/edit"}>
+            <li className="text-body-2 cursor-pointer px-4 py-5 text-neutral-800">
+              글 수정
+            </li>
+          </Link>
           <div className="h-[1px] w-full bg-border-secondary" />
           <li className="text-body-2 cursor-pointer px-4 py-5 text-text-danger">
             글 삭제

@@ -10,7 +10,7 @@ const PostLayout = ({ children }: { children: React.ReactNode }) => {
     <main
       className={clsx(
         "bg-background-primary",
-        pathname === "/post/create"
+        pathname === "/post/create" || pathname.endsWith("/edit")
           ? "h-[calc(100vh-46px)]"
           : "h-[calc(100vh-46px-70px)]",
       )}
