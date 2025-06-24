@@ -16,9 +16,15 @@ const PostDetailPage = () => {
   const params = useParams();
   const postId = Number(params.postId);
   const { data: postData, isLoading, error } = usePostData(postId);
-  const isMyPost = postData?.writtenBy.id === (userId || 0) + 1;
+  const [isMyPost, setIsMyPost] = useState(false);
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const types = ["업계정보", "채용", "교육"];
+
+  useEffect(() => {
+    if (postData && userId) {
+      setIsMyPost(postData.writtenBy.id === userId + 1);
+    }
+  }, [postData, userId]);
 
   useEffect(() => {
     setHeader({
@@ -27,9 +33,11 @@ const PostDetailPage = () => {
       showMenuButton: isMyPost,
       onClick: () => setIsPostBottomSheetOpen(true),
     });
-  }, [setHeader]);
+  }, [setHeader, isMyPost]);
 
-  return (
+  return isLoading ? (
+    <div>로딩중...</div>
+  ) : (
     <>
       <div className="flex h-full flex-col overflow-y-auto">
         {/* type으로 변경 */}

@@ -30,7 +30,7 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
               alt={`${i}번 사진`}
               width={375}
               height={375}
-              layout="intrinsic"
+              priority
               className="h-auto w-full object-contain"
             />
           </div>
