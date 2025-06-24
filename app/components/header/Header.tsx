@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
+import HeaderMenuButton from "./HeaderMenuButton";
 
 interface HeaderProps {
   title: string;
@@ -11,6 +12,7 @@ interface HeaderProps {
   showNotificationButton?: boolean;
   showSettingButton?: boolean;
   showCreateButton?: boolean;
+  showMenuButton?: boolean;
   showCreateButtonProps?: { className: string; disabled: boolean };
   onClick?: () => void;
 }
@@ -23,6 +25,7 @@ const Header = ({
   showNotificationButton = false,
   showSettingButton = false,
   showCreateButton = false,
+  showMenuButton = false,
   showCreateButtonProps = { className: "", disabled: true },
   onClick,
 }: HeaderProps) => {
@@ -31,7 +34,7 @@ const Header = ({
     <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
-          <button onClick={() => router.back()}>
+          <button type="button" onClick={() => router.back()}>
             <Image
               src="/icons/chevron-left.svg"
               alt="뒤로 가기 버튼"
@@ -47,7 +50,7 @@ const Header = ({
       {/* 각 버튼에 onClick 함수 추가 예정 */}
       {showSearchButton && (
         <div className="flex h-full w-[46px] items-center justify-center">
-          <button>
+          <button type="button">
             <Image
               src={"/icons/icn_search.svg"}
               alt="검색 버튼"
@@ -59,7 +62,7 @@ const Header = ({
       )}
       <div className="flex h-full w-[46px] items-center justify-center">
         {showNotificationButton && (
-          <button>
+          <button type="button">
             <Image
               src={"/icons/icn_alert_on.svg"}
               alt="알림 버튼"
@@ -69,7 +72,7 @@ const Header = ({
           </button>
         )}
         {showSettingButton && (
-          <button>
+          <button type="button">
             <Image
               src={"/icons/icn_settings.svg"}
               alt="설정 버튼"
@@ -84,6 +87,7 @@ const Header = ({
             onClick={onClick}
           />
         )}
+        {showMenuButton && <HeaderMenuButton onClick={onClick ?? (() => {})} />}
       </div>
     </header>
   );

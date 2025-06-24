@@ -13,6 +13,7 @@ const HeaderConsumer = () => {
       showNotificationButton={header.showNotificationButton}
       showSettingButton={header.showSettingButton}
       showCreateButton={header.showCreateButton}
+      showMenuButton={header.showMenuButton}
       showCreateButtonProps={header.showCreateButtonProps}
       onClick={header.onClick}
     />

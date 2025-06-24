@@ -9,6 +9,7 @@ interface HeaderState {
   showSearchButton?: boolean;
   showSettingButton?: boolean;
   showCreateButton?: boolean;
+  showMenuButton?: boolean;
   showCreateButtonProps?: { className: string; disabled: boolean };
   onClick?: () => void;
 }
@@ -28,6 +29,7 @@ export const HeaderProvider = ({ children }: { children: React.ReactNode }) => {
     showSearchButton: false,
     showSettingButton: false,
     showCreateButton: false,
+    showMenuButton: false,
     showCreateButtonProps: { className: "", disabled: true },
     onClick: () => {},
   });
