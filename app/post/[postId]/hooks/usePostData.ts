@@ -1,14 +1,23 @@
+import { useAuthStore } from "@/store/useAuthStore";
 import { PostType } from "../../types/postType";
 import { useQuery } from "@tanstack/react-query";
 
 const getPostData = async (id: number): Promise<PostType> => {
+  const accessToken = useAuthStore.getState().accessToken;
+
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/getBoard`,
     {
-      headers: {
-        "Content-Type": "application/json",
-      },
       method: "POST",
+      headers,
       body: JSON.stringify({ id }),
     },
   );

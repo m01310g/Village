@@ -5,6 +5,7 @@ import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
 import { Board } from "@/app/profile/hooks/useUserProfile";
+import { useRouter } from "next/navigation";
 
 interface PostHeaderProps {
   post: Board;
@@ -14,14 +15,28 @@ interface PostHeaderProps {
 const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
+  const router = useRouter();
+
+  console.log(post);
 
   return (
     <>
-      <header className="flex items-center justify-between">
+      <header
+        className="flex cursor-pointer items-center justify-between"
+        onClick={() =>
+          isMyProfile
+            ? router.push("/profile")
+            : router.push(`/profile/${post.writtenBy.id}`)
+        }
+      >
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
             <Image
-              src={post.writtenBy.profileImage || ""}
+              src={
+                post.writtenBy.profileImage === "url"
+                  ? "/logos/symbol.svg"
+                  : post.writtenBy.profileImage
+              }
               width={40}
               height={40}
               alt={`${post.writtenBy.nickname}의 프로필 사진`}

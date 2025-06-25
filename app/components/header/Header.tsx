@@ -7,6 +7,7 @@ import HeaderMenuButton from "./HeaderMenuButton";
 
 interface HeaderProps {
   title: string;
+  showLogo?: boolean;
   showBackButton?: boolean;
   showSearchButton?: boolean;
   showNotificationButton?: boolean;
@@ -24,6 +25,7 @@ interface HeaderProps {
 // 로고 확정 시 로고 추가
 const Header = ({
   title,
+  showLogo = false,
   showBackButton = false,
   showSearchButton = false,
   showNotificationButton = false,
@@ -36,6 +38,14 @@ const Header = ({
   const router = useRouter();
   return (
     <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
+      {showLogo && (
+        <Image
+          src={"/logos/logo_transparent3.svg"}
+          alt="빌리지 로고"
+          width={60}
+          height={30}
+        />
+      )}
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
           <button type="button" onClick={() => router.back()}>

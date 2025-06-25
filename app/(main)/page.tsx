@@ -22,15 +22,16 @@ const Page = () => {
       showSearchButton: true,
       showNotificationButton: true,
       showSettingButton: false,
+      showLogo: true,
     });
   }, [setHeader]);
 
   const filteredPosts =
     activeFilter === "전체"
-      ? (postList ?? []).filter((post) => post.id !== 1)
-      : (postList ?? []).filter((post) => {
+      ? postList
+      : postList?.filter((post) => {
           const typeIndex = filters.indexOf(activeFilter) - 1;
-          return post.type === typeIndex && post.id !== 1;
+          return post.type === typeIndex;
         });
 
   return (
@@ -46,13 +47,14 @@ const Page = () => {
         ))}
       </div>
       <div className="h-full overflow-y-auto">
-        {filteredPosts.map((post) => {
-          const postUserId = post.writtenBy.id;
-          const isMyProfile = postUserId === userId! + 1;
-          return (
-            <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />
-          );
-        })}
+        {filteredPosts &&
+          filteredPosts.map((post) => {
+            const postUserId = post.writtenBy.id;
+            const isMyProfile = postUserId === userId! + 1;
+            return (
+              <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />
+            );
+          })}
       </div>
       <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
         <FloatingButton />

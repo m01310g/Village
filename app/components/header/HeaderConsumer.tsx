@@ -8,6 +8,7 @@ const HeaderConsumer = () => {
   return (
     <Header
       title={header.title ?? ""}
+      showLogo={header.showLogo}
       showBackButton={header.showBackButton}
       showSearchButton={header.showSearchButton}
       showNotificationButton={header.showNotificationButton}

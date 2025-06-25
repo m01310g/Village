@@ -4,7 +4,7 @@ interface ProfileInfoCardProps {
   profileImage: string;
   nickname: string;
   name: string;
-  role: string;
+  role: "TRAINER";
   neighborCount: number;
 }
 
@@ -15,6 +15,7 @@ const ProfileInfoCard = ({
   role,
   neighborCount,
 }: ProfileInfoCardProps) => {
+  const roles = { TRAINER: "트레이너" };
   return (
     <div className="flex items-center justify-between">
       <div className="h-20 w-20 overflow-hidden rounded-full">
@@ -27,7 +28,9 @@ const ProfileInfoCard = ({
           <h3 className="text-title-2 text-neutral-400">{name}</h3>
         </div>
         <div className="flex gap-2">
-          <span className="text-body-3 text-text-tertiary">{role}</span>
+          <span className="text-body-3 text-text-tertiary">
+            {roles[role] || "트레이너"}
+          </span>
           <div className="flex gap-1">
             <span className="text-body-3 text-text-onsecondary">이웃</span>
             <span className="text-title-4 text-text-onsecondary">{`${neighborCount}명`}</span>

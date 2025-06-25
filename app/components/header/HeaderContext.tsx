@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from "react";
 
 interface HeaderState {
   title?: string;
+  showLogo?: boolean;
   showBackButton?: boolean;
   showNotificationButton?: boolean;
   showSearchButton?: boolean;
@@ -28,6 +29,7 @@ const HeaderContext = createContext<HeaderContextType | undefined>(undefined);
 export const HeaderProvider = ({ children }: { children: React.ReactNode }) => {
   const [header, setHeader] = useState<HeaderState>({
     title: "",
+    showLogo: false,
     showBackButton: false,
     showNotificationButton: false,
     showSearchButton: false,

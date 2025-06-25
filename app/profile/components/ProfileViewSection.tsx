@@ -1,37 +1,36 @@
+import { UserProfile } from "../hooks/useUserProfile";
 import ProfileButtons from "./ProfileButtons";
 import ProfileInfoCard from "./ProfileInfoCard";
 import ProfileIntroduce from "./ProfileIntroduce";
 
 interface ProfileViewSectionProps {
-  profileImage: string;
-  nickname: string;
-  name: string;
-  role: string;
-  introduction: string;
-  neighborCount: number;
+  profile: UserProfile;
   isMyProfile: boolean;
 }
 
 const ProfileViewSection = ({
-  profileImage,
-  nickname,
-  name,
-  role,
-  introduction,
-  neighborCount,
+  profile,
   isMyProfile,
 }: ProfileViewSectionProps) => {
   return (
     <section className="flex flex-col gap-4 p-4">
       <ProfileInfoCard
-        profileImage={profileImage}
-        nickname={nickname}
-        role={role}
-        name={name}
-        neighborCount={neighborCount}
+        profileImage={
+          profile.profileImage === "url"
+            ? "/logos/symbol.svg"
+            : profile.profileImage
+        }
+        nickname={profile.nickname}
+        role={profile.type || "트레이너"}
+        name={profile.name}
+        neighborCount={profile.neighbor}
       />
-      <ProfileIntroduce introduction={introduction} />
-      <ProfileButtons isMyProfile={isMyProfile} />
+      <ProfileIntroduce introduction={profile.introduction} />
+      <ProfileButtons
+        isMyProfile={isMyProfile}
+        isNeighbor={profile.isNeighbor}
+        id={profile.id}
+      />
     </section>
   );
 };

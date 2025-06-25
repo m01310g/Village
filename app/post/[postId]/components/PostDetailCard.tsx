@@ -21,7 +21,7 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
             className="w-full max-w-[375px] overflow-hidden rounded-[8px]"
           >
             <Image
-              src={image}
+              src={image.includes("url") ? "/logos/symbol.svg" : image}
               alt={`${i}번 사진`}
               width={375}
               height={375}
@@ -31,7 +31,9 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
           </div>
         ))}
       <PostDetailFooter
-        likeCount={post.likeNumber}
+        postId={post.id}
+        isLiked={post.isLiked === 1}
+        likeCount={post.likeNumber || 0}
         createdAt={getRelativeTime(post.writtenAt)}
       />
     </div>

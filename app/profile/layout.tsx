@@ -19,7 +19,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     if (path === "/profile/create") return "프로필 등록";
     if (path === "/profile/edit") return "프로필 수정";
     if (path === "/profile/neighbors") return "내 이웃 목록";
-    return "";
+    return "빌리지";
   };
 
   useEffect(() => {
@@ -44,7 +44,9 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     <main
       className={clsx(
         "overflow-y-auto bg-background-primary",
-        pathname === "/profile/edit" || pathname === "/profile/neighbors"
+        pathname === "/profile/edit" ||
+          pathname === "/profile/neighbors" ||
+          (pathname.startsWith("/profile/") && !pathname.endsWith("/neighbors"))
           ? "h-[calc(100vh-46px)]"
           : "h-[calc(100vh-46px-81px)]",
       )}
