@@ -26,7 +26,7 @@ export interface Board {
 
 export interface UserProfile extends ProfileFormData {
   id: number;
-  type: string;
+  type: "TRAINER";
   neighbor: number;
   boards: Board[];
 }

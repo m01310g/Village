@@ -6,7 +6,7 @@ interface ProfileViewSectionProps {
   profileImage: string;
   nickname: string;
   name: string;
-  role: string;
+  role: "TRAINER";
   introduction: string;
   neighborCount: number;
   isMyProfile: boolean;
