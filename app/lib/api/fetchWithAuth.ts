@@ -5,7 +5,7 @@ import { signoutUser } from "../signoutUser";
 export const fetchWithAuth = async (
   url: string,
   options: RequestInit,
-): Promise<Response | undefined> => {
+): Promise<Response> => {
   const accessToken = useAuthStore.getState().accessToken;
   const refreshToken = useAuthStore.getState().refreshToken;
 
@@ -34,6 +34,7 @@ export const fetchWithAuth = async (
       console.error("로그인이 만료되었습니다.");
     }
     signoutUser(refreshToken!);
-    return undefined;
   }
+
+  return res;
 };
