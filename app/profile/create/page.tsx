@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import CompleteButton from "../components/CompleteButton";
 import { createFormFieldChangeHandler } from "../utils/formUtils";
 import { ProfileFormData } from "../types/profileFormData";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 const ProfileCreatePage = () => {
   const nameInput = useInputValidation("name");
@@ -21,7 +22,6 @@ const ProfileCreatePage = () => {
     webCareers: [],
     introduction: "",
   });
-  const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
 
   const isFormValid =
@@ -36,11 +36,10 @@ const ProfileCreatePage = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch(
+      const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           method: "POST",

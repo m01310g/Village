@@ -1,13 +1,12 @@
-import { useAuthStore } from "@/store/useAuthStore";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const deletePost = async (postId: number, accessToken: string) => {
-  const res = await fetch(
+const deletePost = async (postId: number) => {
+  const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/deleteBoard`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: postId }),
@@ -32,10 +31,9 @@ const deletePost = async (postId: number, accessToken: string) => {
 
 export const useDeletePost = (onSuccess?: () => void) => {
   const queryClient = useQueryClient();
-  const accessToken = useAuthStore.getState().accessToken;
 
   return useMutation({
-    mutationFn: (postId: number) => deletePost(postId, accessToken!),
+    mutationFn: (postId: number) => deletePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["postList"] });
       if (onSuccess) onSuccess();

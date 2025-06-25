@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
+import { fetchWithAuth } from "../lib/api/fetchWithAuth";
 
 interface UserDeleteResponse {
   message: string;
@@ -9,17 +10,15 @@ interface UserDeleteResponse {
 
 const UserDeleteButton = () => {
   const refreshToken = useAuthStore((state) => state.refreshToken);
-  const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
 
   const handleUserDelete = async () => {
     try {
-      const res = await fetch(
+      const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/delete`,
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ refreshToken }),

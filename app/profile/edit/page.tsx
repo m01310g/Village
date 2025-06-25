@@ -10,6 +10,7 @@ import CompleteButton from "../components/CompleteButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 const ProfileEditPage = () => {
   const { data: profile, isLoading, error } = useUserProfile();
@@ -20,7 +21,6 @@ const ProfileEditPage = () => {
     webCareers: [],
     introduction: "",
   });
-  const accessToken = useAuthStore((state) => state.accessToken);
   const router = useRouter();
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
@@ -51,11 +51,10 @@ const ProfileEditPage = () => {
 
   const handleModify = async () => {
     try {
-      const res = await fetch(
+      const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           method: "POST",

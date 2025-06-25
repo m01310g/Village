@@ -2,6 +2,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useQuery } from "@tanstack/react-query";
 import { ProfileFormData } from "../types/profileFormData";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 interface BoardProfile {
   id: number;
@@ -30,14 +31,11 @@ interface UserProfile extends ProfileFormData {
   boards: Board[];
 }
 
-const getProfile = async (accessToken: string): Promise<UserProfile> => {
-  const res = await fetch(
+const getProfile = async (): Promise<UserProfile> => {
+  const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/getMyWebProfile`,
     {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
     },
   );
 
@@ -61,14 +59,8 @@ const getProfile = async (accessToken: string): Promise<UserProfile> => {
 };
 
 export const useUserProfile = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-
   return useQuery({
     queryKey: ["userProfile"],
-    queryFn: () => {
-      if (!accessToken) throw new Error("No access token");
-      return getProfile(accessToken);
-    },
-    enabled: !!accessToken,
+    queryFn: getProfile,
   });
 };

@@ -25,6 +25,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 const KakaoCallbackPage = () => {
   const searchParams = useSearchParams();
@@ -34,14 +35,10 @@ const KakaoCallbackPage = () => {
   const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
-  const checkHasWebProfile = async (accessToken: string): Promise<boolean> => {
-    const res = await fetch(
+  const checkHasWebProfile = async (): Promise<boolean> => {
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/hasWebProfile`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+      { method: "GET" },
     );
 
     if (!res.ok) {
@@ -78,7 +75,7 @@ const KakaoCallbackPage = () => {
           setAccessToken(result.data.accessToken);
           setRefreshToken(result.data.refreshToken);
 
-          const hasProfile = await checkHasWebProfile(result.data.accessToken);
+          const hasProfile = await checkHasWebProfile();
 
           if (hasProfile) {
             router.replace("/");

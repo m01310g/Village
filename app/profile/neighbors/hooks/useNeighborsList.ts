@@ -1,3 +1,4 @@
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
@@ -16,13 +17,11 @@ interface NeighborsList {
   neighbors: Neighbor[];
 }
 
-const getNeighbors = async (accessToken: string): Promise<NeighborsList> => {
-  const res = await fetch(
+const getNeighbors = async (): Promise<NeighborsList> => {
+  const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/myNeighbor`,
     {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+      headers: {},
     },
   );
 
@@ -43,14 +42,8 @@ const getNeighbors = async (accessToken: string): Promise<NeighborsList> => {
 };
 
 export const useNeighborsList = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-
   return useQuery({
     queryKey: ["neighbors"],
-    queryFn: () => {
-      if (!accessToken) throw new Error("No access token");
-      return getNeighbors(accessToken);
-    },
-    enabled: !!accessToken,
+    queryFn: getNeighbors,
   });
 };

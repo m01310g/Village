@@ -49,7 +49,9 @@ const Page = () => {
         {filteredPosts.map((post) => {
           const postUserId = post.writtenBy.id;
           const isMyProfile = postUserId === userId! + 1;
-          return <PostCard key={post.id} post={post} isMyProfile={true} />;
+          return (
+            <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />
+          );
         })}
       </div>
       <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
