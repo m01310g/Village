@@ -6,12 +6,16 @@ export const refreshTokens = async (): Promise<{
   refreshToken: string;
 }> => {
   const refreshToken = useAuthStore.getState().refreshToken;
+  console.log(refreshToken);
   if (!refreshToken) throw new Error("유효하지 않은 리프레시 토큰");
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/refresh`,
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ refreshToken }),
     },
   );
@@ -23,7 +27,7 @@ export const refreshTokens = async (): Promise<{
     } else if (error.statusCode === 401) {
       console.error("유효하지 않거나 기간이 만료된 토큰:", error.message);
     } else {
-      console.error("로그아웃 실패:", error);
+      console.error("토큰 갱신 실패:", error);
     }
   }
 
