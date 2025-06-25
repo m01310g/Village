@@ -22,6 +22,7 @@ const Page = () => {
       showSearchButton: true,
       showNotificationButton: true,
       showSettingButton: false,
+      showLogo: true,
     });
   }, [setHeader]);
 

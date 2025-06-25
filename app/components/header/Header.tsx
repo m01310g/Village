@@ -40,7 +40,7 @@ const Header = ({
     <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
       {showLogo && (
         <Image
-          src={"/logos/logo_black.svg"}
+          src={"/logos/logo_transparent3.svg"}
           alt="빌리지 로고"
           width={60}
           height={30}
