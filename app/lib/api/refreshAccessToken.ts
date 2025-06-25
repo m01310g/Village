@@ -6,12 +6,16 @@ export const refreshTokens = async (): Promise<{
   refreshToken: string;
 }> => {
   const refreshToken = useAuthStore.getState().refreshToken;
+  console.log(refreshToken);
   if (!refreshToken) throw new Error("유효하지 않은 리프레시 토큰");
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-auth/refresh`,
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ refreshToken }),
     },
   );
