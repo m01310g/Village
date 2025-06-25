@@ -1,24 +1,35 @@
 import HeartIcon from "@/public/icons/icn_heart.svg";
 import clsx from "clsx";
 import { useState } from "react";
+import { useLikePost } from "../hooks/useLikePost";
+import { useUnlikePost } from "../hooks/useUnlikePost";
 
 interface PostDetailFooterProps {
-  isLiked?: boolean;
+  postId: number;
+  isLiked: boolean;
   likeCount: number;
   createdAt: string;
 }
 
 const PostDetailFooter = ({
-  isLiked = false,
+  postId,
+  isLiked,
   likeCount,
   createdAt,
 }: PostDetailFooterProps) => {
   const [liked, setLiked] = useState(isLiked);
   const [count, setCount] = useState(likeCount);
+  const likeMutation = useLikePost(postId);
+  const unlikeMutation = useUnlikePost(postId);
 
   const handleLike = () => {
     setLiked((prev) => !prev);
     setCount((prev) => (liked ? prev - 1 : prev + 1));
+    if (liked) {
+      unlikeMutation.mutate();
+    } else {
+      likeMutation.mutate();
+    }
   };
 
   return (

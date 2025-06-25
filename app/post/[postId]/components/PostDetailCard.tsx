@@ -31,6 +31,7 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
           </div>
         ))}
       <PostDetailFooter
+        postId={post.id}
         isLiked={post.isLiked === 1}
         likeCount={post.likeNumber || 0}
         createdAt={getRelativeTime(post.writtenAt)}
