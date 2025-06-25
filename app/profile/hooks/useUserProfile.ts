@@ -24,7 +24,7 @@ export interface Board {
   isLiked?: number;
 }
 
-interface UserProfile extends ProfileFormData {
+export interface UserProfile extends ProfileFormData {
   id: number;
   type: string;
   neighbor: number;
