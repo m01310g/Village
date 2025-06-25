@@ -1,15 +1,19 @@
 import Button from "@/app/components/Button";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
+import ProfileNeighborButton from "./ProfileNeighborButton";
 
 interface ProfileButtonProps {
   isMyProfile: boolean;
+  isNeighbor: number;
+  id: number;
 }
 
-const ProfileButtons = ({ isMyProfile }: ProfileButtonProps) => {
+const ProfileButtons = ({
+  isMyProfile,
+  isNeighbor,
+  id,
+}: ProfileButtonProps) => {
   const router = useRouter();
-  const { user } = useAuthStore();
-  const id = user?.id || null;
 
   return (
     <div className="flex gap-2">
@@ -31,9 +35,7 @@ const ProfileButtons = ({ isMyProfile }: ProfileButtonProps) => {
           </Button>
         </>
       ) : (
-        <Button size="lg" color="primary">
-          이웃 맺기
-        </Button>
+        <ProfileNeighborButton id={id} isNeighbor={isNeighbor} />
       )}
     </div>
   );

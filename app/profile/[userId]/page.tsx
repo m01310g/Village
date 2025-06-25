@@ -18,19 +18,7 @@ const UserProfilePage = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ProfileViewSection
-        profileImage={
-          profile.profileImage === "url"
-            ? "/logos/symbol.svg"
-            : profile.profileImage
-        }
-        isMyProfile={false}
-        nickname={profile.nickname}
-        name={profile.name}
-        introduction={profile.introduction}
-        role={profile.type || "트레이너"}
-        neighborCount={profile.neighbor}
-      />
+      <ProfileViewSection profile={profile} isMyProfile={false} />
       <div className="h-[1px] w-full bg-border-tertiary" />
       <PostsSection
         nickname={profile.nickname}

@@ -33,15 +33,7 @@ const ProfilePage = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ProfileViewSection
-        profileImage={profile.profileImage}
-        isMyProfile
-        nickname={profile.nickname}
-        name={profile.name}
-        introduction={profile.introduction}
-        role={profile.type || "트레이너"}
-        neighborCount={profile.neighbor}
-      />
+      <ProfileViewSection profile={profile} isMyProfile={true} />
       <div className="h-[1px] w-full bg-border-tertiary" />
       <PostsSection
         nickname={profile.nickname}

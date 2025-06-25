@@ -6,6 +6,7 @@ import { useUnlikePost } from "../hooks/useUnlikePost";
 import { useAuthStore } from "@/store/useAuthStore";
 import ModalWrapper from "@/app/components/modal/ModalWrapper";
 import Button from "@/app/components/Button";
+import LoginRequiredModal from "@/app/components/LoginRequiredModal";
 
 interface PostDetailFooterProps {
   postId: number;
@@ -63,14 +64,7 @@ const PostDetailFooter = ({
         </button>
         <span className="text-caption-3 text-text-tertiary">{createdAt}</span>
       </div>
-      {isModalOpen && (
-        <ModalWrapper onClose={() => setIsModalOpen(false)}>
-          <h3 className="text-title-3 text-text-primary">
-            로그인이 필요한 서비스입니다.
-          </h3>
-          <Button onClick={() => setIsModalOpen(false)}>확인</Button>
-        </ModalWrapper>
-      )}
+      {isModalOpen && <LoginRequiredModal setIsModalOpen={setIsModalOpen} />}
     </>
   );
 };

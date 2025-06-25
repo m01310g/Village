@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useQuery } from "@tanstack/react-query";
 import { ProfileFormData } from "../types/profileFormData";
@@ -28,6 +27,7 @@ export interface UserProfile extends ProfileFormData {
   id: number;
   type: "TRAINER";
   neighbor: number;
+  isNeighbor: number;
   boards: Board[];
 }
 
