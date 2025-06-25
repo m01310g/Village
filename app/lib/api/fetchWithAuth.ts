@@ -2,7 +2,10 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { refreshTokens } from "./refreshAccessToken";
 import { signoutUser } from "../signoutUser";
 
-export const fetchWithAuth = async (url: string, options: RequestInit) => {
+export const fetchWithAuth = async (
+  url: string,
+  options: RequestInit,
+): Promise<Response | undefined> => {
   const accessToken = useAuthStore.getState().accessToken;
   const refreshToken = useAuthStore.getState().refreshToken;
 
@@ -16,7 +19,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
     },
   });
 
-  if (res.status !== 401) {
+  if (res.status === 401) {
     try {
       tokens = await refreshTokens(); // token 갱신
       const retryRes = await fetch(url, {
@@ -31,5 +34,6 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
       console.error("로그인이 만료되었습니다.");
     }
     signoutUser(refreshToken!);
+    return undefined;
   }
 };
