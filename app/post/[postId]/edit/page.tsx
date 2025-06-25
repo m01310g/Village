@@ -6,6 +6,7 @@ import { usePostData } from "../hooks/usePostData";
 import { useParams, useRouter } from "next/navigation";
 import PostForm from "../components/PostForm";
 import { useAuthStore } from "@/store/useAuthStore";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 const PostEditPage = () => {
   const setHeader = useSetHeader();
@@ -40,11 +41,10 @@ const PostEditPage = () => {
     };
 
     try {
-      const res = await fetch(
+      const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/modifyBoard`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           method: "POST",
@@ -82,7 +82,9 @@ const PostEditPage = () => {
 
   useEffect(() => {
     if (postData) {
-      setIsActive(types[postData.type] as "업계이야기" | "채용" | "교육");
+      if (typeof postData.type === "number") {
+        setIsActive(types[postData.type] as "업계이야기" | "채용" | "교육");
+      }
       setContent(postData.content);
       setImages(postData.images || []);
       setOriginalContent(postData.content);
@@ -120,7 +122,6 @@ const PostEditPage = () => {
       setContent={setContent}
       images={images}
       setImages={setImages}
-      accessToken={accessToken!}
     />
   );
 };

@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import PostForm from "../[postId]/components/PostForm";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 const PostCreatePage = () => {
   const setHeader = useSetHeader();
@@ -18,11 +19,10 @@ const PostCreatePage = () => {
   const handleSubmit = useCallback(async () => {
     const formData = { type: typeMap[isActive], content, images };
     try {
-      const res = await fetch(
+      const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/registerBoard`,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           method: "POST",
@@ -85,7 +85,6 @@ const PostCreatePage = () => {
       setContent={setContent}
       images={images}
       setImages={setImages}
-      accessToken={accessToken!}
     />
   );
 };

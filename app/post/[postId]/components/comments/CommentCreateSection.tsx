@@ -33,8 +33,8 @@ const CommentCreateSection = ({
   };
 
   const handleSubmit = () => {
-    if (!inputValue || !accessToken) return;
-    createCommentMutation.mutate({ postId, comment: inputValue, accessToken });
+    if (!inputValue) return;
+    createCommentMutation.mutate({ postId, comment: inputValue });
   };
 
   return (

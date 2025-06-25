@@ -2,18 +2,14 @@ import React from "react";
 import CameraIcon from "@/public/icons/icn_camera-01.svg";
 import ImageIcon from "@/public/icons/icn_image-03.svg";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 interface PostCreateFooterProps {
-  accessToken: string;
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
   imageCount: number;
 }
 
-const PostCreateFooter = ({
-  accessToken,
-  setImages,
-  imageCount,
-}: PostCreateFooterProps) => {
+const PostCreateFooter = ({ setImages, imageCount }: PostCreateFooterProps) => {
   const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -31,12 +27,10 @@ const PostCreateFooter = ({
       const formData = new FormData();
       validFiles.forEach((file) => formData.append("images", file));
 
-      const res = await fetch(
+      const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/uploadBoardImage`,
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: {},
           method: "POST",
           body: formData,
         },

@@ -10,7 +10,6 @@ interface PostFormProps {
   setContent: Dispatch<SetStateAction<string>>;
   images: string[];
   setImages: Dispatch<SetStateAction<string[]>>;
-  accessToken: string;
 }
 
 const PostForm = ({
@@ -20,7 +19,6 @@ const PostForm = ({
   setContent,
   images,
   setImages,
-  accessToken,
 }: PostFormProps) => {
   const types = ["업계이야기", "채용", "교육"];
   const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
@@ -47,11 +45,7 @@ const PostForm = ({
           setImages={setImages}
         />
       </div>
-      <PostCreateFooter
-        accessToken={accessToken!}
-        setImages={setImages}
-        imageCount={images.length}
-      />
+      <PostCreateFooter setImages={setImages} imageCount={images.length} />
     </div>
   );
 };

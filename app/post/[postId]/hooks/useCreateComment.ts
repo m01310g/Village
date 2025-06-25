@@ -1,20 +1,18 @@
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const createComment = async ({
   postId,
   comment,
-  accessToken,
 }: {
   postId: number;
   comment: string;
-  accessToken: string;
 }) => {
-  const res = await fetch(
+  const res = await fetchWithAuth(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/registerComment`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: postId, content: comment }),
