@@ -16,6 +16,9 @@ const NavigationBar = () => {
     /^\/signin/,
     /^\/web-auth\/kakao\/callback/,
     /^\/post/,
+    /^\/settings/,
+    /^\/support/,
+    /^\/terms/,
   ];
 
   const shouldHideByPattern = hiddenPatterns.some((pattern) =>

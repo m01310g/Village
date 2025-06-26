@@ -2,6 +2,9 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
 import { fetchWithAuth } from "../lib/api/fetchWithAuth";
+import { useState } from "react";
+import Button from "./Button";
+import ModalWrapper from "./modal/ModalWrapper";
 
 interface UserDeleteResponse {
   message: string;
@@ -11,6 +14,7 @@ interface UserDeleteResponse {
 const UserDeleteButton = () => {
   const refreshToken = useAuthStore((state) => state.refreshToken);
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleUserDelete = async () => {
     try {
@@ -38,6 +42,7 @@ const UserDeleteButton = () => {
       }
 
       const data: UserDeleteResponse = await res.json();
+      useAuthStore.getState().resetAuth();
       console.log(data.message);
       router.replace("/");
     } catch (err: any) {
@@ -48,7 +53,40 @@ const UserDeleteButton = () => {
       );
     }
   };
-  return <button onClick={handleUserDelete}>탈퇴하기</button>;
+  return (
+    <>
+      <li
+        className="cursor-pointer px-4 py-5 text-text-tertiary"
+        onClick={() => setIsModalOpen(true)}
+      >
+        회원탈퇴
+      </li>
+      {isModalOpen && (
+        <ModalWrapper onClose={() => setIsModalOpen(false)}>
+          <h3 className="text-title-3 text-text-primary">
+            정말 탈퇴하시겠어요?
+          </h3>
+          <p className="text-body-2 text-center text-text-secondary">
+            등록한 이력서, 개인정보 등 모든 데이터가
+            <br />
+            완전히 삭제되며 복구할 수 없어요.
+          </p>
+          <div className="flex w-full gap-1">
+            <Button
+              size="lg"
+              color="secondaryColor"
+              onClick={() => setIsModalOpen(false)}
+            >
+              취소
+            </Button>
+            <Button size="lg" onClick={handleUserDelete}>
+              확인
+            </Button>
+          </div>
+        </ModalWrapper>
+      )}
+    </>
+  );
 };
 
 export default UserDeleteButton;

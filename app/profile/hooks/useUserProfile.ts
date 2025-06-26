@@ -58,9 +58,11 @@ const getProfile = async (): Promise<UserProfile> => {
   return data;
 };
 
-export const useUserProfile = () => {
+export const useUserProfile = (enabled: boolean = true) => {
   return useQuery({
     queryKey: ["userProfile"],
     queryFn: getProfile,
+    enabled,
+    retry: false,
   });
 };

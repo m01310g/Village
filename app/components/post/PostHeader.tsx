@@ -17,8 +17,6 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
 
-  console.log(post);
-
   return (
     <>
       <header

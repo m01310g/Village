@@ -3,13 +3,51 @@
 import ProfileViewSection from "./components/ProfileViewSection";
 import PostsSection from "./components/PostsSection";
 import { useUserProfile } from "./hooks/useUserProfile";
+import { useAuthStore } from "@/store/useAuthStore";
+import KakaoSigninButton from "../signin/components/KakaoSigninButton";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
-  const { data: profile, isLoading, error } = useUserProfile();
+  const accessToken = useAuthStore.getState().accessToken;
+  const isLoggedIn = typeof window !== "undefined" && !!accessToken;
+  const router = useRouter();
+
+  const { data: profile, isLoading, error } = useUserProfile(isLoggedIn);
 
   const sortedPosts = [...(profile?.boards ?? [])].sort(
     (a, b) => new Date(b.writtenAt).getTime() - new Date(a.writtenAt).getTime(),
   );
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-10 px-4">
+        <div className="flex flex-col items-center justify-center gap-6">
+          <Image
+            src={"/logos/logo_transparent1.svg"}
+            alt="빌리지 로고"
+            width={200}
+            height={200}
+          />
+          <span className="text-body-1 text-text-primary">
+            트레이너 빌리지에 오신 것을 환영해요!
+          </span>
+        </div>
+        <KakaoSigninButton />
+        <span className="text-body-2 text-center text-neutral-300">
+          가입하면 빌리지의
+          <br />
+          <span
+            className="cursor-pointer underline"
+            onClick={() => router.push("/terms")}
+          >
+            이용약관 및 개인정보 처리방침
+          </span>
+          에 동의하게 됩니다.
+        </span>
+      </div>
+    );
+  }
 
   if (isLoading) {
     // 로딩 컴포넌트 구현 예정
