@@ -6,6 +6,7 @@ import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
 import Logo from "@/public/logos/logo_transparent3.svg";
+import HeaderSearchButton from "./HeaderSearchButton";
 
 interface HeaderProps {
   title: string;
@@ -63,14 +64,7 @@ const Header = ({
       {/* 각 버튼에 onClick 함수 추가 예정 */}
       {showSearchButton && (
         <div className="flex h-full w-[46px] items-center justify-center">
-          <button type="button">
-            <Image
-              src={"/icons/icn_search.svg"}
-              alt="검색 버튼"
-              width={24}
-              height={24}
-            />
-          </button>
+          <HeaderSearchButton />
         </div>
       )}
       <div className="flex h-full w-[46px] items-center justify-center">
