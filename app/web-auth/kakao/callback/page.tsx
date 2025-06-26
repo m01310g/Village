@@ -32,10 +32,9 @@ const KakaoCallbackPage = () => {
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
   const setRefreshToken = useAuthStore((state) => state.setRefreshToken);
-  const accessToken = useAuthStore.getState().accessToken;
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
-  const checkHasWebProfile = async (): Promise<boolean> => {
+  const checkHasWebProfile = async (accessToken: string): Promise<boolean> => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/hasWebProfile`,
 
@@ -75,13 +74,12 @@ const KakaoCallbackPage = () => {
 
         if (res.status === 200) {
           const result: SigninResponse = await res.json();
-          console.log("로그인 결과:", result);
 
           setUser(result.data.webUser);
           setAccessToken(result.data.accessToken);
           setRefreshToken(result.data.refreshToken);
 
-          const hasProfile = await checkHasWebProfile();
+          const hasProfile = await checkHasWebProfile(result.data.accessToken);
 
           if (hasProfile) {
             router.replace("/");
