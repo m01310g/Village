@@ -5,6 +5,7 @@ import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
+import Logo from "@/public/logos/logo_transparent3.svg";
 
 interface HeaderProps {
   title: string;
@@ -40,12 +41,9 @@ const Header = ({
   return (
     <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
       {showLogo && (
-        <Image
-          src={"/logos/logo_transparent3.svg"}
-          alt="빌리지 로고"
-          width={60}
-          height={30}
-        />
+        <div className="px-3">
+          <Logo color="#4A5565" width="60px" height="30px" />
+        </div>
       )}
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
