@@ -7,13 +7,25 @@ import { useAuthStore } from "@/store/useAuthStore";
 import KakaoSigninButton from "../signin/components/KakaoSigninButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
-  const accessToken = useAuthStore.getState().accessToken;
-  const isLoggedIn = typeof window !== "undefined" && !!accessToken;
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = useUserProfile(isLoggedIn === true);
+
   const router = useRouter();
 
-  const { data: profile, isLoading, error } = useUserProfile(isLoggedIn);
+  useEffect(() => {
+    const accessToken = useAuthStore.getState().accessToken;
+    setIsLoggedIn(!!accessToken);
+  });
+
+  // 로딩 컴포넌트 구현
+  if (isLoggedIn === null) return null;
 
   const sortedPosts = [...(profile?.boards ?? [])].sort(
     (a, b) => new Date(b.writtenAt).getTime() - new Date(a.writtenAt).getTime(),
