@@ -33,10 +33,10 @@ const SupportPage = () => {
       </h2>
       <ul>
         {faqList.map((item, i) => (
-          <>
-            <ListItem key={i} title={item.question} content={item.answer} />
+          <div key={i}>
+            <ListItem title={item.question} content={item.answer} />
             <div className="h-[1px] bg-border-primary" />
-          </>
+          </div>
         ))}
       </ul>
     </main>
