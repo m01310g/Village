@@ -33,10 +33,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
             !pathname.endsWith("/neighbors") &&
             userId !== profileId)),
 
-      showSettingButton:
-        profileId !== null &&
-        userId === profileId &&
-        !pathname.endsWith("/neighbors"),
+      showSettingButton: profileId === null && pathname === "/profile",
     });
   }, [pathname, profileId, userId, setHeader]);
 
