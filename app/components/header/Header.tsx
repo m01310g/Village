@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
+import HeaderSettingButton from "./HeaderSettingButton";
 
 interface HeaderProps {
   title: string;
@@ -85,16 +86,7 @@ const Header = ({
             />
           </button>
         )}
-        {showSettingButton && (
-          <button type="button">
-            <Image
-              src={"/icons/icn_settings.svg"}
-              alt="설정 버튼"
-              width={24}
-              height={24}
-            />
-          </button>
-        )}
+        {showSettingButton && <HeaderSettingButton />}
         {showCreateButton && (
           <HeaderCreateButton
             showCreateButtonProps={showCreateButtonProps}

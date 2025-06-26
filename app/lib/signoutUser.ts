@@ -30,20 +30,21 @@ export const signoutUser = async (refreshToken: string) => {
       },
     );
 
-    if (res && res.status === 200) {
+    if (res) {
+      if (!res.ok) {
+        const error: ErrorResponse = await res.json();
+        if (error.statusCode === 400) {
+          console.error("요청 형식 오류:", error.message);
+        } else if (error.statusCode === 401) {
+          console.error("유효하지 않거나 기간이 만료된 토큰:", error.message);
+        } else {
+          console.error("로그아웃 실패:", error);
+        }
+      }
       const data: SignoutResponse = await res.json();
       console.log(data.message);
       useAuthStore.getState().resetAuth();
       window.location.replace("/");
-    } else if (res) {
-      const error: ErrorResponse = await res.json();
-      if (error.statusCode === 400) {
-        console.error("요청 형식 오류:", error.message);
-      } else if (error.statusCode === 401) {
-        console.error("유효하지 않거나 기간이 만료된 토큰:", error.message);
-      } else {
-        console.error("로그아웃 실패:", error);
-      }
     } else {
       console.error("로그아웃 요청에 실패했습니다: 응답이 없습니다.");
     }

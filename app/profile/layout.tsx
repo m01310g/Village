@@ -13,6 +13,8 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const profileId = profileIdMatch ? Number(profileIdMatch[1]) : null;
   const userId = user?.id;
   const setHeader = useSetHeader();
+  const accessToken = useAuthStore.getState().accessToken;
+  const isLoggedIn = typeof window !== "undefined" && !!accessToken;
 
   const getTitleByPath = (path: string) => {
     if (path === "/profile") return "프로필";
@@ -33,7 +35,8 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
             !pathname.endsWith("/neighbors") &&
             userId !== profileId)),
 
-      showSettingButton: profileId === null && pathname === "/profile",
+      showSettingButton:
+        profileId === null && pathname === "/profile" && isLoggedIn,
     });
   }, [pathname, profileId, userId, setHeader]);
 
