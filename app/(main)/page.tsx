@@ -56,7 +56,7 @@ const Page = () => {
             );
           })}
       </div>
-      <div className="fixed bottom-[81px] left-1/2 z-50 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
+      <div className="fixed bottom-[81px] left-1/2 z-40 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
         <FloatingButton />
       </div>
     </div>
