@@ -22,7 +22,7 @@ const ProfileEditInfoPage = () => {
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
     setIsLoggedIn(!!accessToken);
-  });
+  }, []);
 
   useEffect(() => {
     if (profile) {

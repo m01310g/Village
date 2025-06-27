@@ -22,7 +22,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
     setIsLoggedIn(!!accessToken);
-  });
+  }, []);
 
   // 로딩 컴포넌트 구현
   if (isLoggedIn === null) return null;

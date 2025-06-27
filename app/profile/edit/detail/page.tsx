@@ -27,6 +27,34 @@ const ProfileEditDetailPage = () => {
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
 
+  useEffect(() => {
+    if (profile) {
+      console.log(profile);
+      const formattedLocation =
+        Array.isArray(profile.location) && profile.location.length > 0
+          ? Object.assign({}, ...profile.location)
+          : profile.location || {};
+
+      setSelectedDistricts(formattedLocation);
+      setStatus(
+        profile.status === 0
+          ? "구직 중이에요"
+          : profile.status === 1
+            ? "일하고 있지만 좋은 제안은 검토해볼게요"
+            : profile.status === 2
+              ? "당장은 구직 또는 이직 생각이 없어요"
+              : "특정 요일/시간만 일할 수 있어요",
+      );
+      setPhoneNumber(profile.phone || "");
+      setIsPhoneNumberOpened(profile.phoneOpened || 0);
+
+      updateField("location", formattedLocation);
+      updateField("status", convertStatusToNumber(status));
+      updateField("phone", profile.phone || "");
+      updateField("phoneOpened", profile.phoneOpened || 0);
+    }
+  }, [profile]);
+
   const isFormValid =
     status !== "구직 상태 선택" &&
     Object.keys(selectedDistricts).length > 0 &&
@@ -42,7 +70,7 @@ const ProfileEditDetailPage = () => {
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
     setIsLoggedIn(!!accessToken);
-  });
+  }, []);
 
   useEffect(() => {
     if (profile) {
@@ -64,7 +92,20 @@ const ProfileEditDetailPage = () => {
     }
   }, [profile]);
 
+  useEffect(() => {
+    updateField("status", convertStatusToNumber(status));
+  }, [status]);
+
+  useEffect(() => {
+    updateField("phone", phoneNumber);
+  }, [phoneNumber]);
+
+  useEffect(() => {
+    updateField("location", selectedDistricts);
+  }, [selectedDistricts]);
+
   const handleModify = async () => {
+    console.log(formData);
     try {
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
@@ -113,7 +154,18 @@ const ProfileEditDetailPage = () => {
           selectedDistricts={selectedDistricts}
           setSelectedDistricts={setSelectedDistricts}
         />
-        <JobSeekingStatusSection status={status} setStatus={setStatus} />
+        <JobSeekingStatusSection
+          status={
+            formData.status === 0
+              ? "구직 중이에요"
+              : formData.status === 1
+                ? "일하고 있지만 좋은 제안은 검토해볼게요"
+                : formData.status === 2
+                  ? "당장은 구직 또는 이직 생각이 없어요"
+                  : "특정 요일/시간만 일할 수 있어요"
+          }
+          setStatus={setStatus}
+        />
         <PhoneNumberSection
           phoneNumber={phoneNumber}
           setPhoneNumber={setPhoneNumber}
@@ -121,7 +173,7 @@ const ProfileEditDetailPage = () => {
           setError={setPhoneNumberError}
         />
         <PhoneNumberVisibilitySection
-          isPhoneNumberOpened={isPhoneNumberOpened}
+          isPhoneNumberOpened={formData.phoneOpened}
           setIsPhoneNumberOpened={setIsPhoneNumberOpened}
         />
       </form>

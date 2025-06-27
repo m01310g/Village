@@ -83,6 +83,7 @@ const ProfileForm = ({
         onChange={() => {}}
       />
       <CareerSection
+        initialCareers={formData.webCareers}
         onChangeCareers={(updatedCareers: WebCareer[]) =>
           onChangeField("webCareers", updatedCareers)
         }

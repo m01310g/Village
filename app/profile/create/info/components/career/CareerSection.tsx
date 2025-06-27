@@ -8,12 +8,29 @@ import ProfileLabel from "../../../components/ProfileLabel";
 
 interface CareerSectionProps {
   onChangeCareers: (careers: WebCareer[]) => void;
+  initialCareers: WebCareer[];
 }
 
-const CareerSection = ({ onChangeCareers }: CareerSectionProps) => {
+const CareerSection = ({
+  onChangeCareers,
+  initialCareers,
+}: CareerSectionProps) => {
   const [careerList, setCareerList] = useState<CareerData[]>([]);
   const [editTarget, setEditTarget] = useState<CareerData | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (initialCareers.length > 0 && careerList.length === 0) {
+      const transformed = initialCareers.map((career, idx) => ({
+        id: `${idx}-${career.where}`,
+        workplace: career.where,
+        startDate: career.start,
+        endDate: career.end === "현재 근무 중" ? "" : career.end,
+        isCurrent: career.end === "현재 근무 중",
+      }));
+      setCareerList(transformed);
+    }
+  }, [initialCareers, careerList.length]);
 
   useEffect(() => {
     const webCareers: WebCareer[] = careerList.map(

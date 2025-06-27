@@ -26,10 +26,11 @@ export interface Board {
 export interface UserProfile extends ProfileFormData {
   id: number;
   type: "TRAINER";
+  webCareers: [];
   neighbor: number;
   isNeighbor: number;
   boards: Board[];
-  location: { string: string[] }[];
+  location: { [key: string]: string[] };
   status: number;
   phone: string;
   isPhoneOpened: number;
