@@ -1,17 +1,25 @@
 import Checkbox from "@/app/components/Checkbox";
 import ProfileLabel from "../../components/ProfileLabel";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-const PhoneNumberVisibilitySection = () => {
-  const [isChecked, setIsChecked] = useState(false);
+interface PhoneNumberVisibilitySectionProps {
+  isPhoneNumberOpened: number;
+  setIsPhoneNumberOpened: Dispatch<SetStateAction<number>>;
+}
 
+const PhoneNumberVisibilitySection = ({
+  isPhoneNumberOpened,
+  setIsPhoneNumberOpened,
+}: PhoneNumberVisibilitySectionProps) => {
   return (
     <section className="flex flex-col gap-3">
       <ProfileLabel label="전화번호 공개 여부" bold />
       <div className="flex h-[31px] w-full items-center gap-2">
         <Checkbox
-          isChecked={isChecked}
-          onClick={() => setIsChecked((prev) => !prev)}
+          isChecked={isPhoneNumberOpened === 1}
+          onClick={() => {
+            setIsPhoneNumberOpened((prev) => (prev === 1 ? 0 : 1));
+          }}
         />
         <span className="text-caption-2 text-text-primary">
           센터에게 내 연락처를 보여줘도 괜찮아요.

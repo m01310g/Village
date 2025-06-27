@@ -4,8 +4,12 @@ import WorkRegionSelector from "./WorkRegionSelector";
 import DistrictItem from "./DistrictItem";
 
 interface WorkRegionSectionProps {
-  selectedDistricts: string[];
-  setSelectedDistricts: Dispatch<SetStateAction<string[]>>;
+  selectedDistricts: { [key: string]: string[] };
+  setSelectedDistricts: Dispatch<
+    SetStateAction<{
+      [key: string]: string[];
+    }>
+  >;
 }
 
 const WorkRegionSection = ({
@@ -23,15 +27,24 @@ const WorkRegionSection = ({
         setSelectedDistricts={setSelectedDistricts}
       />
       <div className="flex w-full gap-1 overflow-x-auto">
-        {selectedDistricts.map((district, i) => (
-          <DistrictItem
-            key={i}
-            district={district}
-            onRemove={() =>
-              setSelectedDistricts((prev) => prev.filter((d) => d !== district))
-            }
-          />
-        ))}
+        {Object.entries(selectedDistricts).flatMap(([sido, districts]) =>
+          districts.map((district) => (
+            <DistrictItem
+              key={`${sido}-${district}`}
+              district={district}
+              onRemove={() =>
+                setSelectedDistricts((prev) => {
+                  const updated = { ...prev };
+                  updated[sido] = updated[sido].filter((d) => d !== district);
+                  if (updated[sido].length === 0) {
+                    delete updated[sido];
+                  }
+                  return updated;
+                })
+              }
+            />
+          )),
+        )}
       </div>
     </section>
   );

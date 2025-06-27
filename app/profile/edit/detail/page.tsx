@@ -1,24 +1,28 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import CompleteButton from "./components/CompleteButton";
-import { useProfileFormStore } from "@/store/useProfileFormStore";
-import WorkRegionSection from "./components/WorkRegionSection";
-import JobSeekingStatusSection from "./components/JobSeekingStatusSection";
 import { useEffect, useState } from "react";
-import PhoneNumberSection from "./components/PhoneNumberSection";
-import PhoneNumberVisibilitySection from "./components/PhoneNumberVisibilitySeciton";
+import CompleteButton from "../../create/detail/components/CompleteButton";
+import JobSeekingStatusSection from "../../create/detail/components/JobSeekingStatusSection";
+import PhoneNumberSection from "../../create/detail/components/PhoneNumberSection";
+import PhoneNumberVisibilitySection from "../../create/detail/components/PhoneNumberVisibilitySeciton";
+import WorkRegionSection from "../../create/detail/components/WorkRegionSection";
+import { useUserProfile } from "../../hooks/useUserProfile";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
+import { useProfileFormStore } from "@/store/useProfileFormStore";
 
-const ProfileCreateDetailPage = () => {
-  const router = useRouter();
+const ProfileEditDetailPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: profile } = useUserProfile(isLoggedIn);
   const { formData, updateField } = useProfileFormStore();
-  const [status, setStatus] = useState("구직 상태 선택");
+  const router = useRouter();
   const [selectedDistricts, setSelectedDistricts] = useState<{
     [key: string]: string[];
   }>({ [""]: [""] });
+  const [status, setStatus] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
@@ -29,33 +33,41 @@ const ProfileCreateDetailPage = () => {
     phoneNumber !== "" &&
     phoneNumberError === "";
 
+  const isFormChanged =
+    profile &&
+    (profile.status !== convertStatusToNumber(status) ||
+      JSON.stringify(profile.location) !== JSON.stringify(selectedDistricts) ||
+      profile.phone !== phoneNumber);
+
   useEffect(() => {
-    if (status !== "구직 상태 선택") {
-      updateField("status", convertStatusToNumber(status));
+    const accessToken = useAuthStore.getState().accessToken;
+    setIsLoggedIn(!!accessToken);
+  });
+
+  useEffect(() => {
+    if (profile) {
+      const formattedLocation =
+        Array.isArray(profile.location) && profile.location.length > 0
+          ? Object.assign({}, ...profile.location)
+          : profile.location || {};
+      setSelectedDistricts(formattedLocation);
+      setStatus(
+        profile.status === 0
+          ? "구직 중이에요"
+          : profile.status === 1
+            ? "일하고 있지만 좋은 제안은 검토해볼게요"
+            : profile.status === 2
+              ? "당장은 구직 또는 이직 생각이 없어요"
+              : "특정 요일/시간만 일할 수 있어요",
+      );
+      setPhoneNumber(profile.phone || "");
     }
-  }, [status]);
+  }, [profile]);
 
-  useEffect(() => {
-    if (Object.keys(selectedDistricts).length > 0) {
-      updateField("location", selectedDistricts);
-    }
-  }, [selectedDistricts]);
-
-  useEffect(() => {
-    if (phoneNumber !== "") {
-      updateField("phone", phoneNumber);
-    }
-  }, [phoneNumber]);
-
-  useEffect(() => {
-    updateField("phoneOpened", isPhoneNumberOpened);
-  }, [isPhoneNumberOpened]);
-
-  const handleSubmit = async () => {
-    console.log(formData);
+  const handleModify = async () => {
     try {
       const res = await fetchWithAuth(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -75,16 +87,18 @@ const ProfileCreateDetailPage = () => {
           );
         } else if (error.statusCode === 403) {
           throw new Error(`유저 회원이 아닙니다: ${error.message}`);
-        } else if (error.statusCode === 409) {
-          throw new Error(`이미 등록된 프로필이 있습니다: ${error.message}`);
+        } else if (error.statusCode === 404) {
+          throw new Error(`등록된 프로필 없음: ${error.message}`);
         } else {
           throw new Error(error.message);
         }
       }
 
-      router.replace(`/profile`);
+      router.push("/profile");
     } catch (err: any) {
-      console.error(err instanceof Error ? err.message : "알 수 없는 오류");
+      console.error(
+        err instanceof Error ? err.message : "프로필 수정 중 오류 발생",
+      );
     }
   };
 
@@ -111,11 +125,14 @@ const ProfileCreateDetailPage = () => {
           setIsPhoneNumberOpened={setIsPhoneNumberOpened}
         />
       </form>
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
-        등록
+      <CompleteButton
+        isFormValid={!!isFormValid && !!isFormChanged}
+        onClick={handleModify}
+      >
+        수정
       </CompleteButton>
     </div>
   );
 };
 
-export default ProfileCreateDetailPage;
+export default ProfileEditDetailPage;

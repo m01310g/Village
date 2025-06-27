@@ -7,7 +7,7 @@ interface ProfileFormState {
   formData: ProfileFormData;
   updateField: (
     field: keyof ProfileFormData,
-    value: string | WebCareer[],
+    value: string | number | WebCareer[] | { [key: string]: string[] },
   ) => void;
   setFormData: (data: ProfileFormData) => void;
 }
@@ -21,6 +21,10 @@ export const useProfileFormStore = create(
         nickname: "",
         webCareers: [],
         introduction: "",
+        location: {},
+        status: 0,
+        phone: "",
+        phoneOpened: 0,
       },
       updateField: (field, value) =>
         set((state) => ({

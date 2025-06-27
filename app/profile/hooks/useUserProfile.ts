@@ -29,6 +29,10 @@ export interface UserProfile extends ProfileFormData {
   neighbor: number;
   isNeighbor: number;
   boards: Board[];
+  location: { string: string[] }[];
+  status: number;
+  phone: string;
+  isPhoneOpened: number;
 }
 
 const getProfile = async (): Promise<UserProfile> => {

@@ -4,8 +4,12 @@ import CheckIcon from "@/public/icons/check.svg";
 import { regions } from "@/constants/regions";
 
 interface WorkRegionSelectorProps {
-  selectedDistricts: string[];
-  setSelectedDistricts: Dispatch<SetStateAction<string[]>>;
+  selectedDistricts: { [key: string]: string[] };
+  setSelectedDistricts: Dispatch<
+    SetStateAction<{
+      [key: string]: string[];
+    }>
+  >;
 }
 
 const WorkRegionSelector = ({
@@ -13,11 +17,24 @@ const WorkRegionSelector = ({
   setSelectedDistricts,
 }: WorkRegionSelectorProps) => {
   const [selectedSido, setSelectedSido] = useState("서울");
+  const toggleDistrict = (sido: string, district: string) => {
+    setSelectedDistricts((prev) => {
+      const next = { ...prev };
+      const current = next[sido] ?? [];
 
-  const toggleDistrict = (name: string) => {
-    setSelectedDistricts((prev) =>
-      prev.includes(name) ? prev.filter((d) => d !== name) : [...prev, name],
-    );
+      if (current.includes(district)) {
+        const updated = current.filter((d) => d !== district);
+        if (updated.length === 0) {
+          delete next[sido];
+        } else {
+          next[sido] = updated;
+        }
+      } else {
+        next[sido] = [...current, district];
+      }
+
+      return next;
+    });
   };
 
   const selectedRegion = regions.find((r) => r.name === selectedSido);
@@ -53,14 +70,14 @@ const WorkRegionSelector = ({
               key={district}
               className={clsx(
                 "text-body-2 flex cursor-pointer items-center justify-between p-[10px]",
-                selectedDistricts.includes(district)
+                selectedDistricts[selectedSido]?.includes(district)
                   ? "text-text-brand"
                   : "text-neutral-400",
               )}
-              onClick={() => toggleDistrict(district)}
+              onClick={() => toggleDistrict(selectedSido, district)}
             >
               <span>{district}</span>
-              {selectedDistricts.includes(district) && (
+              {selectedDistricts[selectedSido]?.includes(district) && (
                 <CheckIcon width="20px" height="20px" color="#00a6f4" />
               )}
             </div>

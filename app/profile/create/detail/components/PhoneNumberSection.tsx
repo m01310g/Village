@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Input from "@/app/components/Input";
 import ProfileLabel from "../../components/ProfileLabel";
 
-const PhoneNumberSection = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [error, setError] = useState("");
+interface PhoneNumberSectionProps {
+  phoneNumber: string;
+  setPhoneNumber: Dispatch<SetStateAction<string>>;
+  error: string;
+  setError: Dispatch<SetStateAction<string>>;
+}
 
+const PhoneNumberSection = ({
+  phoneNumber,
+  setPhoneNumber,
+  error,
+  setError,
+}: PhoneNumberSectionProps) => {
   const formatPhoneNumber = (value: string) => {
     const numbersOnly = value.replace(/\D/g, "").slice(0, 11);
     if (numbersOnly.length < 10) {
