@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import ProfileLabel from "../../components/ProfileLabel";
 import WorkRegionSelector from "./WorkRegionSelector";
 import DistrictItem from "./DistrictItem";
 
-const WorkRegionSection = () => {
-  const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
+interface WorkRegionSectionProps {
+  selectedDistricts: string[];
+  setSelectedDistricts: Dispatch<SetStateAction<string[]>>;
+}
 
+const WorkRegionSection = ({
+  selectedDistricts,
+  setSelectedDistricts,
+}: WorkRegionSectionProps) => {
   return (
     <section className="flex flex-col gap-3">
       <div className="flex gap-3">
