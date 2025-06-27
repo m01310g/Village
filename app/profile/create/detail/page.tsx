@@ -2,12 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import CompleteButton from "./components/CompleteButton";
-import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
 import WorkRegionSection from "./components/WorkRegionSection";
 import JobSeekingStatusSection from "./components/JobSeekingStatusSection";
 import { useState } from "react";
+import PhoneNumberSection from "./components/PhoneNumberSection";
+import PhoneNumberVisibilitySection from "./components/PhoneNumberVisibilitySeciton";
 
 const ProfileCreateDetailPage = () => {
   const router = useRouter();
@@ -29,6 +29,8 @@ const ProfileCreateDetailPage = () => {
           setSelectedDistricts={setSelectedDistricts}
         />
         <JobSeekingStatusSection status={status} setStatus={setStatus} />
+        <PhoneNumberSection />
+        <PhoneNumberVisibilitySection />
       </form>
       <CompleteButton isFormValid={isFormValid} formData={formData} />
     </div>
