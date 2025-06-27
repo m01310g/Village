@@ -2,39 +2,38 @@
 
 import { useEffect, useState } from "react";
 import { useUserProfile } from "../hooks/useUserProfile";
-import ProfileForm from "../components/ProfileForm";
 import { ProfileFormData } from "../types/profileFormData";
 import { createFormFieldChangeHandler } from "../utils/formUtils";
 import { useInputValidation } from "../hooks/useInputValidation";
-import CompleteButton from "../components/CompleteButton";
-import { useAuthStore } from "@/store/useAuthStore";
+import CompleteButton from "../create/detail/components/CompleteButton";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
+import { useProfileFormStore } from "@/store/useProfileFormStore";
+import ProfileForm from "../create/info/components/ProfileForm";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const ProfileEditPage = () => {
-  const { data: profile, isLoading, error } = useUserProfile();
-  const [formData, setFormData] = useState<ProfileFormData>({
-    profileImage: "",
-    name: "",
-    nickname: "",
-    webCareers: [],
-    introduction: "",
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: profile, isLoading, error } = useUserProfile(isLoggedIn);
+  const { formData, updateField } = useProfileFormStore();
   const router = useRouter();
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   useEffect(() => {
+    const accessToken = useAuthStore.getState().accessToken;
+    setIsLoggedIn(!!accessToken);
+  });
+
+  useEffect(() => {
     if (profile) {
-      setFormData({
-        profileImage: profile.profileImage || "",
-        name: profile.name || "",
-        nickname: profile.nickname || "",
-        webCareers: profile.webCareers || [],
-        introduction: profile.introduction || "",
-      });
+      updateField("profileImage", profile.profileImage || "");
+      updateField("name", profile.name || "");
+      updateField("nickname", profile.nickname || "");
+      updateField("webCareers", profile.webCareers || []);
+      updateField("introduction", profile.introduction || "");
     }
   }, [profile]);
 
@@ -47,7 +46,7 @@ const ProfileEditPage = () => {
       JSON.stringify(profile.webCareers) !==
         JSON.stringify(formData.webCareers));
 
-  const handleChange = createFormFieldChangeHandler(setFormData);
+  const handleChange = createFormFieldChangeHandler(updateField);
 
   const handleModify = async () => {
     try {

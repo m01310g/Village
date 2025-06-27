@@ -1,6 +1,6 @@
+import { CareerCardProps } from "@/app/profile/types/careerCard";
 import EditIcon from "@/public/icons/icn_edit1.svg";
 import TrashIcon from "@/public/icons/icn_trash.svg";
-import { CareerCardProps } from "../../types/careerCard";
 
 const CareerCard = ({
   id,

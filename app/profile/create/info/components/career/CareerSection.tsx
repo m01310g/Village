@@ -1,10 +1,10 @@
 import CareerAddButton from "./CareerAddButton";
-import ProfileLabel from "../ProfileLabel";
 import CareerCard from "./CareerCard";
-import { CareerData } from "../../types/careerCard";
 import { useEffect, useState } from "react";
 import CareerAddBottomSheet from "./CareerAddBottomSheet";
-import { WebCareer } from "../../types/webCareer";
+import { CareerData } from "@/app/profile/types/careerCard";
+import { WebCareer } from "@/app/profile/types/webCareer";
+import ProfileLabel from "../../../components/ProfileLabel";
 
 interface CareerSectionProps {
   onChangeCareers: (careers: WebCareer[]) => void;
@@ -57,7 +57,7 @@ const CareerSection = ({ onChangeCareers }: CareerSectionProps) => {
               <CareerCard
                 {...career}
                 onEdit={handleEdit}
-                onDelete={(e) => {
+                onDelete={(e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
                   const updated = careerList.filter((_, i) => i !== idx);
                   setCareerList(updated);

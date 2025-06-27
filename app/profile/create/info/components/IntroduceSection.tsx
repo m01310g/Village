@@ -1,5 +1,4 @@
-import { useState } from "react";
-import ProfileLabel from "./ProfileLabel";
+import ProfileLabel from "@/app/profile/create/components/ProfileLabel";
 
 interface IntroduceSectionProps {
   introduction: string;
