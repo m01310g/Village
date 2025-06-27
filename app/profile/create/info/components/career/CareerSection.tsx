@@ -17,10 +17,10 @@ const CareerSection = ({ onChangeCareers }: CareerSectionProps) => {
 
   useEffect(() => {
     const webCareers: WebCareer[] = careerList.map(
-      ({ workplace, startDate, endDate }) => ({
+      ({ workplace, startDate, endDate, isCurrent }) => ({
         where: workplace,
         start: startDate,
-        end: endDate,
+        end: isCurrent ? "현재 근무 중" : endDate,
       }),
     );
     onChangeCareers(webCareers);

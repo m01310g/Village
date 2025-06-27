@@ -7,6 +7,7 @@ const CareerCard = ({
   workplace,
   startDate,
   endDate,
+  isCurrent,
   onEdit,
   onDelete,
 }: CareerCardProps) => {
@@ -22,7 +23,7 @@ const CareerCard = ({
         <button
           onClick={(e) => {
             e.preventDefault();
-            onEdit({ id, workplace, startDate, endDate });
+            onEdit({ id, workplace, startDate, endDate, isCurrent });
           }}
         >
           <EditIcon color="#737373" width="24px" height="24px" />

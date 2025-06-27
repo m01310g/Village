@@ -3,6 +3,7 @@ export interface CareerData {
   workplace: string;
   startDate: string;
   endDate: string;
+  isCurrent: boolean;
 }
 
 export interface CareerCardProps extends CareerData {
