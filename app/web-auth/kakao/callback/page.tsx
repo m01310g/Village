@@ -79,6 +79,8 @@ const KakaoCallbackPage = () => {
           setAccessToken(result.data.accessToken);
           setRefreshToken(result.data.refreshToken);
 
+          localStorage.removeItem("profile-form-data");
+
           const hasProfile = await checkHasWebProfile(result.data.accessToken);
 
           if (hasProfile) {
