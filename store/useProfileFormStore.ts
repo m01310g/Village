@@ -1,6 +1,7 @@
 import { ProfileFormData } from "@/app/profile/types/profileFormData";
 import { WebCareer } from "@/app/profile/types/webCareer";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface ProfileFormState {
   formData: ProfileFormData;
@@ -11,20 +12,27 @@ interface ProfileFormState {
   setFormData: (data: ProfileFormData) => void;
 }
 
-export const useProfileFormStore = create<ProfileFormState>((set) => ({
-  formData: {
-    profileImage: "",
-    name: "",
-    nickname: "",
-    webCareers: [],
-    introduction: "",
-  },
-  updateField: (field, value) =>
-    set((state) => ({
+export const useProfileFormStore = create(
+  persist<ProfileFormState>(
+    (set) => ({
       formData: {
-        ...state.formData,
-        [field]: value,
+        profileImage: "",
+        name: "",
+        nickname: "",
+        webCareers: [],
+        introduction: "",
       },
-    })),
-  setFormData: (data) => set({ formData: data }),
-}));
+      updateField: (field, value) =>
+        set((state) => ({
+          formData: {
+            ...state.formData,
+            [field]: value,
+          },
+        })),
+      setFormData: (data) => set({ formData: data }),
+    }),
+    {
+      name: "profile-form-data",
+    },
+  ),
+);

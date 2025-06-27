@@ -16,8 +16,8 @@ const ProfileCreateInfo = () => {
   const router = useRouter();
 
   const isFormValid =
-    !!nameInput.value &&
-    !!nicknameInput.value &&
+    !!formData.name &&
+    !!formData.nickname &&
     !nameInput.error &&
     !nicknameInput.error &&
     !nameInput.isComposing &&
@@ -48,6 +48,7 @@ const ProfileCreateInfo = () => {
         onCompositionEndNickname={nicknameInput.handleCompositionEnd}
         isBottomSheetOpen={isBottomSheetOpen}
         setIsBottomSheetOpen={setIsBottomSheetOpen}
+        initialImage={formData.profileImage || ""}
       />
       <div className="sticky bottom-0 left-1/2 w-full max-w-[375px] bg-background-primary px-4 py-3">
         <Button
