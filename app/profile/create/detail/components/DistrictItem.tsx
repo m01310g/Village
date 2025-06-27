@@ -12,7 +12,10 @@ const DistrictItem = ({ district, onRemove }: DistrictItemProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-1 rounded-[99px] border border-neutral-200 bg-white px-[6px] py-1">
+    <div
+      className="flex shrink-0 items-center justify-center gap-1 rounded-[99px] border border-neutral-200 bg-white px-[6px] py-1"
+      style={{ scrollbarWidth: "thin" }}
+    >
       <span className="text-body-3 text-neutral-900">{district}</span>
       <button onClick={handleRemove}>
         <CloseIcon width="20px" height="20px" color="#171717" />
