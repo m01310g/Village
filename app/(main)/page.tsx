@@ -50,7 +50,7 @@ const Page = () => {
         {filteredPosts &&
           filteredPosts.map((post) => {
             const postUserId = post.writtenBy.id;
-            const isMyProfile = postUserId === userId! + 1;
+            const isMyProfile = postUserId === userId;
             return (
               <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />
             );

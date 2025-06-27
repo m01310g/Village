@@ -22,7 +22,7 @@ const CommentsSection = ({ comments }: CommentsSectionProps) => {
       </header>
       {commentsList.map((comment) => {
         const commentUserId = comment.writtenBy.id;
-        const isMyProfile = commentUserId === userId! + 1;
+        const isMyProfile = commentUserId === userId;
         return (
           <CommentCard
             key={comment.id}

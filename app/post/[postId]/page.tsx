@@ -26,7 +26,7 @@ const PostDetailPage = () => {
     if (postData) {
       setCommentsList(postData?.comments);
       setCommentCount(postData.commentNumber ?? 0);
-      if (userId) setIsMyPost(postData.writtenBy.id === userId + 1);
+      if (userId) setIsMyPost(postData.writtenBy.id === userId);
     }
   }, [postData, userId]);
 
