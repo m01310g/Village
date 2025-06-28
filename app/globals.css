@@ -3,20 +3,56 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-tertiary: #e5e5e5;
+  --color-bg-brand: #00a6f4;
+  --color-bg-brand-secondary: #f0f9ff;
+  --color-bg-info: #d6efff;
+  --color-bg-success: #dcfce7;
+  --color-bg-warning: #fef9c2;
+  --color-bg-danger: #ffdfe3;
+  --color-bg-inverse: #171717;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-border-primary: #f5f5f5;
+  --color-border-secondary: #e5e5e5;
+  --color-border-tertiary: #d4d4d4;
+  --color-border-disabled: #d4d4d4;
+  --color-border-onprimary: #d4d4d4;
+  --color-border-brand: #00a6f4;
+  --color-border-info: #067aff;
+  --color-border-success: #00a6f4;
+  --color-border-warning: #d08700;
+  --color-border-danger: #ed152e;
+  --color-border-select: #171717;
+
+  --color-icon-primary: #171717;
+  --color-icon-secondary: #404040;
+  --color-icon-tertiary: #737373;
+  --color-icon-disabled: #d4d4d4;
+  --color-icon-onprimary: #ffffff;
+  --color-icon-brand: #00a6f4;
+  --color-icon-info: #067aff;
+  --color-icon-success: #00a6f4;
+  --color-icon-warning: #d08700;
+  --color-icon-danger: #ed152e;
+
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #404040;
+  --color-text-tertiary: #737373;
+  --color-text-disabled: #d4d4d4;
+  --color-text-onprimary: #ffffff;
+  --color-text-onsecondary: #00a6f4;
+  --color-text-brand: #00a6f4;
+  --color-text-info: #067aff;
+  --color-text-success: #00a6f4;
+  --color-text-warning: #d08700;
+  --color-text-danger: #ed152e;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
   font-family: var(--font-pretendard);
 }
 
@@ -35,6 +71,10 @@ body {
 
   .text-title-3 {
     @apply text-[16px] font-bold leading-[130%] tracking-[-0.02em];
+  }
+
+  .text-title-4 {
+    @apply text-[14px] font-bold leading-[130%] tracking-[-0.02em];
   }
 
   .text-body-1 {

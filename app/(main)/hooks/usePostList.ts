@@ -1,0 +1,27 @@
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
+import { Board } from "@/app/profile/hooks/useUserProfile";
+import { useQuery } from "@tanstack/react-query";
+
+const getPostList = async (): Promise<Board[]> => {
+  const res = await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/getFeed`,
+    { method: "GET" },
+  );
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error);
+  }
+
+  const result = await res.json();
+  const postList: Board[] = result.data;
+
+  return postList;
+};
+
+export const usePostList = () => {
+  return useQuery({
+    queryKey: ["postList"],
+    queryFn: getPostList,
+  });
+};
