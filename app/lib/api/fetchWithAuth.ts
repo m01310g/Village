@@ -31,7 +31,10 @@ export const fetchWithAuth = async (
       });
       return retryRes;
     } catch (err) {
-      console.error("로그인이 만료되었습니다.");
+      console.error(
+        "로그인이 만료되었습니다.",
+        err instanceof Error ? err.message : err,
+      );
     }
     signoutUser(refreshToken!);
   }

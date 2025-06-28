@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import CommentCreateButton from "./CommentCreateButton";
 import clsx from "clsx";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useCreateComment } from "../../hooks/useCreateComment";
+import { CommentType } from "./types/commentType";
 
 interface CommentsCreateSectionProps {
   postId: number;
@@ -17,7 +17,6 @@ const CommentCreateSection = ({
   commentCount,
   setCommentCount,
 }: CommentsCreateSectionProps) => {
-  const accessToken = useAuthStore.getState().accessToken;
   const [inputValue, setInputValue] = useState("");
 
   const createCommentMutation = useCreateComment((newComments) => {

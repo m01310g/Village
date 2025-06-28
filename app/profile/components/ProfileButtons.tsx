@@ -22,7 +22,7 @@ const ProfileButtons = ({
           <Button
             size="md"
             color="secondaryColor"
-            onClick={() => router.push("/profile/edit")}
+            onClick={() => router.push("/profile/edit/info")}
           >
             프로필 수정
           </Button>

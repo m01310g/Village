@@ -6,4 +6,8 @@ export interface ProfileFormData {
   nickname: string;
   webCareers: WebCareer[];
   introduction: string;
+  location: { [key: string]: string[] };
+  status: number;
+  phone: string;
+  phoneOpened: number;
 }

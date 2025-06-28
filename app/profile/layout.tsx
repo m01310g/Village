@@ -18,8 +18,10 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
 
   const getTitleByPath = (path: string) => {
     if (path === "/profile") return "프로필";
-    if (path === "/profile/create") return "프로필 등록";
-    if (path === "/profile/edit") return "프로필 수정";
+    if (path === "/profile/create/info" || path === "/profile/create/detail")
+      return "프로필 등록";
+    if (path === "/profile/edit/info" || path === "/profile/edit/detail")
+      return "프로필 수정";
     if (path === "/profile/neighbors") return "내 이웃 목록";
     return "빌리지";
   };
@@ -38,7 +40,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
       showSettingButton:
         profileId === null && pathname === "/profile" && isLoggedIn,
     });
-  }, [pathname, profileId, userId, setHeader]);
+  }, [pathname, profileId, userId, setHeader, isLoggedIn]);
 
   return (
     <main

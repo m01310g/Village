@@ -1,5 +1,4 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const deleteComment = async (commentId: number) => {

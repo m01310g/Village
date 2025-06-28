@@ -4,10 +4,15 @@ import ProfileViewSection from "./components/ProfileViewSection";
 import PostsSection from "./components/PostsSection";
 import { useUserProfile } from "./hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
-import KakaoSigninButton from "../signin/components/KakaoSigninButton";
+import KakaoSigninButton from "../components/KakaoSigninButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+interface ErrorWithStatus {
+  status: number;
+  message: string;
+}
 
 const ProfilePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -20,9 +25,25 @@ const ProfilePage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const accessToken = useAuthStore.getState().accessToken;
-    setIsLoggedIn(!!accessToken);
-  });
+    const { accessToken, user, resetAuth } = useAuthStore.getState();
+
+    if (!accessToken) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+
+    if (!accessToken && user) {
+      resetAuth();
+      localStorage.removeItem("profile-form-data");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (error && (error as unknown as ErrorWithStatus).status === 404) {
+      router.push("/profile/create/info");
+    }
+  }, [error, router]);
 
   // 로딩 컴포넌트 구현
   if (isLoggedIn === null) return null;

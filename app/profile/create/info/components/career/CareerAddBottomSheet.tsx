@@ -1,11 +1,12 @@
 import Button from "@/app/components/Button";
 import Input from "@/app/components/Input";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DateInput from "./date/DateInput";
-import { CareerData } from "../../types/careerCard";
 import { v4 as uuidv4 } from "uuid";
 import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
+import { CareerData } from "@/app/profile/types/careerCard";
+import Checkbox from "@/app/components/Checkbox";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;
@@ -23,6 +24,17 @@ const CareerAddBottomSheet = ({
   const [center, setCenter] = useState(initialData?.workplace ?? "");
   const [startDate, setStartDate] = useState(initialData?.startDate ?? "");
   const [endDate, setEndDate] = useState(initialData?.endDate ?? "");
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    if (initialData?.isCurrent) {
+      setIsChecked(true);
+      setEndDate("현재 근무중");
+    } else if (initialData) {
+      setIsChecked(false);
+      setEndDate(initialData.endDate || "");
+    }
+  }, [initialData]);
 
   const handleSave = () => {
     onSave({
@@ -30,12 +42,13 @@ const CareerAddBottomSheet = ({
       workplace: center,
       startDate,
       endDate,
+      isCurrent: isChecked,
     });
 
     onClose();
   };
 
-  const isCareerValid = !!center && !!startDate && !!endDate;
+  const isCareerValid = !!center && !!startDate && (isChecked || !!endDate);
 
   const handleCloseButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -57,29 +70,47 @@ const CareerAddBottomSheet = ({
           </button>
           <h2 className="text-title-1 text-text-primary">경력사항</h2>
         </header>
-        <main className="flex flex-col items-center justify-center gap-4">
-          <Input
-            label=""
-            placeholder="근무한 센터명"
-            value={center}
-            onChange={(e) => setCenter(e.target.value)}
-          />
-          <div className="flex w-full items-center justify-center gap-4">
-            <DateInput
-              placeholder="근무 시작일"
-              value={startDate}
-              setDate={setStartDate}
-              isStartDate
-              endDate={endDate}
+        <main className="flex flex-col gap-[6px]">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <Input
+              label=""
+              placeholder="근무한 센터명"
+              value={center}
+              onChange={(e) => setCenter(e.target.value)}
             />
-            <div className="h-[1px] w-3 bg-border-secondary" />
-            <DateInput
-              placeholder="근무 종료일"
-              value={endDate}
-              setDate={setEndDate}
-              isEndDate
-              startDate={startDate}
+            <div className="flex w-full items-center justify-center gap-4">
+              <DateInput
+                placeholder="근무 시작일"
+                value={startDate}
+                setDate={setStartDate}
+                isStartDate
+                endDate={endDate}
+              />
+              <div className="h-[1px] w-3 bg-border-secondary" />
+              <DateInput
+                placeholder="근무 종료일"
+                value={endDate}
+                setDate={setEndDate}
+                isEndDate
+                startDate={startDate}
+                disabled={isChecked}
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-end gap-2 py-[5.5px]">
+            <Checkbox
+              isChecked={isChecked}
+              onClick={() => {
+                setIsChecked((prev) => {
+                  const next = !prev;
+                  setEndDate(next ? "현재 근무 중" : "");
+                  return next;
+                });
+              }}
             />
+            <span className="text-caption-2 text-text-primary">
+              현재 근무 중
+            </span>
           </div>
         </main>
         <div className="fixed bottom-0 flex justify-center gap-[6px] py-5">

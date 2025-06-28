@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import CommentManageBottomSheet from "./CommentManageBottomSheet";
 import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import Image from "next/image";
+import { CommentType } from "./types/commentType";
 
 interface CommentHeaderProps {
   comment: CommentType;

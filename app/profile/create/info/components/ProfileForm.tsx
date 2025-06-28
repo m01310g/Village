@@ -1,10 +1,10 @@
 import Input from "@/app/components/Input";
 import NameSection from "./NameSection";
 import NicknameSection from "./NicknameSection";
-import ProfileImageSection from "./profileImage/ProfileImageSection";
 import CareerSection from "./career/CareerSection";
 import IntroduceSection from "./IntroduceSection";
-import { WebCareer } from "../types/webCareer";
+import { WebCareer } from "@/app/profile/types/webCareer";
+import ProfileImageSection from "@/app/profile/components/profileImage/ProfileImageSection";
 
 interface ProfileFormProps {
   formData: {
@@ -83,6 +83,7 @@ const ProfileForm = ({
         onChange={() => {}}
       />
       <CareerSection
+        initialCareers={formData.webCareers}
         onChangeCareers={(updatedCareers: WebCareer[]) =>
           onChangeField("webCareers", updatedCareers)
         }

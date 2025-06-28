@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import CommentCard from "./CommentCard";
 import { useEffect, useState } from "react";
+import { CommentType } from "./types/commentType";
 
 interface CommentsSectionProps {
   comments: CommentType[];
@@ -22,7 +23,7 @@ const CommentsSection = ({ comments }: CommentsSectionProps) => {
       </header>
       {commentsList.map((comment) => {
         const commentUserId = comment.writtenBy.id;
-        const isMyProfile = commentUserId === userId! + 1;
+        const isMyProfile = commentUserId === userId;
         return (
           <CommentCard
             key={comment.id}

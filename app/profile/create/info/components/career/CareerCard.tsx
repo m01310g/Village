@@ -1,12 +1,13 @@
+import { CareerCardProps } from "@/app/profile/types/careerCard";
 import EditIcon from "@/public/icons/icn_edit1.svg";
 import TrashIcon from "@/public/icons/icn_trash.svg";
-import { CareerCardProps } from "../../types/careerCard";
 
 const CareerCard = ({
   id,
   workplace,
   startDate,
   endDate,
+  isCurrent,
   onEdit,
   onDelete,
 }: CareerCardProps) => {
@@ -15,14 +16,14 @@ const CareerCard = ({
       <div className="flex flex-col gap-1">
         <h3 className="text-body-2 text-text-primary">{workplace}</h3>
         <span className="text-caption-3 text-neutral-600">
-          {startDate} ~ {endDate}
+          {startDate} ~ {endDate === null ? "현재 근무 중" : endDate}
         </span>
       </div>
       <div className="flex items-center gap-3">
         <button
           onClick={(e) => {
             e.preventDefault();
-            onEdit({ id, workplace, startDate, endDate });
+            onEdit({ id, workplace, startDate, endDate, isCurrent });
           }}
         >
           <EditIcon color="#737373" width="24px" height="24px" />

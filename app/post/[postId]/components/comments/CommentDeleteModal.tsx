@@ -2,6 +2,7 @@ import Button from "@/app/components/Button";
 import ModalWrapper from "@/app/components/modal/ModalWrapper";
 import { useDeleteComment } from "../../hooks/useDeleteComment";
 import { Dispatch, SetStateAction } from "react";
+import { CommentType } from "./types/commentType";
 
 interface CommentDeleteModalProps {
   setIsModalOpen: (isOpen: boolean) => void;

@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useLikePost } from "../hooks/useLikePost";
 import { useUnlikePost } from "../hooks/useUnlikePost";
 import { useAuthStore } from "@/store/useAuthStore";
-import ModalWrapper from "@/app/components/modal/ModalWrapper";
-import Button from "@/app/components/Button";
 import LoginRequiredModal from "@/app/components/LoginRequiredModal";
 
 interface PostDetailFooterProps {

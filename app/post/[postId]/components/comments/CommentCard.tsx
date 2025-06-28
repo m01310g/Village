@@ -3,6 +3,7 @@ import CommentFooter from "./CommentFooter";
 import { getRelativeTime } from "@/app/components/post/utils/getRelativeTime";
 import CommentHeader from "./CommentHeader";
 import { Dispatch, SetStateAction } from "react";
+import { CommentType } from "./types/commentType";
 
 interface CommentCardProps {
   comment: CommentType;

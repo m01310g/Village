@@ -56,8 +56,6 @@ const DatePickerBottomSheet = ({
     initScroll();
   }, [year, month, day, years, months, days]);
 
-  const overlayRef = useRef<HTMLDivElement>(null);
-
   return (
     <BottomSheetWrapper onClose={onClose} className="py-5">
       <header>
