@@ -8,7 +8,7 @@ import PostsSection from "../components/PostsSection";
 const UserProfilePage = () => {
   const params = useParams();
   const profileId = Number(params.userId);
-  const { data: profile, isLoading, error } = useProfileById(profileId);
+  const { data: profile } = useProfileById(profileId);
 
   const sortedPosts = [...(profile?.boards ?? [])].sort(
     (a, b) => new Date(b.writtenAt).getTime() - new Date(a.writtenAt).getTime(),

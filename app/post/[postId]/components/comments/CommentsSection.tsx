@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import CommentCard from "./CommentCard";
 import { useEffect, useState } from "react";
+import { CommentType } from "./types/commentType";
 
 interface CommentsSectionProps {
   comments: CommentType[];

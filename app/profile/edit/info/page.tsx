@@ -12,7 +12,7 @@ import Button from "@/app/components/Button";
 
 const ProfileEditInfoPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { data: profile, isLoading, error } = useUserProfile(isLoggedIn);
+  const { data: profile } = useUserProfile(isLoggedIn);
   const { formData, updateField } = useProfileFormStore();
   const router = useRouter();
   const nameInput = useInputValidation("name");
@@ -32,7 +32,7 @@ const ProfileEditInfoPage = () => {
       updateField("webCareers", profile.webCareers || []);
       updateField("introduction", profile.introduction || "");
     }
-  }, [profile]);
+  }, [profile, updateField]);
 
   const handleChange = createFormFieldChangeHandler(updateField);
 

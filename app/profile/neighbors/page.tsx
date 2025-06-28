@@ -34,7 +34,7 @@ const ProfileNeighborsPage = () => {
           <h3 className="text-title-1 px-4 py-2 text-text-primary">
             이웃 신청
           </h3>
-          {receiveds.map((received, _) => (
+          {receiveds.map((received) => (
             <NeighborCard
               key={received.id}
               data={received}
@@ -46,7 +46,7 @@ const ProfileNeighborsPage = () => {
       </div>
       <div className="">
         <h3 className="text-title-1 px-4 py-3 text-text-primary">내 이웃</h3>
-        {neighbors.map((neighbor, _) => (
+        {neighbors.map((neighbor) => (
           <NeighborCard key={neighbor.id} isMyNeighbor={true} data={neighbor} />
         ))}
       </div>

@@ -48,7 +48,7 @@ export const signoutUser = async (refreshToken: string) => {
     } else {
       console.error("로그아웃 요청에 실패했습니다: 응답이 없습니다.");
     }
-  } catch (err: any) {
+  } catch (err) {
     console.error(err instanceof Error ? err.message : "로그아웃 중 오류 발생");
   }
 };

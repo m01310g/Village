@@ -29,7 +29,6 @@ const ProfileEditDetailPage = () => {
 
   useEffect(() => {
     if (profile) {
-      console.log(profile);
       const formattedLocation =
         Array.isArray(profile.location) && profile.location.length > 0
           ? Object.assign({}, ...profile.location)
@@ -53,7 +52,7 @@ const ProfileEditDetailPage = () => {
       updateField("phone", profile.phone || "");
       updateField("phoneOpened", profile.phoneOpened || 0);
     }
-  }, [profile]);
+  }, [profile, status, updateField, formData]);
 
   const isFormValid =
     status !== "구직 상태 선택" &&
@@ -73,36 +72,8 @@ const ProfileEditDetailPage = () => {
   }, []);
 
   useEffect(() => {
-    if (profile) {
-      const formattedLocation =
-        Array.isArray(profile.location) && profile.location.length > 0
-          ? Object.assign({}, ...profile.location)
-          : profile.location || {};
-      setSelectedDistricts(formattedLocation);
-      setStatus(
-        profile.status === 0
-          ? "구직 중이에요"
-          : profile.status === 1
-            ? "일하고 있지만 좋은 제안은 검토해볼게요"
-            : profile.status === 2
-              ? "당장은 구직 또는 이직 생각이 없어요"
-              : "특정 요일/시간만 일할 수 있어요",
-      );
-      setPhoneNumber(profile.phone || "");
-    }
-  }, [profile]);
-
-  useEffect(() => {
-    updateField("status", convertStatusToNumber(status));
-  }, [status]);
-
-  useEffect(() => {
-    updateField("phone", phoneNumber);
-  }, [phoneNumber]);
-
-  useEffect(() => {
-    updateField("location", selectedDistricts);
-  }, [selectedDistricts]);
+    updateField("phoneOpened", isPhoneNumberOpened);
+  }, [isPhoneNumberOpened, updateField]);
 
   const handleModify = async () => {
     console.log(formData);
@@ -136,7 +107,7 @@ const ProfileEditDetailPage = () => {
       }
 
       router.push("/profile");
-    } catch (err: any) {
+    } catch (err) {
       console.error(
         err instanceof Error ? err.message : "프로필 수정 중 오류 발생",
       );

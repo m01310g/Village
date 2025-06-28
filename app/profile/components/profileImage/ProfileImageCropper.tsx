@@ -92,6 +92,7 @@ const ProfileImageCropper = ({
         croppedAreaPixels={croppedAreaPixels!}
         selectedImageUrl={selectedImageUrl}
         setImage={setImage}
+        onUploadSuccess={onUploadSuccess}
       />
     </div>
   );

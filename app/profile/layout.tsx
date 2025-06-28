@@ -40,7 +40,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
       showSettingButton:
         profileId === null && pathname === "/profile" && isLoggedIn,
     });
-  }, [pathname, profileId, userId, setHeader]);
+  }, [pathname, profileId, userId, setHeader, isLoggedIn]);
 
   return (
     <main

@@ -2,7 +2,6 @@
 
 import { useSetHeader } from "@/app/components/header/HeaderContext";
 import React, { useCallback, useEffect, useState } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import PostForm from "../[postId]/components/PostForm";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
@@ -12,7 +11,6 @@ const PostCreatePage = () => {
   const [isActive, setIsActive] = useState<keyof typeof typeMap>("업계이야기");
   const [content, setContent] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const accessToken = useAuthStore((state) => state.accessToken);
   const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
   const router = useRouter();
 
@@ -51,12 +49,12 @@ const PostCreatePage = () => {
       const data = result.data;
 
       router.replace(`/post/${data.id}`);
-    } catch (err: any) {
+    } catch (err) {
       console.error(
         err instanceof Error ? `게시글 등록 실패: ${err.message}` : err,
       );
     }
-  }, [accessToken, isActive, content, images]);
+  }, [router, typeMap, isActive, content, images]);
 
   useEffect(() => {
     const createButtonProps = {

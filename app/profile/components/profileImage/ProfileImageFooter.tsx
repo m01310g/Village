@@ -1,7 +1,6 @@
 import Button from "@/app/components/Button";
 import { Area } from "react-easy-crop";
 import { getCroppedImage } from "./utils/getCroppedImage";
-import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
@@ -10,6 +9,7 @@ interface ProfileImageFooterProps {
   croppedAreaPixels: Area;
   selectedImageUrl: string;
   setImage: (image: string) => void;
+  onUploadSuccess?: (url: string) => void;
 }
 
 interface ProfileImageUploadResponse {
@@ -23,6 +23,7 @@ const ProfileImageFooter = ({
   croppedAreaPixels,
   selectedImageUrl,
   setImage,
+  onUploadSuccess,
 }: ProfileImageFooterProps) => {
   const handleUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -62,7 +63,11 @@ const ProfileImageFooter = ({
       const result: ProfileImageUploadResponse = await res.json();
 
       setImage(result.data);
-    } catch (err: any) {
+
+      if (onUploadSuccess) {
+        onUploadSuccess(result.data);
+      }
+    } catch (err) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
     }
 

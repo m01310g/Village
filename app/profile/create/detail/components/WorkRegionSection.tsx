@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import ProfileLabel from "../../components/ProfileLabel";
 import WorkRegionSelector from "./WorkRegionSelector";
 import DistrictItem from "./DistrictItem";

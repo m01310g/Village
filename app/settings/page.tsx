@@ -1,17 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
 import { useUserProfile } from "../profile/hooks/useUserProfile";
 import UserDeleteButton from "../components/UserDeleteButton";
 import SignoutButton from "../components/SignoutButton";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const SettingsPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const setHeader = useSetHeader();
-  const { data: profile } = useUserProfile();
+  const { data: profile } = useUserProfile(isLoggedIn);
   const nickname = profile?.nickname;
   const router = useRouter();
+
+  useEffect(() => {
+    const accessToken = useAuthStore.getState().accessToken;
+    setIsLoggedIn(!!accessToken);
+  }, []);
 
   useEffect(() => {
     setHeader({
@@ -20,6 +27,8 @@ const SettingsPage = () => {
       showNotificationButton: true,
     });
   }, [setHeader]);
+
+  useEffect(() => {});
 
   return (
     <main className="h-[calc(100vh-46px)] bg-background-primary">

@@ -9,13 +9,14 @@ import { useParams } from "next/navigation";
 import { usePostData } from "./hooks/usePostData";
 import { useAuthStore } from "@/store/useAuthStore";
 import PostManageBottomSheet from "@/app/components/post/PostManageBottomSheet";
+import { CommentType } from "./components/comments/types/commentType";
 
 const PostDetailPage = () => {
   const setHeader = useSetHeader();
   const userId = useAuthStore.getState().user?.id;
   const params = useParams();
   const postId = Number(params.postId);
-  const { data: postData, isLoading, error } = usePostData(postId);
+  const { data: postData, isLoading } = usePostData(postId);
   const [isMyPost, setIsMyPost] = useState(false);
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);

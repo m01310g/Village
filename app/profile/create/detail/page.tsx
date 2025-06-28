@@ -33,23 +33,23 @@ const ProfileCreateDetailPage = () => {
     if (status !== "구직 상태 선택") {
       updateField("status", convertStatusToNumber(status));
     }
-  }, [status]);
+  }, [status, updateField]);
 
   useEffect(() => {
     if (Object.keys(selectedDistricts).length > 0) {
       updateField("location", selectedDistricts);
     }
-  }, [selectedDistricts]);
+  }, [selectedDistricts, updateField]);
 
   useEffect(() => {
     if (phoneNumber !== "") {
       updateField("phone", phoneNumber);
     }
-  }, [phoneNumber]);
+  }, [phoneNumber, updateField]);
 
   useEffect(() => {
     updateField("phoneOpened", isPhoneNumberOpened);
-  }, [isPhoneNumberOpened]);
+  }, [isPhoneNumberOpened, updateField]);
 
   const handleSubmit = async () => {
     console.log(formData);
@@ -83,7 +83,7 @@ const ProfileCreateDetailPage = () => {
       }
 
       router.replace(`/profile`);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
     }
   };

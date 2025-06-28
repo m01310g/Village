@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import { usePostData } from "../hooks/usePostData";
 import { useParams, useRouter } from "next/navigation";
 import PostForm from "../components/PostForm";
-import { useAuthStore } from "@/store/useAuthStore";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
 const PostEditPage = () => {
@@ -19,13 +18,9 @@ const PostEditPage = () => {
   const [originalContent, setOriginalContent] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [originalImages, setOriginalImages] = useState<string[]>([]);
-  const accessToken = useAuthStore.getState().accessToken;
-  const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
   const router = useRouter();
 
-  const { data: postData, isLoading, error } = usePostData(postId);
-
-  const types = ["업계이야기", "채용", "교육"];
+  const { data: postData, isLoading } = usePostData(postId);
 
   const arraysAreEqual = (a: string[], b: string[]) => {
     if (a.length !== b.length) return false;
@@ -33,6 +28,8 @@ const PostEditPage = () => {
   };
 
   const handleEdit = useCallback(async () => {
+    const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
+
     const formData = {
       id: postData!.id,
       type: typeMap[isActive],
@@ -73,15 +70,17 @@ const PostEditPage = () => {
       const data = result.data;
 
       router.replace(`/post/${data.id}`);
-    } catch (err: any) {
+    } catch (err) {
       console.error(
         err instanceof Error ? `게시글 등록 실패: ${err.message}` : err,
       );
     }
-  }, [accessToken, isActive, content, images, postData]);
+  }, [router, isActive, content, images, postData]);
 
   useEffect(() => {
     if (postData) {
+      const types = ["업계이야기", "채용", "교육"];
+
       if (typeof postData.type === "number") {
         setIsActive(types[postData.type] as "업계이야기" | "채용" | "교육");
       }

@@ -14,7 +14,7 @@ interface ProfileFormState {
 
 export const useProfileFormStore = create(
   persist<ProfileFormState>(
-    (set) => ({
+    (set, get) => ({
       formData: {
         profileImage: "",
         name: "",
@@ -26,13 +26,19 @@ export const useProfileFormStore = create(
         phone: "",
         phoneOpened: 0,
       },
-      updateField: (field, value) =>
-        set((state) => ({
-          formData: {
-            ...state.formData,
-            [field]: value,
-          },
-        })),
+      updateField: (key, value) => {
+        const prevValue = get().formData[key];
+
+        // 값이 실제로 변경된 경우에만 set 수행
+        if (JSON.stringify(prevValue) !== JSON.stringify(value)) {
+          set((state) => ({
+            formData: {
+              ...state.formData,
+              [key]: value,
+            },
+          }));
+        }
+      },
       setFormData: (data) => set({ formData: data }),
     }),
     {

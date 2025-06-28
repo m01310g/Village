@@ -52,7 +52,7 @@ const PostCreateFooter = ({ setImages, imageCount }: PostCreateFooterProps) => {
       const result = await res.json();
       const data = result.data;
       setImages((prev) => [...prev, ...data]);
-    } catch (err: any) {
+    } catch (err) {
       console.error(
         err instanceof Error
           ? `이미지 업로드 실패: ${err.message}`

@@ -1,11 +1,11 @@
-interface CommentProfile {
+export interface CommentProfile {
   id: number;
   profileImage: string;
   nickname: string;
   name: string;
 }
 
-interface CommentType {
+export interface CommentType {
   id: number;
   content: string;
   writtenAt: string;

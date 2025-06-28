@@ -97,14 +97,14 @@ const KakaoCallbackPage = () => {
             console.error("로그인 실패:", error);
           }
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error(
           err instanceof Error ? err.message : "로그인 처리 중 오류 발생",
         );
       }
     };
     fetchToken();
-  }, [code]);
+  }, [code, router, setAccessToken, setRefreshToken, setUser]);
 
   return <div>카카오 로그인 처리 중</div>;
 };

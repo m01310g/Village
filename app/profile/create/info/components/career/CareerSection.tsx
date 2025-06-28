@@ -33,6 +33,7 @@ const CareerSection = ({
       setIsInitialized(true);
     }
   }, [initialCareers, isInitialized]);
+
   useEffect(() => {
     const webCareers: WebCareer[] = careerList.map(
       ({ workplace, startDate, endDate, isCurrent }) => ({
@@ -42,7 +43,7 @@ const CareerSection = ({
       }),
     );
     onChangeCareers(webCareers);
-  }, [careerList]);
+  }, [onChangeCareers, careerList]);
 
   const handleAddCareer = (newCareer: CareerData) => {
     setCareerList((prev) => {

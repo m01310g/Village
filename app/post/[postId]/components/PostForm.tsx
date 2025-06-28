@@ -12,6 +12,8 @@ interface PostFormProps {
   setImages: Dispatch<SetStateAction<string[]>>;
 }
 
+type PostType = "업계이야기" | "채용" | "교육";
+
 const PostForm = ({
   isActive,
   setIsActive,
@@ -21,7 +23,7 @@ const PostForm = ({
   setImages,
 }: PostFormProps) => {
   const types = ["업계이야기", "채용", "교육"];
-  const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
+  // const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
 
   return (
     <div className="flex h-full max-w-[375px] flex-col overflow-hidden">
@@ -32,7 +34,7 @@ const PostForm = ({
               key={i}
               content={type}
               onClick={() => {
-                setIsActive(type as keyof typeof typeMap);
+                setIsActive(type as PostType);
               }}
               isActive={isActive === type}
             />

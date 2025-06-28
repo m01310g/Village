@@ -1,6 +1,7 @@
 import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
 import { Dispatch, SetStateAction, useState } from "react";
 import CommentDeleteModal from "./CommentDeleteModal";
+import { CommentType } from "./types/commentType";
 
 interface CommentManageBottomSheetProps {
   commentId: number;

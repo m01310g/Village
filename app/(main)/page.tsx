@@ -12,7 +12,7 @@ const Page = () => {
   const setHeader = useSetHeader();
   const [activeFilter, setActiveFilter] = useState("전체");
   const filters = ["전체", "업계이야기", "채용", "교육"];
-  const { data: postList, isLoading, error } = usePostList();
+  const { data: postList } = usePostList();
   const userId = useAuthStore.getState().user?.id;
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CommentType } from "../components/comments/types/commentType";
 
 const createComment = async ({
   postId,
