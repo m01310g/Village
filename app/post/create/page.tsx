@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import PostForm from "../[postId]/components/PostForm";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
+const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
+
 const PostCreatePage = () => {
   const setHeader = useSetHeader();
   const [isActive, setIsActive] = useState<keyof typeof typeMap>("업계이야기");
   const [content, setContent] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
   const router = useRouter();
 
   const handleSubmit = useCallback(async () => {
@@ -54,7 +55,7 @@ const PostCreatePage = () => {
         err instanceof Error ? `게시글 등록 실패: ${err.message}` : err,
       );
     }
-  }, [router, typeMap, isActive, content, images]);
+  }, [router, isActive, content, images]);
 
   useEffect(() => {
     const createButtonProps = {
