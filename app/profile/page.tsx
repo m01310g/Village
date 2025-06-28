@@ -25,8 +25,18 @@ const ProfilePage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const accessToken = useAuthStore.getState().accessToken;
-    setIsLoggedIn(!!accessToken);
+    const { accessToken, user, resetAuth } = useAuthStore.getState();
+
+    if (!accessToken) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
+    }
+
+    if (!accessToken && user) {
+      resetAuth();
+      localStorage.removeItem("profile-form-data");
+    }
   }, []);
 
   useEffect(() => {
@@ -34,13 +44,6 @@ const ProfilePage = () => {
       router.push("/profile/create/info");
     }
   }, [error, router]);
-
-  useEffect(() => {
-    if (!isLoggedIn && useAuthStore.getState().user) {
-      useAuthStore.getState().resetAuth();
-      localStorage.removeItem("profile-form-data");
-    }
-  }, [isLoggedIn]);
 
   // 로딩 컴포넌트 구현
   if (isLoggedIn === null) return null;

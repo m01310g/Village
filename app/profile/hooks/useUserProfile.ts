@@ -33,7 +33,7 @@ export interface UserProfile extends ProfileFormData {
   location: { [key: string]: string[] };
   status: number;
   phone: string;
-  isPhoneOpened: number;
+  phoneOpened: number;
 }
 
 const getProfile = async (): Promise<UserProfile> => {

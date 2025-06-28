@@ -2,7 +2,7 @@ export interface CareerData {
   id: string;
   workplace: string;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   isCurrent: boolean;
 }
 

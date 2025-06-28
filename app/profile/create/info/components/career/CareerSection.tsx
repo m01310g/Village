@@ -27,7 +27,7 @@ const CareerSection = ({
         workplace: career.where,
         startDate: career.start,
         endDate: career.end === "현재 근무 중" ? "" : career.end,
-        isCurrent: career.end === "현재 근무 중",
+        isCurrent: career.current === 1,
       }));
       setCareerList(transformed);
       setIsInitialized(true);
@@ -39,7 +39,8 @@ const CareerSection = ({
       ({ workplace, startDate, endDate, isCurrent }) => ({
         where: workplace,
         start: startDate,
-        end: isCurrent ? "현재 근무 중" : endDate,
+        end: isCurrent ? null : endDate,
+        current: isCurrent ? 1 : 0,
       }),
     );
     onChangeCareers(webCareers);
