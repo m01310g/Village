@@ -18,9 +18,10 @@ const CareerSection = ({
   const [careerList, setCareerList] = useState<CareerData[]>([]);
   const [editTarget, setEditTarget] = useState<CareerData | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (initialCareers.length > 0 && careerList.length === 0) {
+    if (!isInitialized && initialCareers.length > 0) {
       const transformed = initialCareers.map((career, idx) => ({
         id: `${idx}-${career.where}`,
         workplace: career.where,
@@ -29,9 +30,9 @@ const CareerSection = ({
         isCurrent: career.end === "현재 근무 중",
       }));
       setCareerList(transformed);
+      setIsInitialized(true);
     }
-  }, [initialCareers, careerList.length]);
-
+  }, [initialCareers, isInitialized]);
   useEffect(() => {
     const webCareers: WebCareer[] = careerList.map(
       ({ workplace, startDate, endDate, isCurrent }) => ({
@@ -69,15 +70,16 @@ const CareerSection = ({
       </div>
       {careerList &&
         (careerList.length !== 0 ? (
-          careerList.map((career, idx) => (
-            <div key={idx}>
+          careerList.map((career) => (
+            <div key={career.id}>
               <CareerCard
                 {...career}
                 onEdit={handleEdit}
                 onDelete={(e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
-                  const updated = careerList.filter((_, i) => i !== idx);
-                  setCareerList(updated);
+                  setCareerList((prev) =>
+                    prev.filter((c) => c.id !== career.id),
+                  );
                 }}
               />
               <div className="h-[1px] w-full bg-border-secondary" />
