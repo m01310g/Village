@@ -11,6 +11,8 @@ import PhoneNumberVisibilitySection from "./components/PhoneNumberVisibilitySeci
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
+import { useAuthStore } from "@/store/useAuthStore";
+import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
 
 const ProfileCreateDetailPage = () => {
   const router = useRouter();
@@ -22,12 +24,24 @@ const ProfileCreateDetailPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
+  const { accessToken } = useAuthStore();
 
   const isFormValid =
     status !== "구직 상태 선택" &&
     Object.keys(selectedDistricts).length > 0 &&
     phoneNumber !== "" &&
     phoneNumberError === "";
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const checkWebProfile = async () => {
+      const hasProfile = await checkHasWebProfile(accessToken);
+
+      if (hasProfile) router.replace("/");
+    };
+
+    checkWebProfile();
+  }, [accessToken]);
 
   useEffect(() => {
     if (status !== "구직 상태 선택") {

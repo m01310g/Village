@@ -1,19 +1,22 @@
 "use client";
 
 import { useInputValidation } from "../../hooks/useInputValidation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createFormFieldChangeHandler } from "../../utils/formUtils";
 import Button from "@/app/components/Button";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
 import ProfileForm from "./components/ProfileForm";
+import { useAuthStore } from "@/store/useAuthStore";
+import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
 
-const ProfileCreateInfo = () => {
+const ProfileCreateInfoPage = () => {
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const { formData, updateField } = useProfileFormStore();
   const router = useRouter();
+  const { accessToken } = useAuthStore();
 
   const isFormValid =
     !!formData.name &&
@@ -24,6 +27,17 @@ const ProfileCreateInfo = () => {
     !nicknameInput.isComposing;
 
   const handleChange = createFormFieldChangeHandler(updateField);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const checkWebProfile = async () => {
+      const hasProfile = await checkHasWebProfile(accessToken);
+
+      if (hasProfile) router.replace("/");
+    };
+
+    checkWebProfile();
+  }, [accessToken]);
 
   return (
     <div className="flex h-full flex-col items-center">
@@ -64,4 +78,4 @@ const ProfileCreateInfo = () => {
   );
 };
 
-export default ProfileCreateInfo;
+export default ProfileCreateInfoPage;
