@@ -1,10 +1,9 @@
 import Checkbox from "@/app/components/Checkbox";
 import ProfileLabel from "../../components/ProfileLabel";
-import { Dispatch, SetStateAction } from "react";
 
 interface PhoneNumberVisibilitySectionProps {
   isPhoneNumberOpened: number;
-  setIsPhoneNumberOpened: Dispatch<SetStateAction<number>>;
+  setIsPhoneNumberOpened: (value: number) => void;
 }
 
 const PhoneNumberVisibilitySection = ({
@@ -18,7 +17,8 @@ const PhoneNumberVisibilitySection = ({
         <Checkbox
           isChecked={isPhoneNumberOpened === 1}
           onClick={() => {
-            setIsPhoneNumberOpened((prev) => (prev === 1 ? 0 : 1));
+            const newValue = isPhoneNumberOpened === 1 ? 0 : 1;
+            setIsPhoneNumberOpened(newValue);
           }}
         />
         <span className="text-caption-2 text-text-primary">

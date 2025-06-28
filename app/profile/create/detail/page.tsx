@@ -102,13 +102,19 @@ const ProfileCreateDetailPage = () => {
         <JobSeekingStatusSection status={status} setStatus={setStatus} />
         <PhoneNumberSection
           phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
+          setPhoneNumber={(value: string) => {
+            setPhoneNumber(value);
+            updateField("phone", value);
+          }}
           error={phoneNumberError}
           setError={setPhoneNumberError}
         />
         <PhoneNumberVisibilitySection
           isPhoneNumberOpened={isPhoneNumberOpened}
-          setIsPhoneNumberOpened={setIsPhoneNumberOpened}
+          setIsPhoneNumberOpened={(value: number) => {
+            setIsPhoneNumberOpened(value);
+            updateField("phoneOpened", value);
+          }}
         />
       </form>
       <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>

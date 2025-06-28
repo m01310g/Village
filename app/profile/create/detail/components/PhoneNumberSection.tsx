@@ -4,7 +4,7 @@ import ProfileLabel from "../../components/ProfileLabel";
 
 interface PhoneNumberSectionProps {
   phoneNumber: string;
-  setPhoneNumber: Dispatch<SetStateAction<string>>;
+  setPhoneNumber: (value: string) => void;
   error: string;
   setError: Dispatch<SetStateAction<string>>;
 }

@@ -4,7 +4,7 @@ import ProfileViewSection from "./components/ProfileViewSection";
 import PostsSection from "./components/PostsSection";
 import { useUserProfile } from "./hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
-import KakaoSigninButton from "../signin/components/KakaoSigninButton";
+import KakaoSigninButton from "../components/KakaoSigninButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

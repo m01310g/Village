@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import ProfileLabel from "../../components/ProfileLabel";
 import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
 
 interface JobSeekingStatusSectionProps {
   status: string;
-  setStatus: Dispatch<SetStateAction<string>>;
+  setStatus: (value: string) => void;
 }
 
 const JobSeekingStatusSection = ({
