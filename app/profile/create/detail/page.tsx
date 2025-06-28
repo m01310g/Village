@@ -18,7 +18,7 @@ const ProfileCreateDetailPage = () => {
   const [status, setStatus] = useState("구직 상태 선택");
   const [selectedDistricts, setSelectedDistricts] = useState<{
     [key: string]: string[];
-  }>({ [""]: [""] });
+  }>({});
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);

@@ -21,7 +21,7 @@ const ProfileEditDetailPage = () => {
   const router = useRouter();
   const [selectedDistricts, setSelectedDistricts] = useState<{
     [key: string]: string[];
-  }>({ [""]: [""] });
+  }>({});
   const [status, setStatus] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
