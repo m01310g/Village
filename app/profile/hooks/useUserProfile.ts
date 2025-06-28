@@ -52,7 +52,7 @@ const getProfile = async (): Promise<UserProfile> => {
     } else if (error.statusCode === 403) {
       throw new Error(`유저 회원이 아닙니다: ${error.message}`);
     } else if (error.statusCode === 404) {
-      throw new Error(`등록한 프로필 없음: ${error.message}`);
+      throw { status: error.statusCode, message: error.message };
     } else {
       throw new Error(`프로필 조회 중 오류 발생: ${error.message}`);
     }

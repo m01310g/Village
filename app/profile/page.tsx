@@ -9,6 +9,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+interface ErrorWithStatus {
+  status: number;
+  message: string;
+}
+
 const ProfilePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const {
@@ -23,6 +28,19 @@ const ProfilePage = () => {
     const accessToken = useAuthStore.getState().accessToken;
     setIsLoggedIn(!!accessToken);
   }, []);
+
+  useEffect(() => {
+    if (error && (error as unknown as ErrorWithStatus).status === 404) {
+      router.push("/profile/create/info");
+    }
+  }, [error, router]);
+
+  useEffect(() => {
+    if (!isLoggedIn && useAuthStore.getState().user) {
+      useAuthStore.getState().resetAuth();
+      localStorage.removeItem("profile-form-data");
+    }
+  }, [isLoggedIn]);
 
   // 로딩 컴포넌트 구현
   if (isLoggedIn === null) return null;
