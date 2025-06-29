@@ -13,6 +13,7 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useAuthStore } from "@/store/useAuthStore";
 import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
+import { logSignUpEvent } from "@/app/lib/amplitude";
 
 const ProfileCreateDetailPage = () => {
   const router = useRouter();
@@ -96,6 +97,8 @@ const ProfileCreateDetailPage = () => {
         }
       }
 
+      const data = await res.json();
+      logSignUpEvent(data.id);
       router.replace(`/profile`);
     } catch (err) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
