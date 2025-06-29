@@ -1,13 +1,7 @@
 "use client";
 
-import * as amplitude from "@amplitude/analytics-browser";
 import { useEffect } from "react";
-
-const initAmplitude = () => {
-  amplitude.init(`${process.env.AMPLITUDE_API_KEY}`, undefined, {
-    defaultTracking: true,
-  });
-};
+import { initAmplitude } from "../lib/amplitude";
 
 interface AmplitudeProviderProps {
   children: React.ReactNode;
