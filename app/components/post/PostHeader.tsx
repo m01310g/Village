@@ -60,10 +60,7 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
           post.isNeighbor || isMyProfile ? (
             <div className="h-10 w-10" />
           ) : (
-            <AddNeighborButton
-              id={post.writtenBy.id}
-              isNeighbor={post.isNeighbor || 0}
-            />
+            <AddNeighborButton />
           )
         ) : pathname.startsWith("/post/") ? (
           isMyProfile ? (
