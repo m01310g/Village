@@ -2,6 +2,7 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import BackIcon from "@/public/icons/chevron-left.svg";
 import SearchIcon from "@/public/icons/icn_search.svg";
 import { useState } from "react";
+import SearchResult from "./SearchResult";
 
 interface HeaderSearchBarProps {
   onClose: () => void;
@@ -9,6 +10,15 @@ interface HeaderSearchBarProps {
 
 const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
   const [keyword, setKeyword] = useState("");
+  const [searchResult, setSearchResult] = useState<
+    {
+      id: number;
+      name: string;
+      nickname: string;
+      isNeighbor: number;
+      profileImage: string;
+    }[]
+  >([]);
 
   const handleSearch = async () => {
     if (!keyword) return;
@@ -36,10 +46,9 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
     }
 
     const result = await res.json();
-    console.log(result);
     const data = result.data;
 
-    console.log(data);
+    setSearchResult(data);
 
     return data;
   };
@@ -67,6 +76,16 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         </div>
         <div className="h-[46px] w-[46px]" />
       </div>
+      {searchResult.length > 0 &&
+        searchResult.map((data) => (
+          <SearchResult
+            key={data.id}
+            id={data.id}
+            nickname={data.nickname}
+            profileImage={data.profileImage}
+            isNeighbor={data.isNeighbor}
+          />
+        ))}
     </div>
   );
 };
