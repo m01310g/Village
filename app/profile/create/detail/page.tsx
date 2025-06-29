@@ -42,7 +42,7 @@ const ProfileCreateDetailPage = () => {
     };
 
     checkWebProfile();
-  }, [accessToken]);
+  }, [accessToken, router]);
 
   useEffect(() => {
     if (status !== "구직 상태 선택") {

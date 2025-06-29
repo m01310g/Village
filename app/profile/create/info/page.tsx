@@ -37,7 +37,7 @@ const ProfileCreateInfoPage = () => {
     };
 
     checkWebProfile();
-  }, [accessToken]);
+  }, [accessToken, router]);
 
   return (
     <div className="flex h-full flex-col items-center">
