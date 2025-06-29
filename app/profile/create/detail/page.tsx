@@ -97,8 +97,8 @@ const ProfileCreateDetailPage = () => {
         }
       }
 
-      const data = await res.json();
-      logSignUpEvent(data.id);
+      const result = await res.json();
+      logSignUpEvent(result.data.id);
       router.replace(`/profile`);
     } catch (err) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
