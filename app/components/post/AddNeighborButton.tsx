@@ -49,7 +49,7 @@ const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
       }}
     >
       <AddUser color="#737373" width="16px" height="16px" />
-      <span className="text-title-4 text-text-tertiary">이웃 신청</span>
+      <span className="text-title-4 text-text-tertiary">요청중</span>
     </button>
   ) : (
     <div></div>
