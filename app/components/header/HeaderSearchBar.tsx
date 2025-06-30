@@ -91,6 +91,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
             <SearchResult
               key={data.id}
               id={data.id}
+              name={data.name}
               nickname={data.nickname}
               profileImage={data.profileImage}
               isNeighbor={data.isNeighbor}

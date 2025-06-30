@@ -6,6 +6,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 interface SearchResultProps {
   id: number;
   nickname: string;
+  name: string;
   profileImage: string;
   isNeighbor: number;
 }
@@ -13,6 +14,7 @@ interface SearchResultProps {
 const SearchResult = ({
   id,
   nickname,
+  name,
   profileImage,
   isNeighbor,
 }: SearchResultProps) => {
@@ -36,7 +38,9 @@ const SearchResult = ({
             alt={`${nickname}의 프로필 사진`}
           />
         </div>
-        <h3 className="text-title-3">{nickname}</h3>
+        <h3 className="text-title-2 text-text-primary">{nickname}</h3>
+        <div className="h-4 w-0.5 bg-neutral-400" />
+        <h3 className="text-title-2 text-neutral-400">{name}</h3>
       </div>
 
       {isNeighbor || isMyProfile ? (
