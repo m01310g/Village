@@ -1,5 +1,4 @@
 import React from "react";
-import CameraIcon from "@/public/icons/icn_camera-01.svg";
 import ImageIcon from "@/public/icons/icn_image-03.svg";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
@@ -63,9 +62,6 @@ const PostCreateFooter = ({ setImages, imageCount }: PostCreateFooterProps) => {
 
   return (
     <footer className="flex w-full items-center border-t-[1px] border-border-primary px-4 py-1">
-      <button className="cursor-pointer p-1.5">
-        <CameraIcon width="24px" height="24px" color="#737373" />
-      </button>
       <label className="cursor-pointer p-1.5">
         <ImageIcon width="24px" height="24px" color="#737373" />
         <input
