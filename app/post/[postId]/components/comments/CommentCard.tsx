@@ -1,9 +1,9 @@
-import PostContent from "@/app/components/post/PostContent";
 import CommentFooter from "./CommentFooter";
 import { getRelativeTime } from "@/app/components/post/utils/getRelativeTime";
 import CommentHeader from "./CommentHeader";
 import { Dispatch, SetStateAction } from "react";
 import { CommentType } from "./types/commentType";
+import CommetnContent from "./CommentContent";
 
 interface CommentCardProps {
   comment: CommentType;
@@ -23,7 +23,7 @@ const CommentCard = ({
         isMyProfile={isMyProfile}
         setComments={setComments}
       />
-      <PostContent content={comment.content} />
+      <CommetnContent content={comment.content} />
       <CommentFooter createdAt={getRelativeTime(comment.writtenAt)} />
     </div>
   );

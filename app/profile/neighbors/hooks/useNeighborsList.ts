@@ -7,6 +7,7 @@ interface Neighbor {
   profileImage: string;
   nickname: string;
   name: string;
+  isNeighbor: number;
 }
 
 interface NeighborsList {

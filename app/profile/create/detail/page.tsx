@@ -13,6 +13,7 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useAuthStore } from "@/store/useAuthStore";
 import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
+import { logSignUpEvent } from "@/app/lib/amplitude";
 
 const ProfileCreateDetailPage = () => {
   const router = useRouter();
@@ -41,7 +42,7 @@ const ProfileCreateDetailPage = () => {
     };
 
     checkWebProfile();
-  }, [accessToken]);
+  }, [accessToken, router]);
 
   useEffect(() => {
     if (status !== "구직 상태 선택") {
@@ -66,7 +67,6 @@ const ProfileCreateDetailPage = () => {
   }, [isPhoneNumberOpened, updateField]);
 
   const handleSubmit = async () => {
-    console.log(formData);
     try {
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
@@ -96,6 +96,8 @@ const ProfileCreateDetailPage = () => {
         }
       }
 
+      const result = await res.json();
+      logSignUpEvent(result.data.id);
       router.replace(`/profile`);
     } catch (err) {
       console.error(err instanceof Error ? err.message : "알 수 없는 오류");
@@ -131,7 +133,11 @@ const ProfileCreateDetailPage = () => {
           }}
         />
       </form>
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
+      <CompleteButton
+        isFormValid={isFormValid}
+        onClick={handleSubmit}
+        onBack={() => router.back()}
+      >
         등록
       </CompleteButton>
     </div>

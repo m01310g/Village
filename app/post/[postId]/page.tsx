@@ -22,6 +22,8 @@ const PostDetailPage = () => {
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);
   const [commentCount, setCommentCount] = useState(0);
   const types = ["업계정보", "채용", "교육"];
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isLoggedIn = !!accessToken;
 
   useEffect(() => {
     if (postData) {
@@ -44,7 +46,7 @@ const PostDetailPage = () => {
     <div>로딩중...</div>
   ) : (
     <>
-      <div className="flex h-full flex-col overflow-y-auto">
+      <div className="scrollbar-none flex h-full flex-col overflow-y-auto">
         {/* type으로 변경 */}
         <div className="px-4 py-3">
           <span className="text-caption-2 w-fit rounded-[4px] bg-neutral-50 p-1 text-center text-text-tertiary">
@@ -60,6 +62,7 @@ const PostDetailPage = () => {
               setComments={setCommentsList}
               commentCount={commentCount}
               setCommentCount={setCommentCount}
+              isLoggedIn={isLoggedIn}
             />
           </>
         )}

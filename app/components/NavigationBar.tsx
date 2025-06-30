@@ -40,7 +40,7 @@ const NavigationBar = () => {
     },
     {
       label: "채용공고",
-      path: "/job",
+      path: "/recruit",
       Icon: JobListingIcon,
     },
     {

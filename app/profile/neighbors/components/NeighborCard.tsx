@@ -2,7 +2,7 @@ import NeighborButtons from "./NeighborButtons";
 import NeighborInfo from "./NeighborInfo";
 
 interface NeighborCardProps {
-  isMyNeighbor: boolean;
+  isMyNeighbor: number;
   data: {
     id: number;
     nickname: string;
@@ -16,6 +16,7 @@ const NeighborCard = ({ data, isMyNeighbor }: NeighborCardProps) => {
     <div className="flex flex-col">
       <div className="flex w-full justify-between px-4 py-3">
         <NeighborInfo
+          id={data.id}
           nickname={data.nickname}
           name={data.name}
           profileImage={data.profileImage}

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import EditIcon from "@/public/icons/icn_edit2.svg";
 import ProfileImageUploader from "./ProfileImageUploader";
+import useIsMobile from "@/app/lib/hooks/useIsMobile";
 
 interface ProfileImageSectionProps {
   isBottomSheetOpen: boolean;
@@ -23,12 +24,22 @@ const ProfileImageSection = ({
   const [step, setStep] = useState<"select" | "gallery" | "camera" | "crop">(
     "select",
   );
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (initialImage) {
       setImage(initialImage);
     }
   }, [initialImage]);
+
+  const onImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImageUrl(imageUrl);
+      setStep("crop");
+    }
+  };
 
   return (
     <>
@@ -39,11 +50,24 @@ const ProfileImageSection = ({
               <label
                 htmlFor="profile-image-upload"
                 className="absolute left-[102px] top-1 z-10 flex h-7 w-7 cursor-pointer items-center justify-center rounded-[69.3px] border border-white bg-background-brand"
-                onClick={() => {
-                  setStep("select");
-                  onClickOpen();
+                onClick={(e) => {
+                  if (isMobile) {
+                    e.preventDefault();
+                    setStep("select");
+                    onClickOpen();
+                  }
                 }}
               >
+                {!isMobile && (
+                  <input
+                    id="profile-image-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onClick={(e) => e.stopPropagation()}
+                    onChange={onImageSelect}
+                  />
+                )}
                 <EditIcon color="white" width="18px" height="18px" />
               </label>
               <div className="relative flex h-[118px] w-[118px] items-center justify-center overflow-hidden rounded-[4px]">
@@ -60,8 +84,24 @@ const ProfileImageSection = ({
           ) : (
             <label
               className="flex h-[118px] w-[118px] cursor-pointer flex-col items-center justify-center gap-2 rounded-[4px] bg-background-secondary"
-              onClick={onClickOpen}
+              onClick={(e) => {
+                if (isMobile) {
+                  e.preventDefault();
+                  setStep("select");
+                  onClickOpen();
+                }
+              }}
             >
+              {!isMobile && (
+                <input
+                  id="profile-image-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={onImageSelect}
+                />
+              )}
               <Image
                 src={"/icons/icn_img_plus.svg"}
                 alt="프로필 사진 등록"
@@ -75,17 +115,18 @@ const ProfileImageSection = ({
           )}
         </div>
       </section>
-      {isBottomSheetOpen && (
-        <ProfileImageUploader
-          setImage={setImage}
-          setIsBottomSheetOpen={setIsBottomSheetOpen}
-          selectedImageUrl={selectedImageUrl}
-          setSelectedImageUrl={setSelectedImageUrl}
-          step={step}
-          setStep={setStep}
-          onUploadSuccess={onUploadSuccess}
-        />
-      )}
+      {isBottomSheetOpen ||
+        (step === "crop" && (
+          <ProfileImageUploader
+            setImage={setImage}
+            setIsBottomSheetOpen={setIsBottomSheetOpen}
+            selectedImageUrl={selectedImageUrl}
+            setSelectedImageUrl={setSelectedImageUrl}
+            step={step}
+            setStep={setStep}
+            onUploadSuccess={onUploadSuccess}
+          />
+        ))}
     </>
   );
 };

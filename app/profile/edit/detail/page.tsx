@@ -17,7 +17,13 @@ import { useProfileFormStore } from "@/store/useProfileFormStore";
 const ProfileEditDetailPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: profile } = useUserProfile(isLoggedIn);
-  const { formData, updateField } = useProfileFormStore();
+  const {
+    formData,
+    updateField,
+    setInitialFormData,
+    checkIsModified,
+    isModified,
+  } = useProfileFormStore();
   const router = useRouter();
   const [selectedDistricts, setSelectedDistricts] = useState<{
     [key: string]: string[];
@@ -51,33 +57,36 @@ const ProfileEditDetailPage = () => {
   }, [profile]);
 
   useEffect(() => {
-    updateField("status", convertStatusToNumber(status));
-  }, [status, updateField]);
+    checkIsModified();
+  }, [formData]);
 
   useEffect(() => {
-    updateField("phone", phoneNumber);
-  }, [phoneNumber, updateField]);
+    if (profile) {
+      const initial = {
+        profileImage: profile.profileImage || "",
+        name: profile.name || "",
+        nickname: profile.nickname || "",
+        webCareers: profile.webCareers || [],
+        introduction: profile.introduction || "",
+        location: profile.location || {},
+        status: profile.status || 0,
+        phone: profile.phone || "",
+        phoneOpened: profile.phoneOpened || 0,
+      };
+
+      setInitialFormData(initial);
+    }
+  }, [profile]);
 
   useEffect(() => {
-    updateField("phoneOpened", isPhoneNumberOpened);
-  }, [isPhoneNumberOpened, updateField]);
-
-  useEffect(() => {
-    updateField("location", selectedDistricts);
-  }, [selectedDistricts, updateField]);
+    checkIsModified();
+  }, [formData]);
 
   const isFormValid =
     status !== "구직 상태 선택" &&
     Object.keys(selectedDistricts).length > 0 &&
     phoneNumber !== "" &&
     phoneNumberError === "";
-
-  const isFormChanged =
-    profile &&
-    (profile.status !== convertStatusToNumber(status) ||
-      JSON.stringify(profile.location) !== JSON.stringify(selectedDistricts) ||
-      profile.phone !== phoneNumber ||
-      profile.phoneOpened !== isPhoneNumberOpened);
 
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
@@ -168,8 +177,9 @@ const ProfileEditDetailPage = () => {
         />
       </form>
       <CompleteButton
-        isFormValid={!!isFormValid && !!isFormChanged}
+        isFormValid={!!isFormValid && isModified}
         onClick={handleModify}
+        onBack={() => router.back()}
       >
         수정
       </CompleteButton>

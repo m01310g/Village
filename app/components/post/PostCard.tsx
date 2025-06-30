@@ -4,6 +4,7 @@ import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";
 import { getRelativeTime } from "./utils/getRelativeTime";
 import Link from "next/link";
+import PostImagesItem from "./PostImagesItem";
 
 interface PostCardProps {
   post: Board;
@@ -20,6 +21,9 @@ const PostCard = ({ post, isMyProfile }: PostCardProps) => {
         className="flex flex-col gap-3"
       >
         <PostContent content={post.content} />
+        {post.images && post.images?.length > 0 && (
+          <PostImagesItem images={post.images} />
+        )}
         <PostCardFooter
           likeCount={post.likeNumber || 0}
           commentCount={post.commentNumber || 0}

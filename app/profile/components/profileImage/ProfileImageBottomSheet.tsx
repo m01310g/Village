@@ -51,20 +51,6 @@ const ProfileImageBottomSheet = ({
           />
         </li>
         <div className="h-[1px] w-full bg-background-tertiary" />
-        <li className="h-[61px] px-4 py-5">
-          <button
-            className="flex w-full justify-between text-left"
-            onClick={() => setStep("camera")}
-          >
-            <span className="text-body-2">사진 찍기</span>
-            <Image
-              src={"/icons/chevron-right.svg"}
-              alt="사진 보관함"
-              width={20}
-              height={20}
-            />
-          </button>
-        </li>
       </ul>
     </div>
   );

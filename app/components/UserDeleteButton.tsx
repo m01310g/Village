@@ -68,7 +68,7 @@ const UserDeleteButton = () => {
             정말 탈퇴하시겠어요?
           </h3>
           <p className="text-body-2 text-center text-text-secondary">
-            등록한 이력서, 개인정보 등 모든 데이터가
+            등록한 프로필, 개인정보 등 모든 데이터가
             <br />
             완전히 삭제되며 복구할 수 없어요.
           </p>
