@@ -1,5 +1,6 @@
 import { UserProfile } from "../hooks/useUserProfile";
 import ProfileButtons from "./ProfileButtons";
+import ProfileCareer from "./ProfileCareer";
 import ProfileInfoCard from "./ProfileInfoCard";
 import ProfileIntroduce from "./ProfileIntroduce";
 
@@ -25,7 +26,10 @@ const ProfileViewSection = ({
         name={profile.name}
         neighborCount={profile.neighbor}
       />
-      <ProfileIntroduce introduction={profile.introduction} />
+      <div className="flex flex-col">
+        <ProfileCareer careers={profile.webCareers} />
+        <ProfileIntroduce introduction={profile.introduction} />
+      </div>
       <ProfileButtons
         isMyProfile={isMyProfile}
         isNeighbor={profile.isNeighbor}
