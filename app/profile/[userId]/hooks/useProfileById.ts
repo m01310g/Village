@@ -1,7 +1,7 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { UserProfile } from "../../hooks/useUserProfile";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const getProfileById = async (userId: number): Promise<UserProfile> => {
   const res = await fetchWithAuth(
@@ -33,7 +33,7 @@ const getProfileById = async (userId: number): Promise<UserProfile> => {
 
 export const useProfileById = (userId: number) => {
   return useQuery({
-    queryKey: ["profileById"],
+    queryKey: ["profileById", userId],
     queryFn: () => getProfileById(userId),
   });
 };
