@@ -41,11 +41,11 @@ const ProfileEditInfoPage = () => {
       };
       setInitialFormData(initial);
     }
-  }, [profile, updateField]);
+  }, [profile, updateField, setInitialFormData]);
 
   useEffect(() => {
     checkIsModified();
-  }, [formData]);
+  }, [formData, checkIsModified]);
 
   return (
     <div className="flex h-full flex-col items-center">
