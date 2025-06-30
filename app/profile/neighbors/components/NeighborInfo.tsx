@@ -9,12 +9,14 @@ interface NeighborInfoProps {
 const NeighborInfo = ({ nickname, name, profileImage }: NeighborInfoProps) => {
   return (
     <div className="flex items-center gap-2">
-      <Image
-        src={profileImage}
-        width={40}
-        height={40}
-        alt={`${nickname}의 프로필 사진`}
-      />
+      <div className="flex h-10 w-10 overflow-hidden rounded-full">
+        <Image
+          src={profileImage}
+          width={40}
+          height={40}
+          alt={`${nickname}의 프로필 사진`}
+        />
+      </div>
       <div className="flex items-center gap-[6px]">
         <span className="text-body-2 text-text-primary">{nickname}</span>
         <div className="h-4 w-[1px] bg-neutral-400" />
