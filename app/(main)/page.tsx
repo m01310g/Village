@@ -20,7 +20,6 @@ const Page = () => {
       title: "",
       showBackButton: false,
       showSearchButton: true,
-      showNotificationButton: true,
       showSettingButton: false,
       showLogo: true,
     });

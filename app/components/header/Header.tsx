@@ -62,12 +62,9 @@ const Header = ({
         <h1 className="text-title-2">{title}</h1>
       </div>
       {/* 각 버튼에 onClick 함수 추가 예정 */}
-      {showSearchButton && (
-        <div className="flex h-full w-[46px] items-center justify-center">
-          <HeaderSearchButton />
-        </div>
-      )}
+
       <div className="flex h-full w-[46px] items-center justify-center">
+        {showSearchButton && <HeaderSearchButton />}
         {showNotificationButton && (
           <button type="button">
             <Image
