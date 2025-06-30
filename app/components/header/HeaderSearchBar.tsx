@@ -65,7 +65,13 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         >
           <BackIcon width="24px" height="24px" color="#171717" />
         </button>
-        <div className="flex flex-1 gap-1 rounded-[999px] bg-background-secondary px-3 py-2">
+        <form
+          className="flex flex-1 gap-1 rounded-[999px] bg-background-secondary px-3 py-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+        >
           <input
             type="text"
             value={keyword}
@@ -73,10 +79,10 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
             placeholder="사용자 검색"
             className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"
           />
-          <button onClick={handleSearch}>
+          <button type="submit">
             <SearchIcon width="24px" height="24px" color="#171717" />
           </button>
-        </div>
+        </form>
         <div className="h-[46px] w-[46px]" />
       </div>
       <div className="scrollbar-none h-[calc(100vh-46px)] overflow-y-scroll py-3">
