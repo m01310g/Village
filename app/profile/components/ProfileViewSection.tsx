@@ -16,6 +16,7 @@ const ProfileViewSection = ({
   return (
     <section className="flex flex-col gap-4 p-4">
       <ProfileInfoCard
+        id={profile.id}
         profileImage={
           profile.profileImage === "url"
             ? "/logos/symbol.svg"

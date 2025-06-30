@@ -2,7 +2,7 @@ import NeighborButtons from "./NeighborButtons";
 import NeighborInfo from "./NeighborInfo";
 
 interface NeighborCardProps {
-  isMyNeighbor: boolean;
+  isMyNeighbor: number;
   data: {
     id: number;
     nickname: string;
