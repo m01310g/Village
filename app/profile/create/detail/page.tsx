@@ -134,7 +134,11 @@ const ProfileCreateDetailPage = () => {
           }}
         />
       </form>
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
+      <CompleteButton
+        isFormValid={isFormValid}
+        onClick={handleSubmit}
+        onBack={() => router.back()}
+      >
         등록
       </CompleteButton>
     </div>

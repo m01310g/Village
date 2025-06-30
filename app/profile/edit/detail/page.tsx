@@ -170,6 +170,7 @@ const ProfileEditDetailPage = () => {
       <CompleteButton
         isFormValid={!!isFormValid && !!isFormChanged}
         onClick={handleModify}
+        onBack={() => router.back()}
       >
         수정
       </CompleteButton>
