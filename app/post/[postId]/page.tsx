@@ -22,6 +22,8 @@ const PostDetailPage = () => {
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);
   const [commentCount, setCommentCount] = useState(0);
   const types = ["업계정보", "채용", "교육"];
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isLoggedIn = !!accessToken;
 
   useEffect(() => {
     if (postData) {
@@ -60,6 +62,7 @@ const PostDetailPage = () => {
               setComments={setCommentsList}
               commentCount={commentCount}
               setCommentCount={setCommentCount}
+              isLoggedIn={isLoggedIn}
             />
           </>
         )}
