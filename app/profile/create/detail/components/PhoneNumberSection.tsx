@@ -17,13 +17,18 @@ const PhoneNumberSection = ({
 }: PhoneNumberSectionProps) => {
   const formatPhoneNumber = (value: string) => {
     const numbersOnly = value.replace(/\D/g, "").slice(0, 11);
-    if (numbersOnly.length < 10) {
-      return numbersOnly;
+
+    const part1 = numbersOnly.slice(0, 3);
+    const part2 = numbersOnly.slice(3, 7);
+    const part3 = numbersOnly.slice(7, 11);
+
+    if (numbersOnly.length <= 3) {
+      return part1;
+    } else if (numbersOnly.length <= 7) {
+      return `${part1}-${part2}`;
+    } else {
+      return `${part1}-${part2}-${part3}`;
     }
-    if (numbersOnly.length <= 10) {
-      return numbersOnly.replace(/(\d{3})(\d{3,4})(\d{4})/, "$1-$2-$3");
-    }
-    return numbersOnly.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +36,7 @@ const PhoneNumberSection = ({
     const formatted = formatPhoneNumber(rawValue);
     setPhoneNumber(formatted);
 
-    if (formatted.replace(/\D/g, "").length < 10) {
+    if (formatted.replace(/\D/g, "").length < 11) {
       setError("010-0000-0000 형식에 맞지 않습니다.");
     } else {
       setError("");

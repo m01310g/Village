@@ -67,7 +67,6 @@ const ProfileCreateDetailPage = () => {
   }, [isPhoneNumberOpened, updateField]);
 
   const handleSubmit = async () => {
-    console.log(formData);
     try {
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
@@ -134,7 +133,11 @@ const ProfileCreateDetailPage = () => {
           }}
         />
       </form>
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
+      <CompleteButton
+        isFormValid={isFormValid}
+        onClick={handleSubmit}
+        onBack={() => router.back()}
+      >
         등록
       </CompleteButton>
     </div>

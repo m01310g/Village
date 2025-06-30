@@ -20,7 +20,6 @@ const Page = () => {
       title: "",
       showBackButton: false,
       showSearchButton: true,
-      showNotificationButton: true,
       showSettingButton: false,
       showLogo: true,
     });
@@ -46,7 +45,7 @@ const Page = () => {
           />
         ))}
       </div>
-      <div className="h-full overflow-y-auto">
+      <div className="scrollbar-none h-full overflow-y-auto">
         {filteredPosts &&
           filteredPosts.map((post) => {
             const postUserId = post.writtenBy.id;

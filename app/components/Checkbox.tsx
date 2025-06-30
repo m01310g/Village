@@ -4,16 +4,24 @@ import CheckIcon from "@/public/icons/check.svg";
 interface CheckboxProps {
   isChecked: boolean;
   onClick: () => void;
+  disabled?: boolean;
 }
 
-const Checkbox = ({ isChecked, onClick }: CheckboxProps) => {
+const Checkbox = ({ isChecked, onClick, disabled }: CheckboxProps) => {
   return (
-    <div className="h-5 w-5 cursor-pointer p-0.5" onClick={onClick}>
+    <div
+      className={clsx(
+        "h-5 w-5 p-0.5",
+        disabled ? "cursor-not-allowed" : "cursor-pointer",
+      )}
+      onClick={disabled ? undefined : onClick}
+    >
       <div
         className={clsx(
+          "rounded-[3px]",
           isChecked
-            ? "rounded-[3px] border border-blue-600 bg-blue-600"
-            : "rounded-[3px] border-[1.5px] border-border-secondary bg-background-primary",
+            ? "border border-blue-600 bg-blue-600"
+            : "border-[1.5px] border-border-secondary bg-background-primary",
         )}
       >
         <CheckIcon width="14px" height="14px" color="#ffffff" />

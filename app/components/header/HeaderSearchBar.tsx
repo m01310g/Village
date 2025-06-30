@@ -19,9 +19,12 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
       profileImage: string;
     }[]
   >([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     if (!keyword) return;
+
+    setHasSearched(true);
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/searchWebProfile`,
@@ -62,30 +65,44 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         >
           <BackIcon width="24px" height="24px" color="#171717" />
         </button>
-        <div className="flex flex-1 gap-1 rounded-[999px] bg-background-secondary px-3 py-2">
+        <form
+          className="flex flex-1 gap-1 rounded-[999px] bg-background-secondary px-3 py-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+        >
           <input
             type="text"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder="검색어를 입력하세요"
+            placeholder="사용자 검색"
             className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"
           />
-          <button onClick={handleSearch}>
+          <button type="submit">
             <SearchIcon width="24px" height="24px" color="#171717" />
           </button>
-        </div>
+        </form>
         <div className="h-[46px] w-[46px]" />
       </div>
-      {searchResult.length > 0 &&
-        searchResult.map((data) => (
-          <SearchResult
-            key={data.id}
-            id={data.id}
-            nickname={data.nickname}
-            profileImage={data.profileImage}
-            isNeighbor={data.isNeighbor}
-          />
-        ))}
+      <div className="scrollbar-none h-[calc(100vh-46px)] overflow-y-scroll py-3">
+        {searchResult.length > 0 ? (
+          searchResult.map((data) => (
+            <SearchResult
+              key={data.id}
+              id={data.id}
+              name={data.name}
+              nickname={data.nickname}
+              profileImage={data.profileImage}
+              isNeighbor={data.isNeighbor}
+            />
+          ))
+        ) : hasSearched ? (
+          <div className="text-title-1 flex h-full items-center justify-center text-text-primary">
+            검색 결과가 없습니다.
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

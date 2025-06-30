@@ -16,6 +16,7 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
+  const isNeighbor = post.isNeighbor ?? 0;
 
   return (
     <>
@@ -57,13 +58,10 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
         ) : pathname.startsWith("/profile/") ? (
           <div className="h-10 w-10" />
         ) : pathname === "/" ? (
-          post.isNeighbor || isMyProfile ? (
+          isMyProfile ? (
             <div className="h-10 w-10" />
           ) : (
-            <AddNeighborButton
-              id={post.writtenBy.id}
-              isNeighbor={post.isNeighbor || 0}
-            />
+            <AddNeighborButton id={post.writtenBy.id} isNeighbor={isNeighbor} />
           )
         ) : pathname.startsWith("/post/") ? (
           isMyProfile ? (

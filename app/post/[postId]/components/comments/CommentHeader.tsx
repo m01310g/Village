@@ -3,6 +3,7 @@ import CommentManageBottomSheet from "./CommentManageBottomSheet";
 import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import Image from "next/image";
 import { CommentType } from "./types/commentType";
+import { useRouter } from "next/navigation";
 
 interface CommentHeaderProps {
   comment: CommentType;
@@ -17,10 +18,14 @@ const CommentHeader = ({
 }: CommentHeaderProps) => {
   const [isCommentBottomSheetOpen, setIsCommentBottomSheetOpen] =
     useState(false);
+  const router = useRouter();
 
   return (
     <>
-      <header className="flex items-center justify-between">
+      <header
+        className="flex cursor-pointer items-center justify-between"
+        onClick={() => router.push(`/profile/${comment.writtenBy.id}`)}
+      >
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
             <Image

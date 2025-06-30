@@ -1,9 +1,20 @@
 "use client";
 import PlusIcon from "@/public/icons/plus.svg";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 
 const FloatingButton = () => {
   const router = useRouter();
+  const user = useAuthStore.getState().user;
+
+  const handleClick = () => {
+    if (!user) {
+      router.push("/profile");
+      return;
+    }
+
+    router.push("/post/create");
+  };
 
   return (
     <>
@@ -26,7 +37,7 @@ const FloatingButton = () => {
         </div>
         <button
           className="h-12 w-12 rounded-[8px] bg-background-brand p-2.5"
-          onClick={() => router.push("/post/create")}
+          onClick={handleClick}
         >
           <PlusIcon width="28px" height="28px" color="#ffffff" />
         </button>

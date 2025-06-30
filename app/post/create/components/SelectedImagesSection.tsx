@@ -1,6 +1,5 @@
 import Image from "next/image";
 import CloseIcon from "@/public/icons/close-2.svg";
-import clsx from "clsx";
 
 interface SelectedImagesSectionProps {
   images: string[];
@@ -18,10 +17,7 @@ const SelectedImagesSection = ({
     >
       {images.map((image, i) => (
         <div
-          className={clsx(
-            "relative h-[100px] w-[100px] min-w-[100px] flex-none overflow-hidden rounded-[8px]",
-            i === 0 ? "ml-4" : i === images.length - 1 ? "mr-4" : "",
-          )}
+          className="relative h-[100px] w-[100px] min-w-[100px] flex-none overflow-hidden rounded-[8px]"
           key={i}
         >
           <Image

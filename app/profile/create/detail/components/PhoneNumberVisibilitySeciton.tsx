@@ -1,5 +1,6 @@
 import Checkbox from "@/app/components/Checkbox";
 import ProfileLabel from "../../components/ProfileLabel";
+import InfoIcon from "@/public/icons/information-circle-contained.svg";
 
 interface PhoneNumberVisibilitySectionProps {
   isPhoneNumberOpened: number;
@@ -25,10 +26,14 @@ const PhoneNumberVisibilitySection = ({
           센터에게 내 연락처를 보여줘도 괜찮아요.
         </span>
       </div>
-      <span className="text-caption-3 text-text-info">
-        연락처를 비공개하면 센터의 제안을 받을 수 없어요. 제안을 받으려면
-        연락처를 공개해 주세요. (언제든 비공개 전환 가능)
-      </span>
+      <div className="flex gap-2 rounded-[5px] bg-background-brandSecondary p-3">
+        <InfoIcon />
+        <span className="text-caption-3 whitespace-pre-line text-text-info">
+          {`연락처를 비공개하면 센터의 제안을 받을 수 없어요.
+          제안을 받고 싶다면 연락처를 공개해주세요.
+          (필요할 때 언제든 비공개로 바꿀 수 있어요.)`}
+        </span>
+      </div>
     </section>
   );
 };

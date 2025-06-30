@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import ProfileLabel from "../../components/ProfileLabel";
 import WorkRegionSelector from "./WorkRegionSelector";
 import DistrictItem from "./DistrictItem";
@@ -16,6 +16,23 @@ const WorkRegionSection = ({
   selectedDistricts,
   setSelectedDistricts,
 }: WorkRegionSectionProps) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      if (!e.shiftKey) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   return (
     <section className="flex flex-col gap-3">
       <div className="flex gap-3">
@@ -26,7 +43,10 @@ const WorkRegionSection = ({
         selectedDistricts={selectedDistricts}
         setSelectedDistricts={setSelectedDistricts}
       />
-      <div className="flex w-full gap-1 overflow-x-auto">
+      <div
+        className="scrollbar-none flex w-full gap-1 overflow-x-auto"
+        ref={scrollRef}
+      >
         {Object.entries(selectedDistricts).flatMap(([sido, districts]) =>
           districts.map((district) => (
             <DistrictItem

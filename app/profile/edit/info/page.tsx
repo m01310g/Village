@@ -13,11 +13,13 @@ import Button from "@/app/components/Button";
 const ProfileEditInfoPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: profile } = useUserProfile(isLoggedIn);
-  const { formData, updateField } = useProfileFormStore();
+  const { formData, updateField, setInitialFormData, checkIsModified } =
+    useProfileFormStore();
   const router = useRouter();
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const handleChange = createFormFieldChangeHandler(updateField);
 
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
@@ -26,15 +28,24 @@ const ProfileEditInfoPage = () => {
 
   useEffect(() => {
     if (profile) {
-      updateField("profileImage", profile.profileImage || "");
-      updateField("name", profile.name || "");
-      updateField("nickname", profile.nickname || "");
-      updateField("webCareers", profile.webCareers || []);
-      updateField("introduction", profile.introduction || "");
+      const initial = {
+        profileImage: profile.profileImage || "",
+        name: profile.name || "",
+        nickname: profile.nickname || "",
+        webCareers: profile.webCareers || [],
+        introduction: profile.introduction || "",
+        location: profile.location || {},
+        status: profile.status || 0,
+        phone: profile.phone || "",
+        phoneOpened: profile.phoneOpened || 0,
+      };
+      setInitialFormData(initial);
     }
   }, [profile, updateField]);
 
-  const handleChange = createFormFieldChangeHandler(updateField);
+  useEffect(() => {
+    checkIsModified();
+  }, [formData]);
 
   return (
     <div className="flex h-full flex-col items-center">

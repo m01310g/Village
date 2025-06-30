@@ -30,13 +30,6 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     setHeader({
       title: getTitleByPath(pathname),
       showBackButton: true,
-      showNotificationButton:
-        profileId !== null &&
-        ((pathname === "/profile" && userId !== profileId) ||
-          (pathname.startsWith("/profile/") &&
-            !pathname.endsWith("/neighbors") &&
-            userId !== profileId)),
-
       showSettingButton:
         profileId === null && pathname === "/profile" && isLoggedIn,
     });
@@ -46,8 +39,8 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     <main
       className={clsx(
         "overflow-y-auto bg-background-primary",
-        pathname === "/profile/edit" ||
-          pathname === "/profile/neighbors" ||
+        pathname.includes("/profile/edit") ||
+          pathname.includes("/neighbors") ||
           (pathname.startsWith("/profile/") && !pathname.endsWith("/neighbors"))
           ? "h-[calc(100vh-46px)]"
           : "h-[calc(100vh-46px-81px)]",

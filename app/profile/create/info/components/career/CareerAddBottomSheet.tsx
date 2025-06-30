@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
 import { CareerData } from "@/app/profile/types/careerCard";
 import Checkbox from "@/app/components/Checkbox";
+import clsx from "clsx";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;
@@ -99,6 +100,7 @@ const CareerAddBottomSheet = ({
           </div>
           <div className="flex items-center justify-end gap-2 py-[5.5px]">
             <Checkbox
+              disabled={!startDate}
               isChecked={isChecked}
               onClick={() => {
                 setIsChecked((prev) => {
@@ -108,7 +110,12 @@ const CareerAddBottomSheet = ({
                 });
               }}
             />
-            <span className="text-caption-2 text-text-primary">
+            <span
+              className={clsx(
+                "text-caption-2",
+                !startDate ? "text-text-disabled" : "text-text-primary",
+              )}
+            >
               현재 근무 중
             </span>
           </div>
