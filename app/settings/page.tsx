@@ -24,7 +24,6 @@ const SettingsPage = () => {
     setHeader({
       title: "설정",
       showBackButton: true,
-      showNotificationButton: true,
     });
   }, [setHeader]);
 

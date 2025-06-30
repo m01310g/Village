@@ -57,10 +57,6 @@ const ProfileEditDetailPage = () => {
   }, [profile]);
 
   useEffect(() => {
-    checkIsModified();
-  }, [formData]);
-
-  useEffect(() => {
     if (profile) {
       const initial = {
         profileImage: profile.profileImage || "",
@@ -76,11 +72,11 @@ const ProfileEditDetailPage = () => {
 
       setInitialFormData(initial);
     }
-  }, [profile]);
+  }, [profile, setInitialFormData]);
 
   useEffect(() => {
     checkIsModified();
-  }, [formData]);
+  }, [formData, checkIsModified]);
 
   const isFormValid =
     status !== "구직 상태 선택" &&
