@@ -1,7 +1,7 @@
 import { useRequestNeighbor } from "@/app/profile/[userId]/hooks/useRequestNeighbor";
 import AddUser from "@/public/icons/icn_user-profile-add-01.svg";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginRequiredModal from "../LoginRequiredModal";
 
 interface AddNeighborButtonProps {
@@ -15,11 +15,12 @@ const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
   const requestNeighborMutation = useRequestNeighbor(id);
   const accessToken = useAuthStore.getState().accessToken;
 
-  if (!accessToken) {
-    setIsModalOpen(true);
-  }
-
   const handleRequestNeighbor = () => {
+    if (!accessToken) {
+      setIsModalOpen(true);
+      return;
+    }
+
     setButtonState(2);
 
     requestNeighborMutation.mutate();
