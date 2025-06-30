@@ -32,6 +32,15 @@ const ProfileImageSection = ({
     }
   }, [initialImage]);
 
+  const onImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImageUrl(imageUrl);
+      setStep("crop");
+    }
+  };
+
   return (
     <>
       <section className="flex items-center justify-center pb-3">
@@ -56,6 +65,7 @@ const ProfileImageSection = ({
                     accept="image/*"
                     className="hidden"
                     onClick={(e) => e.stopPropagation()}
+                    onChange={onImageSelect}
                   />
                 )}
                 <EditIcon color="white" width="18px" height="18px" />
@@ -89,6 +99,7 @@ const ProfileImageSection = ({
                   accept="image/*"
                   className="hidden"
                   onClick={(e) => e.stopPropagation()}
+                  onChange={onImageSelect}
                 />
               )}
               <Image
@@ -104,17 +115,18 @@ const ProfileImageSection = ({
           )}
         </div>
       </section>
-      {isBottomSheetOpen && (
-        <ProfileImageUploader
-          setImage={setImage}
-          setIsBottomSheetOpen={setIsBottomSheetOpen}
-          selectedImageUrl={selectedImageUrl}
-          setSelectedImageUrl={setSelectedImageUrl}
-          step={step}
-          setStep={setStep}
-          onUploadSuccess={onUploadSuccess}
-        />
-      )}
+      {isBottomSheetOpen ||
+        (step === "crop" && (
+          <ProfileImageUploader
+            setImage={setImage}
+            setIsBottomSheetOpen={setIsBottomSheetOpen}
+            selectedImageUrl={selectedImageUrl}
+            setSelectedImageUrl={setSelectedImageUrl}
+            step={step}
+            setStep={setStep}
+            onUploadSuccess={onUploadSuccess}
+          />
+        ))}
     </>
   );
 };
