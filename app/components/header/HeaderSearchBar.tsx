@@ -79,21 +79,23 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         </div>
         <div className="h-[46px] w-[46px]" />
       </div>
-      {searchResult.length > 0 ? (
-        searchResult.map((data) => (
-          <SearchResult
-            key={data.id}
-            id={data.id}
-            nickname={data.nickname}
-            profileImage={data.profileImage}
-            isNeighbor={data.isNeighbor}
-          />
-        ))
-      ) : hasSearched ? (
-        <div className="text-title-1 flex h-full items-center justify-center text-text-primary">
-          검색 결과가 없습니다.
-        </div>
-      ) : null}
+      <div className="scrollbar-none h-[calc(100vh-46px)] overflow-y-scroll py-3">
+        {searchResult.length > 0 ? (
+          searchResult.map((data) => (
+            <SearchResult
+              key={data.id}
+              id={data.id}
+              nickname={data.nickname}
+              profileImage={data.profileImage}
+              isNeighbor={data.isNeighbor}
+            />
+          ))
+        ) : hasSearched ? (
+          <div className="text-title-1 flex h-full items-center justify-center text-text-primary">
+            검색 결과가 없습니다.
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };
