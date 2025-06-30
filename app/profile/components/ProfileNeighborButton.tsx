@@ -24,11 +24,12 @@ const ProfileNeighborButton = ({
     setButtonState(isNeighbor);
   }, [isNeighbor]);
 
-  if (!accessToken) {
-    setIsModalOpen(true);
-  }
-
   const handleRequestNeighbor = () => {
+    if (!accessToken) {
+      setIsModalOpen(true);
+      return;
+    }
+
     setButtonState(2);
 
     requestNeighborMutation.mutate();
