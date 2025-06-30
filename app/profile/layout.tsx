@@ -30,13 +30,6 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     setHeader({
       title: getTitleByPath(pathname),
       showBackButton: true,
-      showNotificationButton:
-        profileId !== null &&
-        ((pathname === "/profile" && userId !== profileId) ||
-          (pathname.startsWith("/profile/") &&
-            !pathname.endsWith("/neighbors") &&
-            userId !== profileId)),
-
       showSettingButton:
         profileId === null && pathname === "/profile" && isLoggedIn,
     });
