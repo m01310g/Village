@@ -40,7 +40,7 @@ export const useRejectNeighbor = (id: number) => {
   return useMutation({
     mutationFn: () => rejectNeighbor(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["neighbors", id] });
+      queryClient.invalidateQueries({ queryKey: ["neighbors"] });
     },
   });
 };
