@@ -82,20 +82,11 @@ const ProfileEditDetailPage = () => {
     checkIsModified();
   }, [formData]);
 
-  console.log(isModified);
-
   const isFormValid =
     status !== "구직 상태 선택" &&
     Object.keys(selectedDistricts).length > 0 &&
     phoneNumber !== "" &&
     phoneNumberError === "";
-
-  const isFormChanged =
-    profile &&
-    (profile.status !== convertStatusToNumber(status) ||
-      JSON.stringify(profile.location) !== JSON.stringify(selectedDistricts) ||
-      profile.phone !== phoneNumber ||
-      profile.phoneOpened !== isPhoneNumberOpened);
 
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
