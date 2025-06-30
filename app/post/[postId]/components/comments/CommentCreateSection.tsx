@@ -52,6 +52,7 @@ const CommentCreateSection = ({
         )}
         onChange={handleChange}
         value={inputValue}
+        maxLength={300}
       />
       <CommentCreateButton onClick={handleSubmit} isActive={!!inputValue} />
     </form>
