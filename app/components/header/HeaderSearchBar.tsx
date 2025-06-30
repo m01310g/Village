@@ -19,9 +19,12 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
       profileImage: string;
     }[]
   >([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     if (!keyword) return;
+
+    setHasSearched(true);
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/searchWebProfile`,
@@ -67,7 +70,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
             type="text"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder="검색어를 입력하세요"
+            placeholder="사용자 검색"
             className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"
           />
           <button onClick={handleSearch}>
@@ -76,7 +79,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         </div>
         <div className="h-[46px] w-[46px]" />
       </div>
-      {searchResult.length > 0 &&
+      {searchResult.length > 0 ? (
         searchResult.map((data) => (
           <SearchResult
             key={data.id}
@@ -85,7 +88,12 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
             profileImage={data.profileImage}
             isNeighbor={data.isNeighbor}
           />
-        ))}
+        ))
+      ) : hasSearched ? (
+        <div className="text-title-1 flex h-full items-center justify-center text-text-primary">
+          검색 결과가 없습니다.
+        </div>
+      ) : null}
     </div>
   );
 };
