@@ -17,7 +17,13 @@ import { useProfileFormStore } from "@/store/useProfileFormStore";
 const ProfileEditDetailPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: profile } = useUserProfile(isLoggedIn);
-  const { formData, updateField } = useProfileFormStore();
+  const {
+    formData,
+    updateField,
+    setInitialFormData,
+    checkIsModified,
+    isModified,
+  } = useProfileFormStore();
   const router = useRouter();
   const [selectedDistricts, setSelectedDistricts] = useState<{
     [key: string]: string[];
@@ -51,20 +57,32 @@ const ProfileEditDetailPage = () => {
   }, [profile]);
 
   useEffect(() => {
-    updateField("status", convertStatusToNumber(status));
-  }, [status, updateField]);
+    checkIsModified();
+  }, [formData]);
 
   useEffect(() => {
-    updateField("phone", phoneNumber);
-  }, [phoneNumber, updateField]);
+    if (profile) {
+      const initial = {
+        profileImage: profile.profileImage || "",
+        name: profile.name || "",
+        nickname: profile.nickname || "",
+        webCareers: profile.webCareers || [],
+        introduction: profile.introduction || "",
+        location: profile.location || {},
+        status: profile.status || 0,
+        phone: profile.phone || "",
+        phoneOpened: profile.phoneOpened || 0,
+      };
+
+      setInitialFormData(initial);
+    }
+  }, [profile]);
 
   useEffect(() => {
-    updateField("phoneOpened", isPhoneNumberOpened);
-  }, [isPhoneNumberOpened, updateField]);
+    checkIsModified();
+  }, [formData]);
 
-  useEffect(() => {
-    updateField("location", selectedDistricts);
-  }, [selectedDistricts, updateField]);
+  console.log(isModified);
 
   const isFormValid =
     status !== "구직 상태 선택" &&
@@ -168,7 +186,7 @@ const ProfileEditDetailPage = () => {
         />
       </form>
       <CompleteButton
-        isFormValid={!!isFormValid && !!isFormChanged}
+        isFormValid={!!isFormValid && isModified}
         onClick={handleModify}
         onBack={() => router.back()}
       >
