@@ -29,7 +29,7 @@ const CommentHeader = ({
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
             <Image
-              src={comment.writtenBy.profileImage || ""}
+              src={comment.writtenBy.profileImage ?? "/logos/symbol.svg"}
               width={40}
               height={40}
               alt={`${comment.writtenBy.nickname}의 프로필 사진`}
