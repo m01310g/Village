@@ -9,10 +9,9 @@ import WorkRegionSection from "../../create/detail/components/WorkRegionSection"
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
-import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
+import { useProfileEdit } from "../../hooks/useProfileEdit";
 
 const ProfileEditDetailPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,6 +31,7 @@ const ProfileEditDetailPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
+  const editProfileMutation = useProfileEdit();
 
   useEffect(() => {
     if (profile) {
@@ -94,41 +94,7 @@ const ProfileEditDetailPage = () => {
     if (payload.profileImage === "") delete payload.profileImage;
     if (payload.introduction === "") delete payload.introduction;
 
-    try {
-      const res = await fetchWithAuth(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(payload),
-        },
-      );
-
-      if (!res.ok) {
-        const error: ErrorResponse = await res.json();
-        if (error.statusCode === 400) {
-          throw new Error(`요청 형식 오류: ${error.message}`);
-        } else if (error.statusCode === 401) {
-          throw new Error(
-            `유효하지 않거나 기간이 만료된 토큰: ${error.message}`,
-          );
-        } else if (error.statusCode === 403) {
-          throw new Error(`유저 회원이 아닙니다: ${error.message}`);
-        } else if (error.statusCode === 404) {
-          throw new Error(`등록된 프로필 없음: ${error.message}`);
-        } else {
-          throw new Error(error.message);
-        }
-      }
-
-      router.push("/profile");
-    } catch (err) {
-      console.error(
-        err instanceof Error ? err.message : "프로필 수정 중 오류 발생",
-      );
-    }
+    editProfileMutation.mutate(payload);
   };
 
   return (
