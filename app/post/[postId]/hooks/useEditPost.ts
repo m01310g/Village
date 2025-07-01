@@ -53,10 +53,11 @@ export const useEditPost = (formData: EditPostType) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  if (!formData) return { mutate: () => {} };
-
   return useMutation({
-    mutationFn: () => editPost(formData),
+    mutationFn: () => {
+      if (!formData) throw new Error("formData is required");
+      return editPost(formData);
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["postData", data.id] });
       router.replace(`/post/${data.id}`);

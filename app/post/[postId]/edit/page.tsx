@@ -45,7 +45,7 @@ const PostEditPage = () => {
 
   const handleEdit = useCallback(async () => {
     editPostMutation.mutate();
-  }, [router, isActive, content, images, postData]);
+  }, [editPostMutation]);
 
   useEffect(() => {
     if (postData?.isNeighbor !== 4) {
@@ -89,7 +89,16 @@ const PostEditPage = () => {
       showCreateButtonProps: editButtonProps,
       onClick: handleEdit,
     });
-  }, [setHeader, content, originalContent, originalImages, images, handleEdit]);
+  }, [
+    setHeader,
+    content,
+    originalContent,
+    originalImages,
+    images,
+    handleEdit,
+    isActive,
+    originalIsActive,
+  ]);
 
   return isLoading || !postData ? (
     <div>로딩중...</div>
