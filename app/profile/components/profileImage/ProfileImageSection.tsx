@@ -115,18 +115,17 @@ const ProfileImageSection = ({
           )}
         </div>
       </section>
-      {isBottomSheetOpen ||
-        (step === "crop" && (
-          <ProfileImageUploader
-            setImage={setImage}
-            setIsBottomSheetOpen={setIsBottomSheetOpen}
-            selectedImageUrl={selectedImageUrl}
-            setSelectedImageUrl={setSelectedImageUrl}
-            step={step}
-            setStep={setStep}
-            onUploadSuccess={onUploadSuccess}
-          />
-        ))}
+      {(isBottomSheetOpen || step === "crop") && (
+        <ProfileImageUploader
+          setImage={setImage}
+          setIsBottomSheetOpen={setIsBottomSheetOpen}
+          selectedImageUrl={selectedImageUrl}
+          setSelectedImageUrl={setSelectedImageUrl}
+          step={step}
+          setStep={setStep}
+          onUploadSuccess={onUploadSuccess}
+        />
+      )}
     </>
   );
 };
