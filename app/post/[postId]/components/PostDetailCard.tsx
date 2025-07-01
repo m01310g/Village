@@ -13,7 +13,7 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
   return (
     <div className="flex flex-col gap-3 border-b-[3px] border-border-secondary px-4 py-3">
       <PostHeader
-        isMyProfile={false}
+        isMyProfile={post.isNeighbor === 4}
         post={post}
         isNeighbor={post.isNeighbor ?? 0}
       />
