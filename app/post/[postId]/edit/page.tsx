@@ -6,6 +6,8 @@ import { usePostData } from "../hooks/usePostData";
 import { useParams, useRouter } from "next/navigation";
 import PostForm from "../components/PostForm";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
+import ModalWrapper from "@/app/components/modal/ModalWrapper";
+import Button from "@/app/components/Button";
 
 const PostEditPage = () => {
   const setHeader = useSetHeader();
@@ -19,6 +21,7 @@ const PostEditPage = () => {
   const [images, setImages] = useState<string[]>([]);
   const [originalImages, setOriginalImages] = useState<string[]>([]);
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: postData, isLoading } = usePostData(postId);
 
@@ -78,6 +81,12 @@ const PostEditPage = () => {
   }, [router, isActive, content, images, postData]);
 
   useEffect(() => {
+    if (postData?.isNeighbor !== 4) {
+      setIsModalOpen(true);
+    }
+  }, [postData]);
+
+  useEffect(() => {
     if (postData) {
       const types = ["업계이야기", "채용", "교육"];
 
@@ -114,14 +123,30 @@ const PostEditPage = () => {
   return isLoading || !postData ? (
     <div>로딩중...</div>
   ) : (
-    <PostForm
-      isActive={isActive}
-      setIsActive={setIsActive}
-      content={content}
-      setContent={setContent}
-      images={images}
-      setImages={setImages}
-    />
+    <>
+      <PostForm
+        isActive={isActive}
+        setIsActive={setIsActive}
+        content={content}
+        setContent={setContent}
+        images={images}
+        setImages={setImages}
+      />
+      {isModalOpen && (
+        <ModalWrapper onClose={() => setIsModalOpen(false)}>
+          <span className="text-title-2 text-text-danger">
+            접근 권한이 없습니다.
+          </span>
+          <Button
+            color="primary"
+            size="md"
+            onClick={() => router.push(`/post/${postData.id}`)}
+          >
+            확인
+          </Button>
+        </ModalWrapper>
+      )}
+    </>
   );
 };
 
