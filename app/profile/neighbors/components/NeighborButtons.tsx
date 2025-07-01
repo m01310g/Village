@@ -1,6 +1,4 @@
 import Button from "@/app/components/Button";
-import { useState } from "react";
-import NeighborDeleteBottomSheet from "./NeighborDeleteBottomSheet";
 import { useAcceptNeighbor } from "../hooks/useAcceptNeighbor";
 import { useRejectNeighbor } from "../hooks/useRejectNeighbor";
 import AddNeighborButton from "@/app/components/post/AddNeighborButton";
@@ -12,12 +10,7 @@ interface NeighborButtonsProps {
   isMyNeighbor: boolean | number;
 }
 
-const NeighborButtons = ({
-  nickname,
-  id,
-  isMyNeighbor,
-}: NeighborButtonsProps) => {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+const NeighborButtons = ({ id, isMyNeighbor }: NeighborButtonsProps) => {
   const acceptMutation = useAcceptNeighbor(id);
   const rejectMutation = useRejectNeighbor(id);
   const pathname = usePathname();
@@ -25,11 +18,7 @@ const NeighborButtons = ({
   return (
     <>
       {isMyNeighbor === true || isMyNeighbor === 0 ? (
-        <Button
-          size="sm"
-          color="secondaryColor"
-          onClick={() => setIsBottomSheetOpen(true)}
-        >
+        <Button size="sm" color="secondaryColor">
           이웃
         </Button>
       ) : pathname === "/profile/neighbors" ? (
@@ -53,12 +42,6 @@ const NeighborButtons = ({
         <AddNeighborButton id={id} isNeighbor={isMyNeighbor} />
       ) : (
         isMyNeighbor === 4 && <></>
-      )}
-      {isBottomSheetOpen && (
-        <NeighborDeleteBottomSheet
-          setIsOpen={setIsBottomSheetOpen}
-          nickname={nickname || ""}
-        />
       )}
     </>
   );
