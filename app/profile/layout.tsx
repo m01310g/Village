@@ -2,11 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
 import clsx from "clsx";
+import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useScrollRestoration(scrollRef);
+
   const pathname = usePathname();
   const { user } = useAuthStore((state) => state);
   const profileIdMatch = pathname.match(/^\/profile\/(\d+)/);
@@ -45,6 +49,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
           ? "h-[calc(100vh-46px)]"
           : "h-[calc(100vh-46px-81px)]",
       )}
+      ref={scrollRef}
     >
       {children}
     </main>
