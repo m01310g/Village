@@ -10,13 +10,13 @@ import { useRouter } from "next/navigation";
 interface PostHeaderProps {
   post: Board;
   isMyProfile?: boolean;
+  isNeighbor: number;
 }
 
-const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
+const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
-  const isNeighbor = post.isNeighbor ?? 0;
 
   return (
     <>
