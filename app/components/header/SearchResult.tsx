@@ -43,7 +43,7 @@ const SearchResult = ({
         <h3 className="text-title-2 text-neutral-400">{name}</h3>
       </div>
 
-      {isNeighbor || isMyProfile ? (
+      {isNeighbor === 1 || isMyProfile ? (
         <div className="h-10 w-10" />
       ) : (
         <AddNeighborButton id={id} isNeighbor={isNeighbor} />
