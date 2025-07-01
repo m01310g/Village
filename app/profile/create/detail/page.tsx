@@ -68,13 +68,9 @@ const ProfileCreateDetailPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const payload = {
-        ...formData,
-        profileImage:
-          formData.profileImage && formData.profileImage !== ""
-            ? formData.profileImage
-            : "/logos/symbol.svg",
-      };
+      const payload = { ...formData };
+      if (payload.profileImage === "") delete payload.profileImage;
+      if (payload.introduction === "") delete payload.introduction;
 
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
