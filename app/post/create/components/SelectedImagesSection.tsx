@@ -24,6 +24,7 @@ const SelectedImagesSection = ({
             src={image}
             alt={`${i}번 사진 미리보기`}
             fill
+            sizes="100px"
             className="object-cover"
           />
           <button

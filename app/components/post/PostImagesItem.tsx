@@ -27,7 +27,7 @@ const PostImagesItem = ({ images }: PostImagesItemProps) => {
   return (
     <div
       ref={scrollRef}
-      className="scrollbar-none flex h-[100px] min-h-[100px] w-full gap-1 overflow-x-auto"
+      className="flex h-[100px] min-h-[100px] w-full gap-1 overflow-x-auto scrollbar-none"
     >
       {images.map((image, i) => (
         <div
@@ -38,6 +38,7 @@ const PostImagesItem = ({ images }: PostImagesItemProps) => {
             src={image}
             alt={`${i}번 사진`}
             fill
+            sizes="100px"
             className="object-cover"
           />
         </div>
