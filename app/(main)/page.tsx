@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
 import FilteringButton from "../components/feed/FilteringButton";
 import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
 import { usePostList } from "./hooks/usePostList";
+import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
 
 const Page = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useScrollRestoration(scrollRef);
+
   const setHeader = useSetHeader();
   const [activeFilter, setActiveFilter] = useState("전체");
   const filters = ["전체", "업계이야기", "채용", "교육"];
@@ -43,7 +47,7 @@ const Page = () => {
           />
         ))}
       </div>
-      <div className="scrollbar-thin h-full overflow-y-auto">
+      <div className="scrollbar-thin h-full overflow-y-auto" ref={scrollRef}>
         {filteredPosts &&
           filteredPosts.map((post) => {
             return (
