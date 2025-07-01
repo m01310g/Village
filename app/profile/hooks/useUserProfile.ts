@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ProfileFormData } from "../types/profileFormData";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
-interface BoardProfile {
+export interface BoardProfile {
   id: number;
   profileImage: string;
   nickname: string;

@@ -10,7 +10,6 @@ interface AddNeighborButtonProps {
 }
 
 const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
-  const [buttonState, setButtonState] = useState(isNeighbor);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const requestNeighborMutation = useRequestNeighbor(id);
   const accessToken = useAuthStore.getState().accessToken;
@@ -21,12 +20,10 @@ const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
       return;
     }
 
-    setButtonState(2);
-
     requestNeighborMutation.mutate();
   };
 
-  return buttonState === 0 ? (
+  return isNeighbor === 0 ? (
     <>
       <button
         className="flex h-8 items-center justify-center gap-1 px-2 py-[9px]"
@@ -41,7 +38,7 @@ const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
       </button>
       {isModalOpen && <LoginRequiredModal setIsModalOpen={setIsModalOpen} />}
     </>
-  ) : buttonState === 2 ? (
+  ) : isNeighbor === 2 ? (
     <button
       className="flex h-8 cursor-default items-center justify-center gap-1 px-2 py-[9px]"
       onClick={(e) => {

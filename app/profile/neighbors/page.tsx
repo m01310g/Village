@@ -38,7 +38,7 @@ const ProfileNeighborsPage = () => {
             <NeighborCard
               key={received.id}
               data={received}
-              isMyNeighbor={received.isNeighbor}
+              isMyNeighbor={false}
             />
           ))}
         </div>
@@ -47,11 +47,7 @@ const ProfileNeighborsPage = () => {
       <div className="">
         <h3 className="text-title-1 px-4 py-3 text-text-primary">내 이웃</h3>
         {neighbors.map((neighbor) => (
-          <NeighborCard
-            key={neighbor.id}
-            isMyNeighbor={neighbor.isNeighbor}
-            data={neighbor}
-          />
+          <NeighborCard key={neighbor.id} isMyNeighbor={true} data={neighbor} />
         ))}
       </div>
     </div>

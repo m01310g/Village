@@ -369,6 +369,9 @@ module.exports = {
         ".scrollbar-none::-webkit-scrollbar": {
           display: "none", // Chrome, Safari
         },
+        ".scrollbar-thin": {
+          "scrollbar-width": "thin",
+        },
       });
     },
   ],

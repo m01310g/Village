@@ -14,7 +14,11 @@ interface PostCardProps {
 const PostCard = ({ post, isMyProfile }: PostCardProps) => {
   return (
     <div className="flex cursor-pointer flex-col gap-3 border-b border-border-secondary px-4 py-3">
-      <PostHeader post={post} isMyProfile={isMyProfile} />
+      <PostHeader
+        post={post}
+        isMyProfile={isMyProfile}
+        isNeighbor={post.isNeighbor ?? 0}
+      />
       <Link
         href={`/post/${post.id}`}
         onClick={(e) => e.stopPropagation()}

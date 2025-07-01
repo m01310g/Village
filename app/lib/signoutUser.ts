@@ -42,7 +42,6 @@ export const signoutUser = async (refreshToken: string) => {
         }
       }
       const data: SignoutResponse = await res.json();
-      console.log(data.message);
       useAuthStore.getState().resetAuth();
       window.location.replace("/");
     } else {
