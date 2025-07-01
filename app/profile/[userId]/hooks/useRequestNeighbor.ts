@@ -1,5 +1,6 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const requestNeighbor = async (userId: number) => {
@@ -34,10 +35,14 @@ const requestNeighbor = async (userId: number) => {
 
 export const useRequestNeighbor = (userId: number) => {
   const queryClient = useQueryClient();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isLoggedIn = !!accessToken;
 
   return useMutation({
     mutationFn: () => requestNeighbor(userId),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["profileById", userId] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profileById", userId] });
+      queryClient.invalidateQueries({ queryKey: ["postList", isLoggedIn] });
+    },
   });
 };

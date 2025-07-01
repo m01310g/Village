@@ -8,6 +8,7 @@ interface ProfileInfoCardProps {
   name: string;
   role: "TRAINER";
   neighborCount: number;
+  isNeighbor: number;
 }
 
 const ProfileInfoCard = ({
@@ -17,6 +18,7 @@ const ProfileInfoCard = ({
   name,
   role,
   neighborCount,
+  isNeighbor,
 }: ProfileInfoCardProps) => {
   const roles = { TRAINER: "트레이너" };
   const router = useRouter();
@@ -38,7 +40,13 @@ const ProfileInfoCard = ({
           </span>
           <div
             className="flex cursor-pointer gap-1"
-            onClick={() => router.push(`/profile/${id}/neighbors`)}
+            onClick={() =>
+              router.push(
+                isNeighbor === 4 || isNeighbor === undefined
+                  ? "/profile/neighbors"
+                  : `/profile/${id}/neighbors`,
+              )
+            }
           >
             <span className="text-body-3 text-text-onsecondary">이웃</span>
             <span className="text-title-4 text-text-onsecondary">{`${neighborCount}명`}</span>

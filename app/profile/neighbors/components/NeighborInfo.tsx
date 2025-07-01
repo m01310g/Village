@@ -6,6 +6,7 @@ interface NeighborInfoProps {
   nickname: string;
   name: string;
   profileImage: string;
+  isMyNeighbor: number | boolean;
 }
 
 const NeighborInfo = ({
@@ -13,13 +14,16 @@ const NeighborInfo = ({
   nickname,
   name,
   profileImage,
+  isMyNeighbor,
 }: NeighborInfoProps) => {
   const router = useRouter();
 
   return (
     <div
       className="flex cursor-pointer items-center gap-2"
-      onClick={() => router.push(`/profile/${id}`)}
+      onClick={() =>
+        router.push(isMyNeighbor === 4 ? "/profile" : `/profile/${id}`)
+      }
     >
       <div className="flex h-10 w-10 overflow-hidden rounded-full">
         <Image

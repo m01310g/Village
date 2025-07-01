@@ -13,8 +13,13 @@ import Button from "@/app/components/Button";
 const ProfileEditInfoPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: profile } = useUserProfile(isLoggedIn);
-  const { formData, updateField, setInitialFormData, checkIsModified } =
-    useProfileFormStore();
+  const {
+    formData,
+    updateField,
+    setInitialFormData,
+    checkIsModified,
+    resetFormData,
+  } = useProfileFormStore();
   const router = useRouter();
   const nameInput = useInputValidation("name");
   const nicknameInput = useInputValidation("nickname");
@@ -24,6 +29,10 @@ const ProfileEditInfoPage = () => {
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
     setIsLoggedIn(!!accessToken);
+  }, []);
+
+  useEffect(() => {
+    resetFormData();
   }, []);
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 interface NeighborButtonsProps {
   nickname?: string;
   id: number;
-  isMyNeighbor: number;
+  isMyNeighbor: boolean | number;
 }
 
 const NeighborButtons = ({
@@ -24,7 +24,7 @@ const NeighborButtons = ({
 
   return (
     <>
-      {isMyNeighbor === 1 ? (
+      {isMyNeighbor === true || isMyNeighbor === 0 ? (
         <Button
           size="sm"
           color="secondaryColor"
@@ -32,7 +32,7 @@ const NeighborButtons = ({
         >
           이웃
         </Button>
-      ) : isMyNeighbor === 3 && pathname === "/profile/neighbor" ? (
+      ) : pathname === "/profile/neighbors" ? (
         <div className="flex items-center justify-center gap-1">
           <Button
             size="sm"
@@ -49,10 +49,10 @@ const NeighborButtons = ({
             수락
           </Button>
         </div>
-      ) : isMyNeighbor === 0 || isMyNeighbor === 2 ? (
+      ) : isMyNeighbor === 2 ? (
         <AddNeighborButton id={id} isNeighbor={isMyNeighbor} />
       ) : (
-        <></>
+        isMyNeighbor === 4 && <></>
       )}
       {isBottomSheetOpen && (
         <NeighborDeleteBottomSheet

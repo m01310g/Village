@@ -32,7 +32,7 @@ const SearchResult = ({
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 overflow-hidden rounded-full">
           <Image
-            src={profileImage === "url" ? "/logos/symbol.svg" : profileImage}
+            src={profileImage ?? "/logos/symbol.svg"}
             width={40}
             height={40}
             alt={`${nickname}의 프로필 사진`}
@@ -43,7 +43,7 @@ const SearchResult = ({
         <h3 className="text-title-2 text-neutral-400">{name}</h3>
       </div>
 
-      {isNeighbor || isMyProfile ? (
+      {isNeighbor === 1 || isMyProfile ? (
         <div className="h-10 w-10" />
       ) : (
         <AddNeighborButton id={id} isNeighbor={isNeighbor} />
