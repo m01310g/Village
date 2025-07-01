@@ -1,7 +1,7 @@
 "use client";
 
 import { useSetHeader } from "@/app/components/header/HeaderContext";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePostData } from "../hooks/usePostData";
 import { useParams, useRouter } from "next/navigation";
 import PostForm from "../components/PostForm";
@@ -25,27 +25,19 @@ const PostEditPage = () => {
   const [originalImages, setOriginalImages] = useState<string[]>([]);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { mutate: editPostMutation } = useEditPost();
 
   const { data: postData, isLoading } = usePostData(postId);
 
-  const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
-
-  const formData = {
-    id: postData!.id,
-    type: typeMap[isActive],
-    content,
-    images,
-  };
-  const editPostMutation = useEditPost({ ...formData });
+  const typeMap = useMemo(
+    () => ({ 업계이야기: 0, 채용: 1, 교육: 2 }) as const,
+    [],
+  );
 
   const arraysAreEqual = (a: string[], b: string[]) => {
     if (a.length !== b.length) return false;
     return a.every((val, idx) => val === b[idx]);
   };
-
-  const handleEdit = useCallback(async () => {
-    editPostMutation.mutate();
-  }, [editPostMutation]);
 
   useEffect(() => {
     if (postData?.isNeighbor !== 4) {
@@ -70,35 +62,44 @@ const PostEditPage = () => {
     }
   }, [postData]);
 
-  useEffect(() => {
+  const isChanged = useMemo(() => {
     const isContentChanged = content !== originalContent;
     const isImagesChanged = !arraysAreEqual(images, originalImages);
     const isTypeChanged = isActive !== originalIsActive;
-    const isChanged = isContentChanged || isImagesChanged || isTypeChanged;
+    return isContentChanged || isImagesChanged || isTypeChanged;
+  }, [
+    content,
+    originalContent,
+    images,
+    originalImages,
+    isActive,
+    originalIsActive,
+  ]);
 
-    const editButtonProps = {
-      className: isChanged ? "text-text-onsecondary" : "text-text-disabled",
-      disabled: !isChanged,
-      label: "수정",
+  const editPost = useCallback(() => {
+    if (!postData) return;
+    const formData = {
+      id: postData.id,
+      type: typeMap[isActive],
+      content,
+      images,
     };
+    editPostMutation(formData);
+  }, [postData, isActive, content, images, typeMap, editPostMutation]);
 
+  useEffect(() => {
     setHeader({
       title: "빌리지",
       showBackButton: true,
       showCreateButton: true,
-      showCreateButtonProps: editButtonProps,
-      onClick: handleEdit,
+      showCreateButtonProps: {
+        className: isChanged ? "text-text-onsecondary" : "text-text-disabled",
+        disabled: !isChanged,
+        label: "수정",
+      },
+      onClick: editPost,
     });
-  }, [
-    setHeader,
-    content,
-    originalContent,
-    originalImages,
-    images,
-    handleEdit,
-    isActive,
-    originalIsActive,
-  ]);
+  }, [setHeader, isChanged, editPost]);
 
   return isLoading || !postData ? (
     <div>로딩중...</div>
