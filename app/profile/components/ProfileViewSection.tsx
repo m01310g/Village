@@ -22,6 +22,7 @@ const ProfileViewSection = ({
         role={profile.type || "트레이너"}
         name={profile.name}
         neighborCount={profile.neighbor}
+        isNeighbor={profile.isNeighbor}
       />
       <div className="flex flex-col">
         <ProfileCareer careers={profile.webCareers} />

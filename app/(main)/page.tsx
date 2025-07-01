@@ -6,14 +6,12 @@ import FilteringButton from "../components/feed/FilteringButton";
 import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
 import { usePostList } from "./hooks/usePostList";
-import { useAuthStore } from "@/store/useAuthStore";
 
 const Page = () => {
   const setHeader = useSetHeader();
   const [activeFilter, setActiveFilter] = useState("전체");
   const filters = ["전체", "업계이야기", "채용", "교육"];
   const { data: postList } = usePostList();
-  const userId = useAuthStore((state) => state.user?.id);
 
   useEffect(() => {
     setHeader({
@@ -48,10 +46,12 @@ const Page = () => {
       <div className="scrollbar-thin h-full overflow-y-auto">
         {filteredPosts &&
           filteredPosts.map((post) => {
-            const postUserId = post.writtenBy.id;
-            const isMyProfile = postUserId === userId;
             return (
-              <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />
+              <PostCard
+                key={post.id}
+                post={post}
+                isMyProfile={post.isNeighbor === 4}
+              />
             );
           })}
       </div>
