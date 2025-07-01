@@ -1,8 +1,8 @@
-import { ErrorResponse } from "@/app/types/ErrorResponse";
 import BackIcon from "@/public/icons/chevron-left.svg";
 import SearchIcon from "@/public/icons/icn_search.svg";
 import { useState } from "react";
 import SearchResult from "./SearchResult";
+import { SearchResultType, useSearchProfile } from "./hooks/useSearchProfile";
 
 interface HeaderSearchBarProps {
   onClose: () => void;
@@ -10,50 +10,18 @@ interface HeaderSearchBarProps {
 
 const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
   const [keyword, setKeyword] = useState("");
-  const [searchResult, setSearchResult] = useState<
-    {
-      id: number;
-      name: string;
-      nickname: string;
-      isNeighbor: number;
-      profileImage: string;
-    }[]
-  >([]);
+  const [searchResult, setSearchResult] = useState<SearchResultType[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const searchProfileMutation = useSearchProfile(keyword);
 
   const handleSearch = async () => {
     if (!keyword) return;
-
-    setHasSearched(true);
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/searchWebProfile`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ keyword }),
+    searchProfileMutation.mutate(undefined, {
+      onSuccess: (data) => {
+        setHasSearched(true);
+        setSearchResult(data);
       },
-    );
-
-    if (!res.ok) {
-      const error: ErrorResponse = await res.json();
-      if (error.statusCode === 400) {
-        console.error("데이터 형식 오류:", error.message);
-      } else if (error.statusCode === 401) {
-        console.error("유효하지 않거나 기간이 만료된 토큰:", error.message);
-      } else {
-        console.error("사용자 검색 실패:", error.message);
-      }
-    }
-
-    const result = await res.json();
-    const data = result.data;
-
-    setSearchResult(data);
-
-    return data;
+    });
   };
 
   return (
@@ -85,7 +53,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         </form>
         <div className="h-[46px] w-[46px]" />
       </div>
-      <div className="scrollbar-none h-[calc(100vh-46px)] overflow-y-scroll py-3">
+      <div className="h-[calc(100vh-46px)] overflow-y-scroll py-3 scrollbar-none">
         {searchResult.length > 0 ? (
           searchResult.map((data) => (
             <SearchResult
