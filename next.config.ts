@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
   compiler: {
     styledComponents: true,
   },
@@ -19,13 +18,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "sehyeon-gym-images.s3.ap-northeast-2.amazonaws.com",
-        pathname: "**",
-      },
-    ],
+    domains: ["sehyeon-gym-images.s3.ap-northeast-2.amazonaws.com"],
   },
 };
 
