@@ -33,7 +33,7 @@ const ProfileEditInfoPage = () => {
 
   useEffect(() => {
     resetFormData();
-  }, []);
+  }, [resetFormData]);
 
   useEffect(() => {
     if (profile) {
