@@ -17,11 +17,7 @@ const ProfileViewSection = ({
     <section className="flex flex-col gap-4 p-4">
       <ProfileInfoCard
         id={profile.id}
-        profileImage={
-          profile.profileImage === "url"
-            ? "/logos/symbol.svg"
-            : profile.profileImage
-        }
+        profileImage={profile.profileImage ?? "/logos/symbol.svg"}
         nickname={profile.nickname}
         role={profile.type || "트레이너"}
         name={profile.name}
@@ -29,7 +25,7 @@ const ProfileViewSection = ({
       />
       <div className="flex flex-col">
         <ProfileCareer careers={profile.webCareers} />
-        <ProfileIntroduce introduction={profile.introduction} />
+        <ProfileIntroduce introduction={profile.introduction ?? ""} />
       </div>
       <ProfileButtons
         isMyProfile={isMyProfile}
