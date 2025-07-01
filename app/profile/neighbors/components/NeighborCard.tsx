@@ -2,7 +2,7 @@ import NeighborButtons from "./NeighborButtons";
 import NeighborInfo from "./NeighborInfo";
 
 interface NeighborCardProps {
-  isMyNeighbor: number;
+  isMyNeighbor: boolean;
   data: {
     id: number;
     nickname: string;
@@ -19,7 +19,7 @@ const NeighborCard = ({ data, isMyNeighbor }: NeighborCardProps) => {
           id={data.id}
           nickname={data.nickname}
           name={data.name}
-          profileImage={data.profileImage}
+          profileImage={data.profileImage || "/logos/symbol.svg"}
         />
         {/* 이웃 여부 판단 */}
         <NeighborButtons
