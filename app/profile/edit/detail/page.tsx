@@ -11,7 +11,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
-import { useEditProfile } from "../../hooks/useProfileEdit";
+import { useProfileEdit } from "../../hooks/useProfileEdit";
 
 const ProfileEditDetailPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,7 +31,7 @@ const ProfileEditDetailPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
-  const editProfileMutation = useEditProfile();
+  const editProfileMutation = useProfileEdit();
 
   useEffect(() => {
     if (profile) {
