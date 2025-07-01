@@ -2,21 +2,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { fetchWithAuth } from "./api/fetchWithAuth";
 import { ErrorResponse } from "../types/ErrorResponse";
 
-interface SignoutResponse {
-  message: string;
-  statusCode: number;
-  data: {
-    accessToken: string;
-    refreshToken: string;
-    webUser: {
-      id: number;
-      nickname: string;
-      email: string;
-      role: "USER";
-    };
-  };
-}
-
 export const signoutUser = async (refreshToken: string) => {
   try {
     const res = await fetchWithAuth(

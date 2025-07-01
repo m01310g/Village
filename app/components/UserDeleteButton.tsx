@@ -6,11 +6,6 @@ import { useState } from "react";
 import Button from "./Button";
 import ModalWrapper from "./modal/ModalWrapper";
 
-interface UserDeleteResponse {
-  message: string;
-  statusCode: number;
-}
-
 const UserDeleteButton = () => {
   const refreshToken = useAuthStore((state) => state.refreshToken);
   const router = useRouter();
