@@ -11,8 +11,8 @@ interface ProfileFormProps {
     name: string;
     nickname: string;
     webCareers: WebCareer[];
-    introduction: string;
-    profileImage: string;
+    introduction?: string;
+    profileImage?: string;
   };
   onChangeField: (
     field: keyof ProfileFormProps["formData"],
@@ -89,7 +89,7 @@ const ProfileForm = ({
         }
       />
       <IntroduceSection
-        introduction={formData.introduction}
+        introduction={formData.introduction ?? ""}
         onChangeIntroduction={(value: string) =>
           onChangeField("introduction", value)
         }
