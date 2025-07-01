@@ -45,13 +45,17 @@ export const useProfileFormStore = create(
       },
       setFormData: (data) => {
         const sanitizedData = { ...data };
+
+        const cleanData = { ...sanitizedData };
+
         if (sanitizedData.profileImage === "") {
-          delete sanitizedData.profileImage;
+          delete cleanData.profileImage;
         }
         if (sanitizedData.introduction === "") {
-          delete sanitizedData.introduction;
+          delete cleanData.introduction;
         }
-        set({ formData: sanitizedData });
+
+        set({ formData: cleanData });
       },
       isModified: false,
       initialFormData: null,
