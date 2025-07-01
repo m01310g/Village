@@ -14,6 +14,7 @@ interface ProfileFormState {
   setInitialFormData: (data: ProfileFormData) => void;
   isModified: boolean;
   checkIsModified: () => void;
+  resetFormData: () => void;
 }
 
 export const useProfileFormStore = create(
@@ -87,6 +88,23 @@ export const useProfileFormStore = create(
         const isChanged =
           JSON.stringify(formData) !== JSON.stringify(initialFormData);
         set({ isModified: isChanged });
+      },
+      resetFormData: () => {
+        set({
+          formData: {
+            profileImage: "",
+            name: "",
+            nickname: "",
+            webCareers: [],
+            introduction: "",
+            location: {},
+            status: 0,
+            phone: "",
+            phoneOpened: 0,
+          },
+          initialFormData: null,
+          isModified: false,
+        });
       },
     }),
     {
