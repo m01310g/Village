@@ -54,7 +54,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         <div className="h-[46px] w-[46px]" />
       </div>
       <div className="h-[calc(100vh-46px)] overflow-y-scroll py-3 scrollbar-none">
-        {searchResult.length > 0 ? (
+        {searchResult && searchResult.length > 0 ? (
           searchResult.map((data) => (
             <SearchResult
               key={data.id}
