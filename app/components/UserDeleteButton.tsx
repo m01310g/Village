@@ -41,7 +41,6 @@ const UserDeleteButton = () => {
         }
       }
 
-      const data: UserDeleteResponse = await res.json();
       useAuthStore.getState().resetAuth();
       localStorage.removeItem("user-profile-form");
       router.replace("/");

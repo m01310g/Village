@@ -41,7 +41,6 @@ export const signoutUser = async (refreshToken: string) => {
           console.error("로그아웃 실패:", error);
         }
       }
-      const data: SignoutResponse = await res.json();
       useAuthStore.getState().resetAuth();
       window.location.replace("/");
     } else {
