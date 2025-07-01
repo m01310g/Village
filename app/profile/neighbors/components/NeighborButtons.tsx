@@ -1,35 +1,27 @@
 import Button from "@/app/components/Button";
-import { useState } from "react";
-import NeighborDeleteBottomSheet from "./NeighborDeleteBottomSheet";
 import { useAcceptNeighbor } from "../hooks/useAcceptNeighbor";
 import { useRejectNeighbor } from "../hooks/useRejectNeighbor";
+import AddNeighborButton from "@/app/components/post/AddNeighborButton";
+import { usePathname } from "next/navigation";
 
 interface NeighborButtonsProps {
   nickname?: string;
   id: number;
-  isMyNeighbor: boolean;
+  isMyNeighbor: boolean | number;
 }
 
-const NeighborButtons = ({
-  nickname,
-  id,
-  isMyNeighbor,
-}: NeighborButtonsProps) => {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+const NeighborButtons = ({ id, isMyNeighbor }: NeighborButtonsProps) => {
   const acceptMutation = useAcceptNeighbor(id);
   const rejectMutation = useRejectNeighbor(id);
+  const pathname = usePathname();
 
   return (
     <>
-      {isMyNeighbor ? (
-        <Button
-          size="sm"
-          color="secondaryColor"
-          onClick={() => setIsBottomSheetOpen(true)}
-        >
+      {isMyNeighbor === true || isMyNeighbor === 0 ? (
+        <Button size="sm" color="secondaryColor">
           이웃
         </Button>
-      ) : (
+      ) : pathname === "/profile/neighbors" ? (
         <div className="flex items-center justify-center gap-1">
           <Button
             size="sm"
@@ -46,12 +38,10 @@ const NeighborButtons = ({
             수락
           </Button>
         </div>
-      )}
-      {isBottomSheetOpen && (
-        <NeighborDeleteBottomSheet
-          setIsOpen={setIsBottomSheetOpen}
-          nickname={nickname || ""}
-        />
+      ) : isMyNeighbor === 2 ? (
+        <AddNeighborButton id={id} isNeighbor={isMyNeighbor} />
+      ) : (
+        isMyNeighbor === 4 && <></>
       )}
     </>
   );

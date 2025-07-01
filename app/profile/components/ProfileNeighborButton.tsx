@@ -2,7 +2,7 @@ import Button from "@/app/components/Button";
 import LoginRequiredModal from "@/app/components/LoginRequiredModal";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRequestNeighbor } from "../[userId]/hooks/useRequestNeighbor";
 
 interface ProfileNeighborButtonProps {
@@ -20,11 +20,16 @@ const ProfileNeighborButton = ({
   const [buttonState, setButtonState] = useState(isNeighbor);
   const requestNeighborMutation = useRequestNeighbor(id);
 
-  if (!accessToken) {
-    setIsModalOpen(true);
-  }
+  useEffect(() => {
+    setButtonState(isNeighbor);
+  }, [isNeighbor]);
 
   const handleRequestNeighbor = () => {
+    if (!accessToken) {
+      setIsModalOpen(true);
+      return;
+    }
+
     setButtonState(2);
 
     requestNeighborMutation.mutate();

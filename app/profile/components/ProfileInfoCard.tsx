@@ -1,21 +1,28 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ProfileInfoCardProps {
+  id: number;
   profileImage: string;
   nickname: string;
   name: string;
   role: "TRAINER";
   neighborCount: number;
+  isNeighbor: number;
 }
 
 const ProfileInfoCard = ({
+  id,
   profileImage,
   nickname,
   name,
   role,
   neighborCount,
+  isNeighbor,
 }: ProfileInfoCardProps) => {
   const roles = { TRAINER: "트레이너" };
+  const router = useRouter();
+
   return (
     <div className="flex items-center justify-between">
       <div className="h-20 w-20 overflow-hidden rounded-full">
@@ -31,7 +38,16 @@ const ProfileInfoCard = ({
           <span className="text-body-3 text-text-tertiary">
             {roles[role] || "트레이너"}
           </span>
-          <div className="flex gap-1">
+          <div
+            className="flex cursor-pointer gap-1"
+            onClick={() =>
+              router.push(
+                isNeighbor === 4 || isNeighbor === undefined
+                  ? "/profile/neighbors"
+                  : `/profile/${id}/neighbors`,
+              )
+            }
+          >
             <span className="text-body-3 text-text-onsecondary">이웃</span>
             <span className="text-title-4 text-text-onsecondary">{`${neighborCount}명`}</span>
           </div>

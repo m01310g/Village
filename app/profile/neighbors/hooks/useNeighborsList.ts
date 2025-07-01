@@ -1,5 +1,6 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 
 interface Neighbor {
@@ -7,6 +8,7 @@ interface Neighbor {
   profileImage: string;
   nickname: string;
   name: string;
+  isNeighbor: number;
 }
 
 interface NeighborsList {
@@ -41,8 +43,12 @@ const getNeighbors = async (): Promise<NeighborsList> => {
 };
 
 export const useNeighborsList = () => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isLoggedIn = !!accessToken;
+
   return useQuery({
     queryKey: ["neighbors"],
     queryFn: getNeighbors,
+    enabled: isLoggedIn,
   });
 };

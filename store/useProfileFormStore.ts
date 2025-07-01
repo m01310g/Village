@@ -10,6 +10,11 @@ interface ProfileFormState {
     value: string | number | WebCareer[] | { [key: string]: string[] },
   ) => void;
   setFormData: (data: ProfileFormData) => void;
+  initialFormData: ProfileFormData | null;
+  setInitialFormData: (data: ProfileFormData) => void;
+  isModified: boolean;
+  checkIsModified: () => void;
+  resetFormData: () => void;
 }
 
 export const useProfileFormStore = create(
@@ -40,6 +45,67 @@ export const useProfileFormStore = create(
         }
       },
       setFormData: (data) => set({ formData: data }),
+      isModified: false,
+      initialFormData: null,
+      setInitialFormData: (data) =>
+        set((state) => {
+          // 이미 초기값이 설정되어 있다면 덮어쓰기 하지 않음
+          if (state.initialFormData) return {};
+
+          const newFormData = {
+            ...state.formData,
+            ...data,
+          };
+
+          const keysToCompare: (keyof ProfileFormData)[] = [
+            "profileImage",
+            "name",
+            "nickname",
+            "webCareers",
+            "introduction",
+            "location",
+            "status",
+            "phone",
+            "phoneOpened",
+          ];
+
+          const isChanged = keysToCompare.some((key) => {
+            return (
+              JSON.stringify(newFormData[key]) !== JSON.stringify(data[key])
+            );
+          });
+
+          return {
+            initialFormData: data,
+            formData: newFormData,
+            isModified: isChanged,
+          };
+        }),
+      checkIsModified: () => {
+        const { formData, initialFormData } = get();
+        if (!initialFormData) return;
+
+        const isChanged =
+          JSON.stringify(formData) !== JSON.stringify(initialFormData);
+        set({ isModified: isChanged });
+      },
+      resetFormData: () => {
+        set({
+          formData: {
+            profileImage: "",
+            name: "",
+            nickname: "",
+            webCareers: [],
+            introduction: "",
+            location: {},
+            status: 0,
+            phone: "",
+            phoneOpened: 0,
+          },
+          initialFormData: null,
+          isModified: false,
+        });
+      },
     }),
     {
       name: "profile-form-data",

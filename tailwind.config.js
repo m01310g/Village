@@ -358,5 +358,21 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-none": {
+          "scrollbar-width": "none", // Firefox
+          "-ms-overflow-style": "none", // IE 10+
+        },
+        ".scrollbar-none::-webkit-scrollbar": {
+          display: "none", // Chrome, Safari
+        },
+        ".scrollbar-thin": {
+          "scrollbar-width": "thin",
+        },
+      });
+    },
+  ],
 };

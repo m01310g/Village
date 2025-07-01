@@ -1,6 +1,7 @@
 import Button from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import ProfileNeighborButton from "./ProfileNeighborButton";
+import { useNeighborsList } from "../neighbors/hooks/useNeighborsList";
 
 interface ProfileButtonProps {
   isMyProfile: boolean;
@@ -14,6 +15,8 @@ const ProfileButtons = ({
   id,
 }: ProfileButtonProps) => {
   const router = useRouter();
+  const { data: neighbors } = useNeighborsList();
+  const received = neighbors?.receiveds;
 
   return (
     <div className="flex gap-2">
@@ -29,6 +32,7 @@ const ProfileButtons = ({
           <Button
             size="md"
             color="primary"
+            showDot={received && received.length > 0}
             onClick={() => router.push("/profile/neighbors")}
           >
             내 이웃 목록

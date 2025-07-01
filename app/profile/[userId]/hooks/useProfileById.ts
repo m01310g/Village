@@ -2,18 +2,29 @@ import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { UserProfile } from "../../hooks/useUserProfile";
 import { useQuery } from "@tanstack/react-query";
+import { useAuthStore } from "@/store/useAuthStore";
 
-const getProfileById = async (userId: number): Promise<UserProfile> => {
-  const res = await fetchWithAuth(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/getWebProfile`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: userId }),
-    },
-  );
+const getProfileById = async (
+  userId: number,
+  isLoggedIn: boolean,
+): Promise<UserProfile> => {
+  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/getWebProfile`;
+
+  const res = await (isLoggedIn
+    ? fetchWithAuth(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: userId }),
+      })
+    : fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: userId }),
+      }));
 
   if (!res.ok) {
     const error: ErrorResponse = await res.json();
@@ -32,8 +43,11 @@ const getProfileById = async (userId: number): Promise<UserProfile> => {
 };
 
 export const useProfileById = (userId: number) => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isLoggedIn = !!accessToken;
+
   return useQuery({
-    queryKey: ["profileById"],
-    queryFn: () => getProfileById(userId),
+    queryKey: ["profileById", userId, isLoggedIn],
+    queryFn: () => getProfileById(userId, isLoggedIn),
   });
 };

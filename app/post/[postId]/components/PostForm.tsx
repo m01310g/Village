@@ -23,7 +23,6 @@ const PostForm = ({
   setImages,
 }: PostFormProps) => {
   const types = ["업계이야기", "채용", "교육"];
-  // const typeMap = { 업계이야기: 0, 채용: 1, 교육: 2 } as const;
 
   return (
     <div className="flex h-full max-w-[375px] flex-col overflow-hidden">

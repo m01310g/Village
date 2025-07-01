@@ -9,15 +9,20 @@ import WorkRegionSection from "../../create/detail/components/WorkRegionSection"
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
-import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
+import { useProfileEdit } from "../../hooks/useProfileEdit";
 
 const ProfileEditDetailPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data: profile } = useUserProfile(isLoggedIn);
-  const { formData, updateField } = useProfileFormStore();
+  const {
+    formData,
+    updateField,
+    setInitialFormData,
+    checkIsModified,
+    isModified,
+  } = useProfileFormStore();
   const router = useRouter();
   const [selectedDistricts, setSelectedDistricts] = useState<{
     [key: string]: string[];
@@ -26,6 +31,7 @@ const ProfileEditDetailPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
+  const editProfileMutation = useProfileEdit();
 
   useEffect(() => {
     if (profile) {
@@ -51,20 +57,26 @@ const ProfileEditDetailPage = () => {
   }, [profile]);
 
   useEffect(() => {
-    updateField("status", convertStatusToNumber(status));
-  }, [status, updateField]);
+    if (profile) {
+      const initial = {
+        profileImage: profile.profileImage || "",
+        name: profile.name || "",
+        nickname: profile.nickname || "",
+        webCareers: profile.webCareers || [],
+        introduction: profile.introduction || "",
+        location: profile.location || {},
+        status: profile.status || 0,
+        phone: profile.phone || "",
+        phoneOpened: profile.phoneOpened || 0,
+      };
+
+      setInitialFormData(initial);
+    }
+  }, [profile, setInitialFormData]);
 
   useEffect(() => {
-    updateField("phone", phoneNumber);
-  }, [phoneNumber, updateField]);
-
-  useEffect(() => {
-    updateField("phoneOpened", isPhoneNumberOpened);
-  }, [isPhoneNumberOpened, updateField]);
-
-  useEffect(() => {
-    updateField("location", selectedDistricts);
-  }, [selectedDistricts, updateField]);
+    checkIsModified();
+  }, [formData, checkIsModified]);
 
   const isFormValid =
     status !== "구직 상태 선택" &&
@@ -72,54 +84,17 @@ const ProfileEditDetailPage = () => {
     phoneNumber !== "" &&
     phoneNumberError === "";
 
-  const isFormChanged =
-    profile &&
-    (profile.status !== convertStatusToNumber(status) ||
-      JSON.stringify(profile.location) !== JSON.stringify(selectedDistricts) ||
-      profile.phone !== phoneNumber ||
-      profile.phoneOpened !== isPhoneNumberOpened);
-
   useEffect(() => {
     const accessToken = useAuthStore.getState().accessToken;
     setIsLoggedIn(!!accessToken);
   }, []);
 
   const handleModify = async () => {
-    try {
-      const res = await fetchWithAuth(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(formData),
-        },
-      );
+    const payload = { ...formData };
+    if (payload.profileImage === "") delete payload.profileImage;
+    if (payload.introduction === "") delete payload.introduction;
 
-      if (!res.ok) {
-        const error: ErrorResponse = await res.json();
-        if (error.statusCode === 400) {
-          throw new Error(`요청 형식 오류: ${error.message}`);
-        } else if (error.statusCode === 401) {
-          throw new Error(
-            `유효하지 않거나 기간이 만료된 토큰: ${error.message}`,
-          );
-        } else if (error.statusCode === 403) {
-          throw new Error(`유저 회원이 아닙니다: ${error.message}`);
-        } else if (error.statusCode === 404) {
-          throw new Error(`등록된 프로필 없음: ${error.message}`);
-        } else {
-          throw new Error(error.message);
-        }
-      }
-
-      router.push("/profile");
-    } catch (err) {
-      console.error(
-        err instanceof Error ? err.message : "프로필 수정 중 오류 발생",
-      );
-    }
+    editProfileMutation.mutate(payload);
   };
 
   return (
@@ -168,8 +143,9 @@ const ProfileEditDetailPage = () => {
         />
       </form>
       <CompleteButton
-        isFormValid={!!isFormValid && !!isFormChanged}
+        isFormValid={!!isFormValid && isModified}
         onClick={handleModify}
+        onBack={() => router.back()}
       >
         수정
       </CompleteButton>

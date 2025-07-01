@@ -8,12 +8,10 @@ import JobSeekingStatusSection from "./components/JobSeekingStatusSection";
 import { useEffect, useState } from "react";
 import PhoneNumberSection from "./components/PhoneNumberSection";
 import PhoneNumberVisibilitySection from "./components/PhoneNumberVisibilitySeciton";
-import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useAuthStore } from "@/store/useAuthStore";
 import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
-import { logSignUpEvent } from "@/app/lib/amplitude";
+import { useCreateProfile } from "../../hooks/useProfileCreate";
 
 const ProfileCreateDetailPage = () => {
   const router = useRouter();
@@ -26,6 +24,7 @@ const ProfileCreateDetailPage = () => {
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
   const { accessToken } = useAuthStore();
+  const createProfileMutation = useCreateProfile();
 
   const isFormValid =
     status !== "구직 상태 선택" &&
@@ -67,42 +66,11 @@ const ProfileCreateDetailPage = () => {
   }, [isPhoneNumberOpened, updateField]);
 
   const handleSubmit = async () => {
-    console.log(formData);
-    try {
-      const res = await fetchWithAuth(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(formData),
-        },
-      );
+    const payload = { ...formData };
+    if (payload.profileImage === "") delete payload.profileImage;
+    if (payload.introduction === "") delete payload.introduction;
 
-      if (!res.ok) {
-        const error: ErrorResponse = await res.json();
-        if (error.statusCode === 400) {
-          throw new Error(`요청 형식 오류: ${error.message}`);
-        } else if (error.statusCode === 401) {
-          throw new Error(
-            `유효하지 않거나 기간이 만료된 토큰: ${error.message}`,
-          );
-        } else if (error.statusCode === 403) {
-          throw new Error(`유저 회원이 아닙니다: ${error.message}`);
-        } else if (error.statusCode === 409) {
-          throw new Error(`이미 등록된 프로필이 있습니다: ${error.message}`);
-        } else {
-          throw new Error(error.message);
-        }
-      }
-
-      const result = await res.json();
-      logSignUpEvent(result.data.id);
-      router.replace(`/profile`);
-    } catch (err) {
-      console.error(err instanceof Error ? err.message : "알 수 없는 오류");
-    }
+    createProfileMutation.mutate(payload);
   };
 
   return (
@@ -134,7 +102,11 @@ const ProfileCreateDetailPage = () => {
           }}
         />
       </form>
-      <CompleteButton isFormValid={isFormValid} onClick={handleSubmit}>
+      <CompleteButton
+        isFormValid={isFormValid}
+        onClick={handleSubmit}
+        onBack={() => router.back()}
+      >
         등록
       </CompleteButton>
     </div>

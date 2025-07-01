@@ -1,30 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
 import FilteringButton from "../components/feed/FilteringButton";
 import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
 import { usePostList } from "./hooks/usePostList";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
+import { usePathname } from "next/navigation";
+import { useScrollStore } from "@/store/useScrollStore";
 
 const Page = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { getActiveFilter, setActiveFilter: saveActiveFilter } =
+    useScrollStore();
+  const pathname = usePathname();
+  const [activeFilter, setActiveFilter] = useState(
+    () => getActiveFilter(pathname) || "전체",
+  );
+
+  useScrollRestoration(scrollRef, activeFilter);
+
   const setHeader = useSetHeader();
-  const [activeFilter, setActiveFilter] = useState("전체");
   const filters = ["전체", "업계이야기", "채용", "교육"];
   const { data: postList } = usePostList();
-  const userId = useAuthStore.getState().user?.id;
 
   useEffect(() => {
     setHeader({
       title: "",
       showBackButton: false,
       showSearchButton: true,
-      showNotificationButton: true,
       showSettingButton: false,
       showLogo: true,
     });
   }, [setHeader]);
+
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter);
+    saveActiveFilter(pathname, filter);
+  };
 
   const filteredPosts =
     activeFilter === "전체"
@@ -42,17 +56,19 @@ const Page = () => {
             key={i}
             content={filter}
             isActive={activeFilter === filter}
-            onClick={() => setActiveFilter(filter)}
+            onClick={() => handleFilterChange(filter)}
           />
         ))}
       </div>
-      <div className="h-full overflow-y-auto">
+      <div className="scrollbar-thin h-full overflow-y-auto" ref={scrollRef}>
         {filteredPosts &&
           filteredPosts.map((post) => {
-            const postUserId = post.writtenBy.id;
-            const isMyProfile = postUserId === userId;
             return (
-              <PostCard key={post.id} post={post} isMyProfile={isMyProfile} />
+              <PostCard
+                key={post.id}
+                post={post}
+                isMyProfile={post.isNeighbor === 4}
+              />
             );
           })}
       </div>

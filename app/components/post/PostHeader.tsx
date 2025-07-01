@@ -10,9 +10,10 @@ import { useRouter } from "next/navigation";
 interface PostHeaderProps {
   post: Board;
   isMyProfile?: boolean;
+  isNeighbor: number;
 }
 
-const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
+const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
@@ -30,11 +31,7 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
             <Image
-              src={
-                post.writtenBy.profileImage === "url"
-                  ? "/logos/symbol.svg"
-                  : post.writtenBy.profileImage
-              }
+              src={post.writtenBy.profileImage ?? "/logos/symbol.svg"}
               width={40}
               height={40}
               alt={`${post.writtenBy.nickname}의 프로필 사진`}
@@ -57,10 +54,10 @@ const PostHeader = ({ post, isMyProfile }: PostHeaderProps) => {
         ) : pathname.startsWith("/profile/") ? (
           <div className="h-10 w-10" />
         ) : pathname === "/" ? (
-          post.isNeighbor || isMyProfile ? (
+          isMyProfile ? (
             <div className="h-10 w-10" />
           ) : (
-            <AddNeighborButton />
+            <AddNeighborButton id={post.writtenBy.id} isNeighbor={isNeighbor} />
           )
         ) : pathname.startsWith("/post/") ? (
           isMyProfile ? (
