@@ -50,7 +50,6 @@ const ProfileImageBottomSheet = ({
             }}
           />
         </li>
-        <div className="h-[1px] w-full bg-background-tertiary" />
       </ul>
     </div>
   );
