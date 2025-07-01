@@ -45,7 +45,7 @@ const Page = () => {
           />
         ))}
       </div>
-      <div className="scrollbar-none h-full overflow-y-auto">
+      <div className="scrollbar-thin h-full overflow-y-auto">
         {filteredPosts &&
           filteredPosts.map((post) => {
             const postUserId = post.writtenBy.id;
