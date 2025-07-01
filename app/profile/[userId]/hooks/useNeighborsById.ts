@@ -39,7 +39,6 @@ const getNeighborById = async (
 
   const result = await res.json();
   const data = result.data;
-  console.log(data);
 
   return data;
 };
