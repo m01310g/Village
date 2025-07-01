@@ -49,12 +49,12 @@ const editPost = async (formData: EditPostType) => {
   }
 };
 
-export const useEditPost = (formData: EditPostType) => {
+export const useEditPost = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => {
+    mutationFn: (formData: EditPostType) => {
       if (!formData) throw new Error("formData is required");
       return editPost(formData);
     },
