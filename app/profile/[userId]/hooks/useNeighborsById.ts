@@ -4,20 +4,24 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 
 interface Neighbor {
-  id: number;
-  nickname: string;
-  profileImage: string;
-  name: string;
-  isNeighbor: number;
+  neighborNumber: number;
+  neighbors: {
+    id: number;
+    nickname: string;
+    profileImage: string;
+    name: string;
+    isNeighbor: number;
+  }[];
 }
 
 const getNeighborById = async (
   userId: number,
   isLoggedIn: boolean,
-): Promise<Neighbor[]> => {
+): Promise<Neighbor> => {
   const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/getNeighbor`;
   const res = await (isLoggedIn ? fetchWithAuth : fetch)(url, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id: userId }),
   });
 
@@ -34,7 +38,8 @@ const getNeighborById = async (
   }
 
   const result = await res.json();
-  const data = result.data.data;
+  const data = result.data;
+  console.log(data);
 
   return data;
 };
@@ -42,7 +47,7 @@ const getNeighborById = async (
 export const useNeighborsById = (userId: number) => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const isLoggedIn = !!accessToken;
-  return useQuery<Neighbor[]>({
+  return useQuery<Neighbor>({
     queryKey: ["neighbors", userId],
     queryFn: () => getNeighborById(userId, isLoggedIn),
     enabled: !!userId,

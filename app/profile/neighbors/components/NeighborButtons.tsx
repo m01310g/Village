@@ -24,7 +24,7 @@ const NeighborButtons = ({
 
   return (
     <>
-      {isMyNeighbor ? (
+      {isMyNeighbor === true || isMyNeighbor === 0 ? (
         <Button
           size="sm"
           color="secondaryColor"
@@ -49,10 +49,10 @@ const NeighborButtons = ({
             수락
           </Button>
         </div>
-      ) : isMyNeighbor === 0 || isMyNeighbor === 2 ? (
+      ) : isMyNeighbor === 2 ? (
         <AddNeighborButton id={id} isNeighbor={isMyNeighbor} />
       ) : (
-        <></>
+        isMyNeighbor === 4 && <></>
       )}
       {isBottomSheetOpen && (
         <NeighborDeleteBottomSheet
