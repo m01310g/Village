@@ -43,7 +43,16 @@ export const useProfileFormStore = create(
           }));
         }
       },
-      setFormData: (data) => set({ formData: data }),
+      setFormData: (data) => {
+        const sanitizedData = { ...data };
+        if (sanitizedData.profileImage === "") {
+          delete sanitizedData.profileImage;
+        }
+        if (sanitizedData.introduction === "") {
+          delete sanitizedData.introduction;
+        }
+        set({ formData: sanitizedData });
+      },
       isModified: false,
       initialFormData: null,
       setInitialFormData: (data) =>

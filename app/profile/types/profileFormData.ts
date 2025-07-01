@@ -1,11 +1,11 @@
 import { WebCareer } from "./webCareer";
 
 export interface ProfileFormData {
-  profileImage: string;
+  profileImage?: string;
   name: string;
   nickname: string;
   webCareers: WebCareer[];
-  introduction: string;
+  introduction?: string;
   location: { [key: string]: string[] };
   status: number;
   phone: string;
