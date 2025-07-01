@@ -68,6 +68,14 @@ const ProfileCreateDetailPage = () => {
 
   const handleSubmit = async () => {
     try {
+      const payload = {
+        ...formData,
+        profileImage:
+          formData.profileImage && formData.profileImage !== ""
+            ? formData.profileImage
+            : "/logos/symbol.svg",
+      };
+
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/registerWebProfile`,
         {
@@ -75,7 +83,7 @@ const ProfileCreateDetailPage = () => {
             "Content-Type": "application/json",
           },
           method: "POST",
-          body: JSON.stringify(formData),
+          body: JSON.stringify(payload),
         },
       );
 
