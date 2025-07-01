@@ -19,6 +19,7 @@ const NavigationBar = () => {
     /^\/settings/,
     /^\/support/,
     /^\/terms/,
+    /^\/recruit\/select-region/,
   ];
 
   const shouldHideByPattern = hiddenPatterns.some((pattern) =>
