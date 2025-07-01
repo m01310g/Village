@@ -90,6 +90,10 @@ const ProfileEditDetailPage = () => {
   }, []);
 
   const handleModify = async () => {
+    const payload = { ...formData };
+    if (payload.profileImage === "") delete payload.profileImage;
+    if (payload.introduction === "") delete payload.introduction;
+
     try {
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/modifyWebProfile`,
@@ -98,7 +102,7 @@ const ProfileEditDetailPage = () => {
             "Content-Type": "application/json",
           },
           method: "POST",
-          body: JSON.stringify(formData),
+          body: JSON.stringify(payload),
         },
       );
 
