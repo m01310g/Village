@@ -4,30 +4,32 @@ import { useEffect } from "react";
 
 export const useScrollRestoration = (
   scrollRef: React.RefObject<HTMLElement | null>,
+  filter?: string,
 ) => {
   const pathname = usePathname();
+  const pathnameKey = filter ? `${pathname}?filter=${filter}` : pathname;
   const { setScroll, getScroll } = useScrollStore();
 
   useEffect(() => {
     const handleScroll = () => {
       const y = scrollRef.current?.scrollTop ?? 0;
-      setScroll(pathname, y);
+      setScroll(pathnameKey, y);
     };
     const target = scrollRef.current;
     if (!target) return;
-    target?.addEventListener("scroll", handleScroll);
+    target.addEventListener("scroll", handleScroll);
     return () => {
-      target?.removeEventListener("scroll", handleScroll);
+      target.removeEventListener("scroll", handleScroll);
     };
-  }, [pathname, setScroll, scrollRef]);
+  }, [pathnameKey, setScroll, scrollRef]);
 
   useEffect(() => {
-    const y = getScroll(pathname);
+    const y = getScroll(pathnameKey);
 
     if (y !== undefined) {
       setTimeout(() => {
         scrollRef.current?.scrollTo({ top: y });
       }, 0);
     }
-  }, [pathname, getScroll, scrollRef]);
+  }, [pathnameKey, getScroll, scrollRef]);
 };
