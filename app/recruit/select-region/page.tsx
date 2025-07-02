@@ -1,14 +1,11 @@
 "use client";
 
 import Button from "@/app/components/Button";
-import { useSetHeader } from "@/app/components/header/HeaderContext";
 import WorkRegionSection from "@/app/profile/create/detail/components/WorkRegionSection";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
 
 const RecruitSelectRegionPage = () => {
-  const setHeader = useSetHeader();
   const resultCount = 300;
   const selectedDistricts = useRegionFilterStore(
     (state) => state.selectedDistricts,
@@ -17,10 +14,6 @@ const RecruitSelectRegionPage = () => {
     (state) => state.setSelectedDistricts,
   );
   const router = useRouter();
-
-  useEffect(() => {
-    setHeader({ title: "지역 조건 설정", showBackButton: true });
-  }, [setHeader]);
 
   return (
     <main className="flex h-[calc(100vh-46px)] flex-col justify-between bg-background-primary px-4 py-5">

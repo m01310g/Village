@@ -1,20 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSetHeader } from "../components/header/HeaderContext";
+import { useState } from "react";
 import RecruitSearchBar from "./components/RecruitSearchBar";
 import RegionFilterSettingBar from "./components/RegionFilterSettingBar";
 import RecruitItem from "./components/RecruitItem";
 
 const RecruitPage = () => {
-  const setHeader = useSetHeader();
   const recruitCount = 17;
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [keyword, setKeyword] = useState("");
-
-  useEffect(() => {
-    setHeader({ title: "채용 공고", showBackButton: true });
-  }, [setHeader]);
 
   return (
     <main className="text-title-1 flex h-[calc(100vh-46px-81px)] flex-col gap-3 bg-background-primary py-4 text-text-primary">
