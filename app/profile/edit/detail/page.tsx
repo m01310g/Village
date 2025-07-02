@@ -78,6 +78,18 @@ const ProfileEditDetailPage = () => {
     checkIsModified();
   }, [formData, checkIsModified]);
 
+  useEffect(() => {
+    updateField("location", selectedDistricts);
+  }, [selectedDistricts, updateField]);
+
+  useEffect(() => {
+    updateField("phoneOpened", isPhoneNumberOpened);
+  }, [isPhoneNumberOpened, updateField]);
+
+  useEffect(() => {
+    updateField("phone", phoneNumber);
+  }, [phoneNumber, updateField]);
+
   const isFormValid =
     status !== "구직 상태 선택" &&
     Object.keys(selectedDistricts).length > 0 &&
