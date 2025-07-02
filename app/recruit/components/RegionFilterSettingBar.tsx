@@ -1,15 +1,7 @@
 import FilterIcon from "@/public/icons/icn_filter.svg";
 import { useRouter } from "next/navigation";
 
-interface RegionFilterSettingBarProps {
-  selectedDistricts: string[];
-  setSelectedDistricts: React.Dispatch<React.SetStateAction<string[]>>;
-}
-
-const RegionFilterSettingBar = ({
-  selectedDistricts,
-  setSelectedDistricts,
-}: RegionFilterSettingBarProps) => {
+const RegionFilterSettingBar = () => {
   const router = useRouter();
 
   return (
