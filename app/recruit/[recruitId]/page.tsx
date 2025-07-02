@@ -3,6 +3,7 @@
 import { useState } from "react";
 import CenterNameSection from "./components/CenterNameSection";
 import TabTitle from "./components/TabTitle";
+import RecruitmentInfo from "./components/RecruitmentInfo";
 
 const RecruitByIdPage = () => {
   const tabs = [
@@ -18,6 +19,7 @@ const RecruitByIdPage = () => {
         createdAt="2025.11.03"
       />
       <TabTitle tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+      <RecruitmentInfo />
     </main>
   );
 };
