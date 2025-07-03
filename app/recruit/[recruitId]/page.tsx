@@ -19,7 +19,7 @@ const RecruitByIdPage = () => {
         createdAt="2025.11.03"
       />
       <TabTitle tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
-      <RecruitmentInfo />
+      {activeTab === "condition" ? <RecruitmentInfo /> : <></>}
     </main>
   );
 };
