@@ -11,7 +11,7 @@ const WorkingAdressSection = ({ address }: WorkingAdressSectionProps) => {
           <span className="w-[60px] text-text-tertiary">급여조건</span>
           <span className="text-text-primary">{address}</span>
         </div>
-        <div className="h-[200px] w-full rounded-[8px]">
+        <div className="h-[200px] w-full overflow-hidden rounded-[8px]">
           {/* 카카오맵 연결 필요 */}
         </div>
       </div>
