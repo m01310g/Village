@@ -13,7 +13,7 @@ const RecruitByIdPage = () => {
   const [activeTab, setActiveTab] = useState("condition");
 
   return (
-    <main className="h-[calc(100vh-46px-81px)] bg-background-primary">
+    <main className="h-[calc(100vh-46px)] overflow-y-auto bg-background-primary">
       <CenterNameSection
         centerName="00휘트니스 서현점"
         createdAt="2025.11.03"
