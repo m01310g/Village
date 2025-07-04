@@ -18,7 +18,10 @@ const RecruitmentInfo = (recruitment: RecruitmentById) => {
         weekendDuty={recruitment.weekendDuty}
       />
       <div className="h-[1px] bg-border-primary" />
-      <WorkingAddressSection address={recruitment.address} />
+      <WorkingAddressSection
+        address={recruitment.address}
+        centerName={recruitment.centerName}
+      />
       <div className="h-[1px] bg-border-primary" />
       <ApplyRequirementSection
         gender={recruitment.gender}
