@@ -15,6 +15,7 @@ const HeaderConsumer = () => {
       showSettingButton={header.showSettingButton}
       showCreateButton={header.showCreateButton}
       showMenuButton={header.showMenuButton}
+      showRefreshButton={header.showRefreshButton}
       showCreateButtonProps={header.showCreateButtonProps}
       onClick={header.onClick}
     />
