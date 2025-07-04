@@ -1,4 +1,4 @@
-import { RecruitmentType } from "../hooks/useRecruitmentList";
+import { RecruitmentType } from "../types/recruitmentType";
 
 interface RecruitItemProps {
   recruit: RecruitmentType;
@@ -22,16 +22,18 @@ const RecruitItem = ({ recruit, onClick }: RecruitItemProps) => {
               {f}
             </span>
           ))}
-          <div className="flex gap-1">
-            {recruit.workTime.map((t, i) => (
-              <span
-                key={i}
-                className="text-caption-3 rounded-[4px] bg-neutral-50 p-1 text-text-tertiary"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+          {!recruit.workTime.includes("명시 안 됨") && (
+            <div className="flex gap-1">
+              {recruit.workTime.map((t, i) => (
+                <span
+                  key={i}
+                  className="text-caption-3 rounded-[4px] bg-neutral-50 p-1 text-text-tertiary"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="h-0.5 bg-border-primary" />
