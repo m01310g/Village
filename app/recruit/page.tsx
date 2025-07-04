@@ -9,15 +9,23 @@ import SelectedRegions from "./components/SelectedRegions";
 import { useRecruitmentList } from "./hooks/useRecruitmentList";
 import PaginationBar from "./components/PaginationBar";
 import { useRecruitmentFilter } from "./hooks/useRecruitmentFilter";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import CountUp from "react-countup";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
+import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 
 const RecruitPage = () => {
   const selectedDistricts = useRegionFilterStore(
     (state) => state.selectedDistricts,
   );
-  const [keyword, setKeyword] = useState("");
+  const searchParams = useSearchParams();
+  const keywordParam = searchParams.get("keyword") ?? "";
+  const { keyword, setKeyword } = useSearchKeywordStore();
+  useEffect(() => {
+    if (keywordParam !== keyword) {
+      setKeyword(keywordParam);
+    }
+  }, [keywordParam]);
   const [page, setPage] = useState(1);
   const { data: recruits } = useRecruitmentList(page);
   const { data: filteredRecruits } = useRecruitmentFilter(keyword, page);
@@ -67,7 +75,11 @@ const RecruitPage = () => {
       ref={scrollContainerRef}
     >
       <div className="flex flex-col gap-3 px-4">
-        <RecruitSearchBar keyword={keyword} setKeyword={setKeyword} />
+        <RecruitSearchBar
+          keyword={keyword}
+          setKeyword={setKeyword}
+          onClick={() => router.push("/recruit/search-center")}
+        />
         <div className="flex h-8 items-center gap-2">
           <h3 className="text-title-3 shrink-0 text-neutral-900">
             <CountUp
