@@ -1,5 +1,7 @@
 import SearchIcon from "@/public/icons/icn_search.svg";
+import RemoveIcon from "@/public/icons/close-2.svg";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 
 interface RecruitSearchBarProps {
   onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
@@ -14,8 +16,15 @@ const RecruitSearchBar = ({
   onClick,
   onSubmit,
 }: RecruitSearchBarProps) => {
+  const pathname = usePathname();
+
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
+  };
+
+  const handleResetKeyword = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setKeyword("");
   };
 
   return (
@@ -43,6 +52,15 @@ const RecruitSearchBar = ({
         onChange={handleKeywordChange}
         readOnly={!!onClick}
       />
+      {keyword.trim() !== "" && pathname !== "/recruit" && (
+        <button
+          type="button"
+          className="cursor-pointer"
+          onClick={handleResetKeyword}
+        >
+          <RemoveIcon color="#171717" width="24px" height="24px" />
+        </button>
+      )}
     </form>
   );
 };

@@ -7,6 +7,7 @@ import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
 import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
+import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 
 interface HeaderProps {
   title: string;
@@ -39,8 +40,20 @@ const Header = ({
   onClick,
 }: HeaderProps) => {
   const router = useRouter();
+
+  const { keyword, setKeyword } = useSearchKeywordStore();
+
+  const handleBack = () => {
+    if (keyword) {
+      setKeyword("");
+      router.replace("/recruit");
+    } else {
+      router.back();
+    }
+  };
+
   return (
-    <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
+    <header className="flex h-[46px] shrink-0 items-center justify-between border-b border-border-primary bg-background-primary px-1">
       {showLogo && (
         <div className="px-3">
           <Logo color="#4A5565" width="60px" height="30px" />
@@ -48,7 +61,7 @@ const Header = ({
       )}
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
-          <button type="button" onClick={() => router.back()}>
+          <button type="button" onClick={handleBack}>
             <Image
               src="/icons/chevron-left.svg"
               alt="뒤로 가기 버튼"

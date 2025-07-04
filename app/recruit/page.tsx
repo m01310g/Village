@@ -21,11 +21,13 @@ const RecruitPage = () => {
   const searchParams = useSearchParams();
   const keywordParam = searchParams.get("keyword") ?? "";
   const { keyword, setKeyword } = useSearchKeywordStore();
+
   useEffect(() => {
     if (keywordParam !== keyword) {
       setKeyword(keywordParam);
     }
   }, [keywordParam]);
+
   const [page, setPage] = useState(1);
   const { data: recruits } = useRecruitmentList(page);
   const { data: filteredRecruits } = useRecruitmentFilter(keyword, page);

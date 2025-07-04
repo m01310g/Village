@@ -15,10 +15,12 @@ const RecruitLayout = ({ children }: { children: React.ReactNode }) => {
           ? "채용 공고"
           : pathname === "/recruit/select-region"
             ? "지역 조건 설정"
-            : pathname.startsWith("/recruit/") &&
-                !pathname.endsWith("/select-region")
-              ? "채용 정보"
-              : "",
+            : pathname === "/recruit/search-center"
+              ? "센터명 검색"
+              : pathname.startsWith("/recruit/") &&
+                  !pathname.endsWith("/select-region")
+                ? "채용 정보"
+                : "",
       showBackButton: true,
     });
   }, [pathname, setHeader]);
