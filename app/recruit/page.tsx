@@ -11,6 +11,7 @@ import PaginationBar from "./components/PaginationBar";
 import { useRecruitmentFilter } from "./hooks/useRecruitmentFilter";
 import { useRouter } from "next/navigation";
 import CountUp from "react-countup";
+import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
 
 const RecruitPage = () => {
   const selectedDistricts = useRegionFilterStore(
@@ -24,6 +25,8 @@ const RecruitPage = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useScrollRestoration(scrollContainerRef);
 
   useEffect(() => {
     const el = scrollRef.current;
