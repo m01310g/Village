@@ -1,4 +1,4 @@
-import { RecruitmentType } from "../hooks/useRecruitmentData";
+import { RecruitmentType } from "../hooks/useRecruitmentList";
 
 interface RecruitItemProps {
   recruit: RecruitmentType;
@@ -13,7 +13,7 @@ const RecruitItem = ({ recruit }: RecruitItemProps) => {
           <span className="text-caption-3 text-text-tertiary">
             {recruit.location}
           </span>
-          {recruit.workFormat.map((f, i) => (
+          {recruit.workType.map((f, i) => (
             <span className="text-caption-3 text-text-tertiary" key={i}>
               {f}
             </span>
