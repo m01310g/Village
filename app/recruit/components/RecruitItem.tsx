@@ -2,12 +2,16 @@ import { RecruitmentType } from "../hooks/useRecruitmentList";
 
 interface RecruitItemProps {
   recruit: RecruitmentType;
+  onClick: () => void;
 }
 
-const RecruitItem = ({ recruit }: RecruitItemProps) => {
+const RecruitItem = ({ recruit, onClick }: RecruitItemProps) => {
   return (
     <>
-      <div className="flex cursor-pointer flex-col gap-2 px-4 py-3">
+      <div
+        className="flex cursor-pointer flex-col gap-2 px-4 py-3"
+        onClick={onClick}
+      >
         <h2 className="text-title-3 text-neutral-900">{recruit.centerName}</h2>
         <div className="flex flex-col gap-1">
           <span className="text-caption-3 text-text-tertiary">

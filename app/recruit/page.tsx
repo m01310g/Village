@@ -8,6 +8,8 @@ import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import SelectedRegions from "./components/SelectedRegions";
 import { useRecruitmentList } from "./hooks/useRecruitmentList";
 import PaginationBar from "./components/PaginationBar";
+import { useRecruitmentFilter } from "./hooks/useRecruitmentFilter";
+import { useRouter } from "next/navigation";
 
 const RecruitPage = () => {
   const selectedDistricts = useRegionFilterStore(
@@ -16,6 +18,8 @@ const RecruitPage = () => {
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const { data: recruits } = useRecruitmentList(page);
+  const { data: filteredRecruits } = useRecruitmentFilter(keyword, page);
+  const router = useRouter();
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +44,19 @@ const RecruitPage = () => {
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const hasFilters =
+    keyword.trim() !== "" || Object.values(selectedDistricts).flat().length > 0;
+
+  const recruitListToRender = hasFilters
+    ? (filteredRecruits?.webRecruitmentList ?? [])
+    : (recruits?.webRecruitmentList ?? []);
+  const totalRecruitments = hasFilters
+    ? filteredRecruits?.totalWebRecruitments
+    : recruits?.totalWebRecruitments;
+  const totalPages = hasFilters
+    ? filteredRecruits?.totalPages
+    : recruits?.totalPages;
+
   return (
     <main
       className="text-title-1 flex h-[calc(100vh-46px-81px)] flex-col gap-3 overflow-y-auto bg-background-primary py-4 text-text-primary"
@@ -49,7 +66,7 @@ const RecruitPage = () => {
         <RecruitSearchBar keyword={keyword} setKeyword={setKeyword} />
         <div className="flex h-8 items-center gap-2">
           <h3 className="text-title-3 shrink-0 text-neutral-900">
-            {recruits?.totalWebRecruitments}건
+            {totalRecruitments}건
           </h3>
           {Object.keys(selectedDistricts).length > 0 && (
             <>
@@ -75,15 +92,29 @@ const RecruitPage = () => {
       </div>
       <div className="flex flex-col">
         <RegionFilterSettingBar />
-        {recruits?.webRecruitmentList.map((recruit, idx) => (
-          <RecruitItem key={idx} recruit={recruit} />
-        ))}
-        {recruits && recruits.totalPages > 1 && (
-          <PaginationBar
-            totalPages={recruits.totalPages}
-            currentPage={page}
-            onClickPage={handlePageClick}
-          />
+        {recruitListToRender.length === 0 ? (
+          <div className="justify-center py-10 text-center text-text-secondary">
+            조건에 맞는 채용공고가 없습니다.
+          </div>
+        ) : (
+          recruitListToRender.map((recruit, idx) => (
+            <RecruitItem
+              key={idx}
+              recruit={recruit}
+              onClick={() => router.push(`/recruit/${recruit.id}`)}
+            />
+          ))
+        )}
+        {totalPages === 0 ? (
+          <></>
+        ) : (
+          totalPages && (
+            <PaginationBar
+              totalPages={totalPages}
+              currentPage={page}
+              onClickPage={handlePageClick}
+            />
+          )
         )}
       </div>
     </main>

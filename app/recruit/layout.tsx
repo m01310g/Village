@@ -17,7 +17,7 @@ const RecruitLayout = ({ children }: { children: React.ReactNode }) => {
             ? "지역 조건 설정"
             : pathname.startsWith("/recruit/") &&
                 !pathname.endsWith("/select-region")
-              ? "채용정보"
+              ? "채용 정보"
               : "",
       showBackButton: true,
     });

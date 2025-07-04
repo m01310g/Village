@@ -9,7 +9,7 @@ export interface RecruitmentType {
   workTime: string[];
 }
 
-interface RecruitmentList {
+export interface RecruitmentList {
   webRecruitmentList: RecruitmentType[];
   totalWebRecruitments: number;
   totalPages: number;
