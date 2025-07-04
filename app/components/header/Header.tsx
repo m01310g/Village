@@ -8,6 +8,7 @@ import HeaderSettingButton from "./HeaderSettingButton";
 import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
+import HeaderRefreshButton from "./HeaderRefreshButton";
 
 interface HeaderProps {
   title: string;
@@ -18,6 +19,7 @@ interface HeaderProps {
   showSettingButton?: boolean;
   showCreateButton?: boolean;
   showMenuButton?: boolean;
+  showRefreshButton?: boolean;
   showCreateButtonProps?: {
     className: string;
     disabled: boolean;
@@ -36,6 +38,7 @@ const Header = ({
   showSettingButton = false,
   showCreateButton = false,
   showMenuButton = false,
+  showRefreshButton = false,
   showCreateButtonProps = { className: "", disabled: true, label: "" },
   onClick,
 }: HeaderProps) => {
@@ -97,6 +100,7 @@ const Header = ({
           />
         )}
         {showMenuButton && <HeaderMenuButton onClick={onClick ?? (() => {})} />}
+        {showRefreshButton && <HeaderRefreshButton />}
       </div>
     </header>
   );

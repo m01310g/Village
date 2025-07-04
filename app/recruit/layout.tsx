@@ -22,6 +22,7 @@ const RecruitLayout = ({ children }: { children: React.ReactNode }) => {
                 ? "채용 정보"
                 : "",
       showBackButton: true,
+      showRefreshButton: pathname === "/recruit/select-region",
     });
   }, [pathname, setHeader]);
 
