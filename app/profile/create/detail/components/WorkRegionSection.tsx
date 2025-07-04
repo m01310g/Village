@@ -4,6 +4,7 @@ import WorkRegionSelector from "./WorkRegionSelector";
 import DistrictItem from "./DistrictItem";
 
 interface WorkRegionSectionProps {
+  showLabel?: boolean;
   selectedDistricts: { [key: string]: string[] };
   setSelectedDistricts: Dispatch<
     SetStateAction<{
@@ -13,6 +14,7 @@ interface WorkRegionSectionProps {
 }
 
 const WorkRegionSection = ({
+  showLabel,
   selectedDistricts,
   setSelectedDistricts,
 }: WorkRegionSectionProps) => {
@@ -35,16 +37,18 @@ const WorkRegionSection = ({
 
   return (
     <section className="flex flex-col gap-3">
-      <div className="flex gap-3">
-        <ProfileLabel label="근무 지역" bold required />
-        <span className="text-body-3 text-neutral-600">중복 선택 가능</span>
-      </div>
+      {showLabel && (
+        <div className="flex gap-3">
+          <ProfileLabel label="근무 지역" bold required />
+          <span className="text-body-3 text-neutral-600">중복 선택 가능</span>
+        </div>
+      )}
       <WorkRegionSelector
         selectedDistricts={selectedDistricts}
         setSelectedDistricts={setSelectedDistricts}
       />
       <div
-        className="scrollbar-none flex w-full gap-1 overflow-x-auto"
+        className="flex w-full gap-1 overflow-x-auto scrollbar-none"
         ref={scrollRef}
       >
         {Object.entries(selectedDistricts).flatMap(([sido, districts]) =>
