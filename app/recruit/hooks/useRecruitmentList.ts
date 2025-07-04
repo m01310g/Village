@@ -1,20 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-
-export interface RecruitmentType {
-  id: number;
-  city: string;
-  centerName: string;
-  location: string;
-  workType: string[];
-  workTime: string[];
-}
-
-export interface RecruitmentList {
-  webRecruitmentList: RecruitmentType[];
-  totalWebRecruitments: number;
-  totalPages: number;
-  currentPage: number;
-}
+import { RecruitmentList } from "../types/recruitmentType";
 
 const getAllWebRecruitment = async (page: number): Promise<RecruitmentList> => {
   const res = await fetch(

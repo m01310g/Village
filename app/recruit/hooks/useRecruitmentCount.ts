@@ -1,7 +1,7 @@
 import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { RecruitmentList } from "./useRecruitmentList";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useQuery } from "@tanstack/react-query";
+import { RecruitmentList } from "../types/recruitmentType";
 
 const fetchRecruitmentCount = async (
   body: Record<string, string>,
