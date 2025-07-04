@@ -10,6 +10,7 @@ import { useRecruitmentList } from "./hooks/useRecruitmentList";
 import PaginationBar from "./components/PaginationBar";
 import { useRecruitmentFilter } from "./hooks/useRecruitmentFilter";
 import { useRouter } from "next/navigation";
+import CountUp from "react-countup";
 
 const RecruitPage = () => {
   const selectedDistricts = useRegionFilterStore(
@@ -66,7 +67,12 @@ const RecruitPage = () => {
         <RecruitSearchBar keyword={keyword} setKeyword={setKeyword} />
         <div className="flex h-8 items-center gap-2">
           <h3 className="text-title-3 shrink-0 text-neutral-900">
-            {totalRecruitments}건
+            <CountUp
+              end={totalRecruitments ?? 0}
+              duration={0.6}
+              separator=","
+            />
+            건의 결과 보기
           </h3>
           {Object.keys(selectedDistricts).length > 0 && (
             <>

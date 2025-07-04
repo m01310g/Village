@@ -4,9 +4,10 @@ import Button from "@/app/components/Button";
 import WorkRegionSection from "@/app/profile/create/detail/components/WorkRegionSection";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useRouter } from "next/navigation";
+import { useRecruitmentCount } from "../hooks/useRecruitmentCount";
+import CountUp from "react-countup";
 
 const RecruitSelectRegionPage = () => {
-  const resultCount = 300;
   const selectedDistricts = useRegionFilterStore(
     (state) => state.selectedDistricts,
   );
@@ -14,6 +15,8 @@ const RecruitSelectRegionPage = () => {
     (state) => state.setSelectedDistricts,
   );
   const router = useRouter();
+
+  const { data: resultCount } = useRecruitmentCount();
 
   return (
     <main className="flex h-[calc(100vh-46px)] flex-col justify-between bg-background-primary px-4 py-5">
@@ -34,7 +37,10 @@ const RecruitSelectRegionPage = () => {
         size="lg"
         disabled={Object.values(selectedDistricts).flat().length === 0}
         onClick={() => router.push("/recruit")}
-      >{`${resultCount}건의 결과 보기`}</Button>
+      >
+        <CountUp end={resultCount ?? 0} duration={0.5} separator="," />
+        건의 결과 보기
+      </Button>
     </main>
   );
 };
