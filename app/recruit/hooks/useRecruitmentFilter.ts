@@ -3,8 +3,13 @@ import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useQuery } from "@tanstack/react-query";
 import { RecruitmentList } from "../types/recruitmentType";
 
+interface RecruitFilterBody {
+  selectedName?: string;
+  selectedLocation?: Record<string, string[]>;
+}
+
 const fetchRecruitsByFilter = async (
-  body: Record<string, string>,
+  body: RecruitFilterBody,
   page: number,
 ): Promise<RecruitmentList> => {
   const res = await fetch(
@@ -35,7 +40,7 @@ export const useRecruitmentFilter = (
 ) => {
   const { selectedDistricts } = useRegionFilterStore();
 
-  const requestBody: Record<string, any> = {};
+  const requestBody: RecruitFilterBody = {};
   if (selectedName) requestBody.selectedName = selectedName;
   if (Object.keys(selectedDistricts).length > 0) {
     requestBody.selectedLocation = selectedDistricts;

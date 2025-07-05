@@ -9,7 +9,6 @@ import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import HeaderRefreshButton from "./HeaderRefreshButton";
-import { useEffect } from "react";
 
 interface HeaderProps {
   title: string;

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import AddNeighborButton from "../post/AddNeighborButton";
-import { useAuthStore } from "@/store/useAuthStore";
 
 interface SearchResultProps {
   id: number;

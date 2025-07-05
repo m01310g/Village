@@ -46,7 +46,7 @@ const KakaoMap = ({ address, centerName }: KakaoMapProps) => {
         },
       );
     });
-  }, [isLoaded, address ?? "", centerName]);
+  }, [isLoaded, address, centerName]);
 
   return <div ref={mapRef} className="h-[200px] w-full rounded-[8px]" />;
 };

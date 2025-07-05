@@ -24,7 +24,8 @@ const SelectedRegions = ({ sido, district }: SelectedRegionsProps) => {
             prev[targetSido]?.filter((d) => d !== targetDistrict) || [];
 
           if (updated.length === 0) {
-            const { [targetSido]: removed, ...rest } = prev;
+            const rest = { ...prev };
+            delete rest[targetSido];
             return rest;
           }
 
