@@ -76,7 +76,7 @@ const ProfileForm = ({
         onCompositionEnd={onCompositionEndNickname}
       />
       <Input
-        label="업종"
+        label="관심 업종"
         required
         value="트레이너"
         disabled
