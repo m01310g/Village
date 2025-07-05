@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
@@ -9,6 +9,7 @@ import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import HeaderRefreshButton from "./HeaderRefreshButton";
+import { useEffect } from "react";
 
 interface HeaderProps {
   title: string;
@@ -43,8 +44,10 @@ const Header = ({
   onClick,
 }: HeaderProps) => {
   const router = useRouter();
-
+  const pathname = usePathname();
   const { keyword, setKeyword } = useSearchKeywordStore();
+
+  if (pathname === "/neighbors") return null;
 
   const handleBack = () => {
     if (keyword) {

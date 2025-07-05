@@ -1,21 +1,14 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
+import { NeighborType } from "@/app/neighbors/types/neighborType";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 
-interface Neighbor {
-  id: number;
-  profileImage: string;
-  nickname: string;
-  name: string;
-  isNeighbor: number;
-}
-
 interface NeighborsList {
   receivedNumber: number;
-  receiveds: Neighbor[];
+  receiveds: NeighborType[];
   neighborNumber: number;
-  neighbors: Neighbor[];
+  neighbors: NeighborType[];
 }
 
 const getNeighbors = async (): Promise<NeighborsList> => {
