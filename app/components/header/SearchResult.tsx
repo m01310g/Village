@@ -19,8 +19,7 @@ const SearchResult = ({
   isNeighbor,
 }: SearchResultProps) => {
   const router = useRouter();
-  const userId = useAuthStore((state) => state.user?.id);
-  const isMyProfile = id === userId;
+  const isMyProfile = isNeighbor === 4;
 
   return (
     <div

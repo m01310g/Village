@@ -1,11 +1,12 @@
 import BackIcon from "@/public/icons/chevron-left.svg";
 import SearchIcon from "@/public/icons/icn_search.svg";
+import CloseIcon from "@/public/icons/close-2.svg";
 import { useState } from "react";
 import SearchResult from "./SearchResult";
 import { SearchResultType, useSearchProfile } from "./hooks/useSearchProfile";
 
 interface HeaderSearchBarProps {
-  onClose: () => void;
+  onClose: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
@@ -47,9 +48,15 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
             placeholder="사용자 검색"
             className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"
           />
-          <button type="submit">
-            <SearchIcon width="24px" height="24px" color="#171717" />
-          </button>
+          {keyword ? (
+            <button onClick={onClose} type="button">
+              <CloseIcon width="24px" height="24px" color="#171717" />
+            </button>
+          ) : (
+            <button type="submit">
+              <SearchIcon width="24px" height="24px" color="#171717" />
+            </button>
+          )}
         </form>
         <div className="h-[46px] w-[46px]" />
       </div>
