@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
@@ -43,8 +43,10 @@ const Header = ({
   onClick,
 }: HeaderProps) => {
   const router = useRouter();
-
+  const pathname = usePathname();
   const { keyword, setKeyword } = useSearchKeywordStore();
+
+  if (pathname === "/neighbors") return null;
 
   const handleBack = () => {
     if (keyword) {

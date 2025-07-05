@@ -16,7 +16,12 @@ const HeaderSearchButton = () => {
         />
       </button>
       {isSearchOpen && (
-        <HeaderSearchBar onClose={() => setIsSearchOpen(false)} />
+        <HeaderSearchBar
+          onClose={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            setIsSearchOpen(false);
+          }}
+        />
       )}
     </>
   );

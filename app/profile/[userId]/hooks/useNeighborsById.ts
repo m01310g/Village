@@ -1,23 +1,18 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
+import { NeighborType } from "@/app/neighbors/types/neighborType";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 
-interface Neighbor {
+interface NeighborById {
   neighborNumber: number;
-  neighbors: {
-    id: number;
-    nickname: string;
-    profileImage: string;
-    name: string;
-    isNeighbor: number;
-  }[];
+  neighbors: NeighborType[];
 }
 
 const getNeighborById = async (
   userId: number,
   isLoggedIn: boolean,
-): Promise<Neighbor> => {
+): Promise<NeighborById> => {
   const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-profile/getNeighbor`;
   const res = await (isLoggedIn ? fetchWithAuth : fetch)(url, {
     method: "POST",
@@ -46,7 +41,7 @@ const getNeighborById = async (
 export const useNeighborsById = (userId: number) => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const isLoggedIn = !!accessToken;
-  return useQuery<Neighbor>({
+  return useQuery<NeighborById>({
     queryKey: ["neighbors", userId],
     queryFn: () => getNeighborById(userId, isLoggedIn),
     enabled: !!userId,
