@@ -24,12 +24,12 @@ const SearchResult = ({
 
   return (
     <div
-      className="flex cursor-pointer items-center justify-between px-3 py-3"
+      className="flex cursor-pointer items-center justify-between gap-2 border-b-[1px] border-border-primary px-4 py-3"
       onClick={() =>
         isMyProfile ? router.push("/profile") : router.push(`/profile/${id}`)
       }
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <div className="h-10 w-10 overflow-hidden rounded-full">
           <Image
             src={profileImage ?? "/logos/symbol.svg"}
@@ -38,9 +38,9 @@ const SearchResult = ({
             alt={`${nickname}의 프로필 사진`}
           />
         </div>
-        <h3 className="text-title-2 text-text-primary">{nickname}</h3>
-        <div className="h-4 w-0.5 bg-neutral-400" />
-        <h3 className="text-title-2 text-neutral-400">{name}</h3>
+        <h3 className="text-body-2 text-text-primary">{nickname}</h3>
+        <div className="h-4 w-[1px] bg-neutral-400" />
+        <h3 className="text-body-2 text-neutral-400">{name}</h3>
       </div>
 
       {isNeighbor === 1 || isMyProfile ? (

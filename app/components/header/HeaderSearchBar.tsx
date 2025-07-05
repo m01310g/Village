@@ -25,7 +25,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 m-auto max-w-[375px] bg-white px-1">
+    <div className="fixed inset-0 z-50 m-auto max-w-[375px] bg-white">
       <div className="flex items-center justify-between">
         <button
           onClick={onClose}
@@ -53,7 +53,7 @@ const HeaderSearchBar = ({ onClose }: HeaderSearchBarProps) => {
         </form>
         <div className="h-[46px] w-[46px]" />
       </div>
-      <div className="h-[calc(100vh-46px)] overflow-y-scroll py-3 scrollbar-none">
+      <div className="h-[calc(100vh-46px)] overflow-y-scroll scrollbar-none">
         {searchResult && searchResult.length > 0 ? (
           searchResult.map((data) => (
             <SearchResult
