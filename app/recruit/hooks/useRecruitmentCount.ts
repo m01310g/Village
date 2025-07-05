@@ -3,8 +3,13 @@ import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useQuery } from "@tanstack/react-query";
 import { RecruitmentList } from "../types/recruitmentType";
 
+interface RecruitCountBody {
+  selectedNames?: string;
+  selectedLocation?: Record<string, string[]>;
+}
+
 const fetchRecruitmentCount = async (
-  body: Record<string, string>,
+  body: RecruitCountBody,
 ): Promise<number> => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-recruitment/search?page=1`,
@@ -34,13 +39,13 @@ const fetchRecruitmentCount = async (
 export const useRecruitmentCount = () => {
   const { selectedDistricts } = useRegionFilterStore();
 
-  const requestBody: Record<string, any> = {};
+  const requestBody: RecruitCountBody = {};
   if (Object.keys(selectedDistricts).length > 0) {
     requestBody.selectedLocation = selectedDistricts;
   }
   return useQuery({
     queryKey: ["recruitmentCount", selectedDistricts],
     queryFn: () => fetchRecruitmentCount(requestBody),
-    enabled: Object.values(selectedDistricts).flat().length > 0,
+    enabled: Object.keys(selectedDistricts).length > 0,
   });
 };
