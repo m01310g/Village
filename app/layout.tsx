@@ -32,7 +32,7 @@ export default function RootLayout({
             <body
               className={clsx(
                 pretendard.variable,
-                "mx-auto flex h-screen w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
+                "mx-auto flex w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
               )}
             >
               <Suspense fallback={<div />}>

@@ -57,7 +57,7 @@ const ProfileEditInfoPage = () => {
   }, [formData, checkIsModified]);
 
   return (
-    <div className="flex h-full flex-col items-center">
+    <div className="flex h-[calc(100dvh-69px-46px-env(safe-area-inset-bottom))] flex-col items-center">
       <ProfileForm
         formData={formData}
         onChangeField={handleChange}
