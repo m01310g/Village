@@ -31,6 +31,9 @@ const NeighborInfo = ({
           width={40}
           height={40}
           alt={`${nickname}의 프로필 사진`}
+          placeholder="blur"
+          blurDataURL="/logos/symbol.svg"
+          className="h-10 w-10"
         />
       </div>
       <div className="flex items-center gap-[6px]">

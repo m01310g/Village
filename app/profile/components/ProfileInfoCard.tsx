@@ -26,7 +26,15 @@ const ProfileInfoCard = ({
   return (
     <div className="flex items-center justify-between">
       <div className="h-20 w-20 overflow-hidden rounded-full">
-        <Image src={profileImage} width={80} height={80} alt="내 프로필 사진" />
+        <Image
+          src={profileImage}
+          width={80}
+          height={80}
+          alt="내 프로필 사진"
+          className="h-20 w-20"
+          placeholder="blur"
+          blurDataURL="/logos/symbol.svg"
+        />
       </div>
       <div className="flex flex-1 flex-col gap-2 pl-7">
         <div className="flex items-center gap-2">
