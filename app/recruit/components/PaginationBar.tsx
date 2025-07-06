@@ -29,22 +29,33 @@ const PaginationBar = ({
       >
         <LeftIcon width="24px" height="24px" color="#737373" />
       </button>
-      {Array.from({ length: totalPages }).map((_, index) => {
-        const pageNumber = index + 1;
-        const isActive = currentPage === pageNumber;
-        return (
-          <button
-            key={pageNumber}
-            onClick={() => onClickPage(pageNumber)}
-            className={clsx(
-              isActive && "bg-sky-100",
-              "text-body-2 h-[38px] w-[38px] rounded-[2px] p-[10px] text-text-tertiary",
-            )}
-          >
-            {pageNumber}
-          </button>
+      {(() => {
+        const maxPageButtons = 5;
+        const half = Math.floor(maxPageButtons / 2);
+        const startPage = Math.max(
+          1,
+          Math.min(currentPage - half, totalPages - maxPageButtons + 1),
         );
-      })}
+        const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+        return Array.from({ length: endPage - startPage + 1 }).map(
+          (_, index) => {
+            const pageNumber = startPage + index;
+            const isActive = currentPage === pageNumber;
+            return (
+              <button
+                key={pageNumber}
+                onClick={() => onClickPage(pageNumber)}
+                className={clsx(
+                  isActive && "bg-sky-100",
+                  "text-body-2 h-[38px] w-[38px] rounded-[2px] p-[10px] text-text-tertiary",
+                )}
+              >
+                {pageNumber}
+              </button>
+            );
+          },
+        );
+      })()}
       <button
         className="h-[38px] w-[38px] rounded-[4px] p-[10px]"
         onClick={handleNext}
