@@ -8,8 +8,7 @@ interface CommentsSectionProps {
 }
 
 const CommentsSection = ({ comments }: CommentsSectionProps) => {
-  const user = useAuthStore.getState().user;
-  const userId = user?.id;
+  const userId = useAuthStore((state) => state.user?.webProfileId);
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);
 
   useEffect(() => {
