@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
@@ -67,7 +66,7 @@ const Header = ({
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
           <button type="button" onClick={handleBack}>
-            <Image
+            <img
               src="/icons/chevron-left.svg"
               alt="뒤로 가기 버튼"
               width={24}
@@ -85,7 +84,7 @@ const Header = ({
         {showSearchButton && <HeaderSearchButton />}
         {showNotificationButton && (
           <button type="button">
-            <Image
+            <img
               src={"/icons/icn_alert_on.svg"}
               alt="알림 버튼"
               width={24}

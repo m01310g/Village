@@ -1,6 +1,5 @@
 import Button from "@/app/components/Button";
 import Input from "@/app/components/Input";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import DateInput from "./date/DateInput";
 import { v4 as uuidv4 } from "uuid";
@@ -62,7 +61,7 @@ const CareerAddBottomSheet = ({
       <div className="relative flex h-full w-full max-w-[375px] flex-col gap-3 rounded-t-[20px] bg-background-primary px-4 pb-10 pt-5">
         <header className="flex w-full gap-2 py-2">
           <button onClick={handleCloseButton}>
-            <Image
+            <img
               src={"/icons/close-2.svg"}
               width={24}
               height={24}

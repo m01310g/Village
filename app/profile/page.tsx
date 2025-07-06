@@ -5,7 +5,6 @@ import PostsSection from "./components/PostsSection";
 import { useUserProfile } from "./hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
 import KakaoSigninButton from "../components/KakaoSigninButton";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -56,7 +55,7 @@ const ProfilePage = () => {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-10 px-4">
         <div className="flex flex-col items-center justify-center gap-6">
-          <Image
+          <img
             src={"/logos/logo_transparent1.svg"}
             alt="빌리지 로고"
             width={200}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Image from "next/image";
 import DatePickerBottomSheet from "./DatePickerBottomSheet";
 import clsx from "clsx";
 
@@ -50,7 +49,7 @@ const DateInput = ({
         >
           {!disabled && value ? value : placeholder}
         </span>
-        <Image
+        <img
           src={"/icons/icn_calendar.svg"}
           alt="달력"
           width={20}

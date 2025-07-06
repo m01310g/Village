@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const KakaoSigninButton = () => {
@@ -15,7 +14,7 @@ const KakaoSigninButton = () => {
       onClick={handleSignin}
       className="flex w-full items-center justify-center gap-2 rounded-[12px] bg-[#FEE500] px-2 py-3 text-[#191919]"
     >
-      <Image
+      <img
         src={"/icons/icn_kakao.svg"}
         alt="카카오 로그인"
         width={20}

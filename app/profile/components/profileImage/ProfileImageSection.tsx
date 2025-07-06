@@ -103,7 +103,7 @@ const ProfileImageSection = ({
                   onChange={onImageSelect}
                 />
               )}
-              <Image
+              <img
                 src={"/icons/icn_img_plus.svg"}
                 alt="프로필 사진 등록"
                 width={24}
