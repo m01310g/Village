@@ -43,12 +43,25 @@ const Header = ({
 }: HeaderProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { keyword, setKeyword } = useSearchKeywordStore();
 
   if (pathname === "/neighbors") return null;
 
   const handleBack = () => {
-    if (keyword) {
+    const page = searchParams.get("page");
+
+    if (
+      pathname.startsWith("/recruit/") &&
+      pathname !== "/recruit" &&
+      keyword
+    ) {
+      const query = new URLSearchParams();
+      query.set("keyword", keyword);
+      if (page) query.set("page", page);
+
+      router.push(`/recruit?${query.toString()}`);
+    } else if (keyword) {
       setKeyword("");
       router.replace("/recruit");
     } else {
