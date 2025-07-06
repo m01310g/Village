@@ -74,7 +74,7 @@ const ProfileCreateDetailPage = () => {
   };
 
   return (
-    <div className="flex h-full flex-col items-center">
+    <div className="flex h-[calc(100dvh-69px-46px-env(safe-area-inset-bottom))] flex-col items-center">
       <form className="flex w-full max-w-[375px] flex-col gap-8 overflow-y-auto p-4">
         <div className="text-caption-2 rounded-[5px] bg-neutral-50 p-3 text-neutral-900">
           해당 정보는 채용 담당자에게만 공개되며, 현재 근무 중인 센터의
