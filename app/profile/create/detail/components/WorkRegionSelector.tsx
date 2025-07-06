@@ -20,17 +20,31 @@ const WorkRegionSelector = ({
   const toggleDistrict = (sido: string, district: string) => {
     setSelectedDistricts((prev) => {
       const next = { ...prev };
+
+      if (district === "서울 전체" || district === "경기 전체") {
+        if (next[sido]?.includes(district)) {
+          delete next[sido];
+        } else {
+          next[sido] = [district];
+        }
+        return next;
+      }
+
       const current = next[sido] ?? [];
 
+      const filtered = current.filter(
+        (d) => d !== "서울 전체" && d !== "경기 전체",
+      );
+
       if (current.includes(district)) {
-        const updated = current.filter((d) => d !== district);
+        const updated = filtered.filter((d) => d !== district);
         if (updated.length === 0) {
           delete next[sido];
         } else {
           next[sido] = updated;
         }
       } else {
-        next[sido] = [...current, district];
+        next[sido] = [...filtered, district];
       }
 
       return next;

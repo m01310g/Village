@@ -22,15 +22,15 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
         post.images.map((image, i) => (
           <div
             key={i}
-            className="w-full max-w-[375px] overflow-hidden rounded-[8px]"
+            className="relativew-full max-w-[375px] overflow-hidden rounded-[8px]"
           >
             <Image
               src={image.includes("url") ? "/logos/symbol.svg" : image}
               alt={`${i}번 사진`}
               width={375}
-              height={375}
-              priority
-              className="h-auto w-full object-contain"
+              height={0}
+              placeholder="blur"
+              blurDataURL="/logos/symbol.svg"
             />
           </div>
         ))}

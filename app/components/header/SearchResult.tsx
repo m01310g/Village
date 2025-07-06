@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import AddNeighborButton from "../post/AddNeighborButton";
-import { useAuthStore } from "@/store/useAuthStore";
 
 interface SearchResultProps {
   id: number;
@@ -19,28 +18,30 @@ const SearchResult = ({
   isNeighbor,
 }: SearchResultProps) => {
   const router = useRouter();
-  const userId = useAuthStore((state) => state.user?.id);
-  const isMyProfile = id === userId;
+  const isMyProfile = isNeighbor === 4;
 
   return (
     <div
-      className="flex cursor-pointer items-center justify-between px-3 py-3"
+      className="flex cursor-pointer items-center justify-between gap-2 border-b-[1px] border-border-primary px-4 py-3"
       onClick={() =>
         isMyProfile ? router.push("/profile") : router.push(`/profile/${id}`)
       }
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <div className="h-10 w-10 overflow-hidden rounded-full">
           <Image
             src={profileImage ?? "/logos/symbol.svg"}
             width={40}
             height={40}
             alt={`${nickname}의 프로필 사진`}
+            className="h-10 w-10"
+            placeholder="blur"
+            blurDataURL="/logos/symbol.svg"
           />
         </div>
-        <h3 className="text-title-2 text-text-primary">{nickname}</h3>
-        <div className="h-4 w-0.5 bg-neutral-400" />
-        <h3 className="text-title-2 text-neutral-400">{name}</h3>
+        <h3 className="text-body-2 text-text-primary">{nickname}</h3>
+        <div className="h-4 w-[1px] bg-neutral-400" />
+        <h3 className="text-body-2 text-neutral-400">{name}</h3>
       </div>
 
       {isNeighbor === 1 || isMyProfile ? (

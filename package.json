@@ -16,6 +16,7 @@
     "linkify-react": "^4.3.1",
     "next": "15.3.3",
     "react": "^19.0.0",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.0.0",
     "react-easy-crop": "^5.4.2",
     "react-markdown": "^10.1.0",

@@ -1,12 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
 import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
+import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
+import HeaderRefreshButton from "./HeaderRefreshButton";
 
 interface HeaderProps {
   title: string;
@@ -17,6 +19,7 @@ interface HeaderProps {
   showSettingButton?: boolean;
   showCreateButton?: boolean;
   showMenuButton?: boolean;
+  showRefreshButton?: boolean;
   showCreateButtonProps?: {
     className: string;
     disabled: boolean;
@@ -35,12 +38,27 @@ const Header = ({
   showSettingButton = false,
   showCreateButton = false,
   showMenuButton = false,
+  showRefreshButton = false,
   showCreateButtonProps = { className: "", disabled: true, label: "" },
   onClick,
 }: HeaderProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const { keyword, setKeyword } = useSearchKeywordStore();
+
+  if (pathname === "/neighbors") return null;
+
+  const handleBack = () => {
+    if (keyword) {
+      setKeyword("");
+      router.replace("/recruit");
+    } else {
+      router.back();
+    }
+  };
+
   return (
-    <header className="flex h-[46px] items-center justify-between border-b border-border-primary bg-background-primary px-1">
+    <header className="flex h-[46px] shrink-0 items-center justify-between border-b border-border-primary bg-background-primary px-1">
       {showLogo && (
         <div className="px-3">
           <Logo color="#4A5565" width="60px" height="30px" />
@@ -48,7 +66,7 @@ const Header = ({
       )}
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
-          <button type="button" onClick={() => router.back()}>
+          <button type="button" onClick={handleBack}>
             <Image
               src="/icons/chevron-left.svg"
               alt="뒤로 가기 버튼"
@@ -84,6 +102,7 @@ const Header = ({
           />
         )}
         {showMenuButton && <HeaderMenuButton onClick={onClick ?? (() => {})} />}
+        {showRefreshButton && <HeaderRefreshButton />}
       </div>
     </header>
   );

@@ -5,6 +5,7 @@ import clsx from "clsx";
 import HomeIcon from "@/public/icons/icn_home.svg";
 import JobListingIcon from "@/public/icons/icn_job_listing.svg";
 import UserProfileIcon from "@/public/icons/icn_user-profile-02.svg";
+import NeighborsIcon from "@/public/icons/icn_users-profiles-02.svg";
 
 const NavigationBar = () => {
   const pathname = usePathname();
@@ -19,6 +20,9 @@ const NavigationBar = () => {
     /^\/settings/,
     /^\/support/,
     /^\/terms/,
+    /^\/recruit\/select-region/,
+    /^\/recruit\/\d+/,
+    /^\/recruit\/search-center/,
   ];
 
   const shouldHideByPattern = hiddenPatterns.some((pattern) =>
@@ -38,6 +42,7 @@ const NavigationBar = () => {
       path: "/",
       Icon: HomeIcon,
     },
+    { label: "이웃", path: "/neighbors", Icon: NeighborsIcon },
     {
       label: "채용공고",
       path: "/recruit",

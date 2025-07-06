@@ -3,12 +3,17 @@ import CloseIcon from "@/public/icons/close-2.svg";
 interface DistrictItemProps {
   district: string;
   onRemove: (district: string) => void;
+  sido?: string;
 }
 
-const DistrictItem = ({ district, onRemove }: DistrictItemProps) => {
+const DistrictItem = ({ district, onRemove, sido }: DistrictItemProps) => {
   const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onRemove(district);
+    if (sido) {
+      onRemove(`${sido}:${district}`);
+    } else {
+      onRemove(district);
+    }
   };
 
   return (
