@@ -1,10 +1,10 @@
+import { useRouter } from "next/navigation";
 import SearchIcon from "@/public/icons/icn_search.svg";
 import RemoveIcon from "@/public/icons/close-2.svg";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 
 interface RecruitSearchBarProps {
-  onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+  onClick?: (e?: React.MouseEvent<HTMLInputElement>) => void;
   keyword: string;
   setKeyword: (value: string) => void;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -16,8 +16,7 @@ const RecruitSearchBar = ({
   onClick,
   onSubmit,
 }: RecruitSearchBarProps) => {
-  const pathname = usePathname();
-
+  const router = useRouter();
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
@@ -25,19 +24,12 @@ const RecruitSearchBar = ({
   const handleResetKeyword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setKeyword("");
+    router.replace("/recruit");
   };
 
   return (
     <form
       className="flex w-full rounded-[10px] border border-border-tertiary px-3 py-2"
-      onClick={
-        onClick
-          ? (e: React.MouseEvent<HTMLFormElement>) => {
-              e.preventDefault();
-              onClick();
-            }
-          : undefined
-      }
       onSubmit={onSubmit}
     >
       <SearchIcon width="24px" height="24px" color="#171717" />
@@ -47,12 +39,21 @@ const RecruitSearchBar = ({
           "text-body-3 w-full px-[10px] text-text-primary placeholder:text-neutral-300 focus:outline-none",
           onClick && "cursor-pointer",
         )}
+        onClick={
+          onClick
+            ? (e: React.MouseEvent<HTMLInputElement>) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClick(e);
+              }
+            : undefined
+        }
         placeholder="센터명을 검색하세요."
         value={keyword}
         onChange={handleKeywordChange}
-        readOnly={!!onClick}
+        readOnly={onClick !== undefined && keyword === ""}
       />
-      {keyword.trim() !== "" && pathname !== "/recruit" && (
+      {keyword.trim() !== "" && (
         <button
           type="button"
           className="cursor-pointer"

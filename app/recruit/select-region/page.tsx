@@ -6,6 +6,7 @@ import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useRouter } from "next/navigation";
 import { useRecruitmentCount } from "../hooks/useRecruitmentCount";
 import CountUp from "react-countup";
+import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 
 const RecruitSelectRegionPage = () => {
   const selectedDistricts = useRegionFilterStore(
@@ -15,8 +16,14 @@ const RecruitSelectRegionPage = () => {
     (state) => state.setSelectedDistricts,
   );
   const router = useRouter();
+  const { keyword } = useSearchKeywordStore();
 
   const { data: resultCount } = useRecruitmentCount();
+
+  const handleRoute = () => {
+    if (keyword) router.push(`/recruit?keyword=${keyword}`);
+    else router.push("/recruit");
+  };
 
   return (
     <main className="flex h-[calc(100vh-46px)] flex-col justify-between bg-background-primary px-4 py-5">
@@ -36,7 +43,7 @@ const RecruitSelectRegionPage = () => {
         color="primary"
         size="lg"
         disabled={Object.values(selectedDistricts).flat().length === 0}
-        onClick={() => router.push("/recruit")}
+        onClick={handleRoute}
       >
         <CountUp end={resultCount ?? 0} duration={0.5} separator="," />
         건의 결과 보기

@@ -89,7 +89,7 @@ const ClientRecruitPage = () => {
               duration={0.6}
               separator=","
             />
-            건의 결과 보기
+            건
           </h3>
           {Object.keys(selectedDistricts).length > 0 && (
             <>
