@@ -11,6 +11,7 @@ interface SigninResponse {
       nickname: string;
       email: string;
       role: "USER";
+      webProfileId: number;
     };
   };
 }
