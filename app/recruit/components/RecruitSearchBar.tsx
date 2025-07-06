@@ -29,14 +29,19 @@ const RecruitSearchBar = ({
 
   return (
     <form
-      className="flex w-full rounded-[10px] border border-border-tertiary px-3 py-2"
+      className="flex w-full items-center rounded-[10px] border border-border-tertiary px-3 py-2"
       onSubmit={onSubmit}
     >
-      <SearchIcon width="24px" height="24px" color="#171717" />
+      <SearchIcon
+        width="24px"
+        height="24px"
+        color="#171717"
+        className="shrink-0"
+      />
       <input
         type="text"
         className={clsx(
-          "text-body-3 w-full px-[10px] text-text-primary placeholder:text-neutral-300 focus:outline-none",
+          "text-body-3 flex w-full px-[10px] text-text-primary placeholder:text-neutral-300 focus:outline-none",
           onClick && "cursor-pointer",
         )}
         onClick={
@@ -56,10 +61,15 @@ const RecruitSearchBar = ({
       {keyword.trim() !== "" && (
         <button
           type="button"
-          className="cursor-pointer"
+          className="flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full bg-neutral-400"
           onClick={handleResetKeyword}
         >
-          <RemoveIcon color="#171717" width="24px" height="24px" />
+          <RemoveIcon
+            color="#ffffff"
+            width="16px"
+            height="16px"
+            className="shrink-0"
+          />
         </button>
       )}
     </form>
