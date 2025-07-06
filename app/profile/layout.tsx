@@ -42,12 +42,12 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className={clsx(
-        "overflow-y-auto bg-background-primary",
+        "overflow-hidden bg-background-primary",
         pathname.includes("/profile/edit") ||
           pathname.includes("/neighbors") ||
           (pathname.startsWith("/profile/") && !pathname.endsWith("/neighbors"))
-          ? "h-[calc(100vh-46px)]"
-          : "h-[calc(100vh-46px-81px)]",
+          ? "h-[calc(100dvh-46px-env(safe-area-inset-bottom))]"
+          : "h-[calc(100dvh-46px-81px-env(safe-area-inset-bottom))]",
       )}
       ref={scrollRef}
     >

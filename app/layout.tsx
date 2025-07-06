@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { HeaderProvider } from "./components/header/HeaderContext";
 import HeaderConsumer from "./components/header/HeaderConsumer";
 import { AmplitudeProvider } from "./providers/AmplitudeProvider";
+import { Suspense } from "react";
 
 const pretendard = localFont({
   src: "../public/fonts/pretendard/PretendardVariable.woff2",
@@ -31,10 +32,12 @@ export default function RootLayout({
             <body
               className={clsx(
                 pretendard.variable,
-                "mx-auto flex h-screen w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
+                "mx-auto flex w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
               )}
             >
-              <HeaderConsumer />
+              <Suspense fallback={<div />}>
+                <HeaderConsumer />
+              </Suspense>
               {children}
               <NavigationBar />
             </body>

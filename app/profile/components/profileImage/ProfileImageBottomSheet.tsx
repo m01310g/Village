@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import ArrowRight from "@/public/icons/chevron-right.svg";
 
 interface ProfileImageBottomSheetProps {
   setSelectedImageUrl: (imgUrl: string) => void;
@@ -19,12 +20,7 @@ const ProfileImageBottomSheet = ({
         >
           <div className="flex w-full justify-between text-left">
             <span className="text-body-2">사진 보관함</span>
-            <img
-              src={"/icons/chevron-right.svg"}
-              alt="사진 보관함"
-              width={20}
-              height={20}
-            />
+            <ArrowRight width="20px" height="20px" color="#171717" />
           </div>
           <input
             id="fileInput"

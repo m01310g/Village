@@ -6,6 +6,7 @@ interface User {
   nickname: string;
   email: string;
   role: "USER";
+  webProfileId: number;
 }
 
 interface AuthState {

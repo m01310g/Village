@@ -60,7 +60,10 @@ const Page = () => {
           />
         ))}
       </div>
-      <div className="scrollbar-thin h-full overflow-y-auto" ref={scrollRef}>
+      <div
+        className="h-[calc(100dvh-81px-100px-env(safe-area-inset-bottom))] overflow-y-auto scrollbar-thin"
+        ref={scrollRef}
+      >
         {filteredPosts &&
           filteredPosts.map((post) => {
             return (
