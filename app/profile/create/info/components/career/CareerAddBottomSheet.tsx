@@ -7,6 +7,7 @@ import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
 import { CareerData } from "@/app/profile/types/careerCard";
 import Checkbox from "@/app/components/Checkbox";
 import clsx from "clsx";
+import CloseIcon from "@/public/icons/close-2.svg";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;
@@ -61,12 +62,7 @@ const CareerAddBottomSheet = ({
       <div className="relative flex h-full w-full max-w-[375px] flex-col gap-3 rounded-t-[20px] bg-background-primary px-4 pb-10 pt-5">
         <header className="flex w-full gap-2 py-2">
           <button onClick={handleCloseButton}>
-            <img
-              src={"/icons/close-2.svg"}
-              width={24}
-              height={24}
-              alt="닫기 버튼"
-            />
+            <CloseIcon width="24px" height="24px" color="#171717" />
           </button>
           <h2 className="text-title-1 text-text-primary">경력사항</h2>
         </header>

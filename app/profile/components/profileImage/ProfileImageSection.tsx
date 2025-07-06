@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import EditIcon from "@/public/icons/icn_edit2.svg";
+import AddImageIcon from "@/public/icons/icn_img_plus.svg";
 import ProfileImageUploader from "./ProfileImageUploader";
 import useIsMobile from "@/app/lib/hooks/useIsMobile";
 
@@ -103,12 +104,7 @@ const ProfileImageSection = ({
                   onChange={onImageSelect}
                 />
               )}
-              <img
-                src={"/icons/icn_img_plus.svg"}
-                alt="프로필 사진 등록"
-                width={24}
-                height={24}
-              />
+              <AddImageIcon width="24px" height="24px" color="#404040" />
               <span className="text-caption-2 text-neutral-600">
                 프로필 사진 올리기
               </span>

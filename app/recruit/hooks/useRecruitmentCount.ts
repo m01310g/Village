@@ -2,7 +2,6 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useQuery } from "@tanstack/react-query";
 import { RecruitmentList } from "../types/recruitmentType";
-import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 
 interface RecruitCountBody {
   selectedName?: string;

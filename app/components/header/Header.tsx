@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
@@ -8,6 +8,8 @@ import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import HeaderRefreshButton from "./HeaderRefreshButton";
+import BackIcon from "@/public/icons/chevron-left.svg";
+import AlertIcon from "@/public/icons/icn_alert_on.svg";
 
 interface HeaderProps {
   title: string;
@@ -79,12 +81,7 @@ const Header = ({
       <div className="flex h-full w-[46px] items-center justify-center">
         {showBackButton && (
           <button type="button" onClick={handleBack}>
-            <img
-              src="/icons/chevron-left.svg"
-              alt="뒤로 가기 버튼"
-              width={24}
-              height={24}
-            />
+            <BackIcon width="24px" height="24px" color="#171717" />
           </button>
         )}
       </div>
@@ -97,12 +94,7 @@ const Header = ({
         {showSearchButton && <HeaderSearchButton />}
         {showNotificationButton && (
           <button type="button">
-            <img
-              src={"/icons/icn_alert_on.svg"}
-              alt="알림 버튼"
-              width={24}
-              height={24}
-            />
+            <AlertIcon />
           </button>
         )}
         {showSettingButton && <HeaderSettingButton />}

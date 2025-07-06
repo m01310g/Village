@@ -1,16 +1,12 @@
 import { useRouter } from "next/navigation";
+import SettingIcon from "@/public/icons/icn_settings.svg";
 
 const HeaderSettingButton = () => {
   const router = useRouter();
 
   return (
     <button type="button" onClick={() => router.push("/settings")}>
-      <img
-        src={"/icons/icn_settings.svg"}
-        alt="설정 버튼"
-        width={24}
-        height={24}
-      />
+      <SettingIcon width="24px" height="24px" color="#171717" />
     </button>
   );
 };
