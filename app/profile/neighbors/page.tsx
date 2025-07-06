@@ -28,7 +28,7 @@ const ProfileNeighborsPage = () => {
   const neighbors = neighborsList.neighbors;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 overflow-y-auto">
       <div className="py-2">
         <div className="flex flex-col gap-1">
           <h3 className="text-title-1 px-4 py-2 text-text-primary">

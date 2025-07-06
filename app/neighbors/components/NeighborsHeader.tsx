@@ -56,8 +56,17 @@ const NeighborsHeader = ({
           className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"
         />
         {keyword ? (
-          <button onClick={handleClose} type="button">
-            <CloseIcon width="24px" height="24px" color="#171717" />
+          <button
+            type="button"
+            className="flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded-full bg-neutral-400"
+            onClick={handleClose}
+          >
+            <CloseIcon
+              color="#ffffff"
+              width="16px"
+              height="16px"
+              className="shrink-0"
+            />
           </button>
         ) : (
           <button type="submit">

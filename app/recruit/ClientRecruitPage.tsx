@@ -28,7 +28,8 @@ const ClientRecruitPage = () => {
     }
   }, [keywordParam, keyword, setKeyword]);
 
-  const [page, setPage] = useState(1);
+  const pageParam = Number(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(pageParam);
   const { data: recruits } = useRecruitmentList(page);
   const { data: filteredRecruits } = useRecruitmentFilter(keyword, page);
   const router = useRouter();
@@ -55,6 +56,9 @@ const ClientRecruitPage = () => {
 
   const handlePageClick = (pageNumber: number) => {
     setPage(pageNumber);
+    router.push(
+      `/recruit?page=${pageNumber}${keyword ? `&keyword=${keyword}` : ""}`,
+    );
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -73,7 +77,7 @@ const ClientRecruitPage = () => {
 
   return (
     <main
-      className="text-title-1 flex h-[calc(100vh-46px-81px)] flex-col gap-3 overflow-y-auto bg-background-primary py-4 text-text-primary"
+      className="flex h-[calc(100vh-46px-81px)] max-w-[375px] flex-col gap-3 overflow-y-auto bg-background-primary py-4 text-text-primary"
       ref={scrollContainerRef}
     >
       <div className="flex flex-col gap-3 px-4">
@@ -124,7 +128,11 @@ const ClientRecruitPage = () => {
             <RecruitItem
               key={idx}
               recruit={recruit}
-              onClick={() => router.push(`/recruit/${recruit.id}`)}
+              onClick={() =>
+                router.push(
+                  `/recruit/${recruit.id}?page=${page}${keyword ? `&keyword=${keyword}` : ""}`,
+                )
+              }
             />
           ))
         )}

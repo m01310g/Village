@@ -1,5 +1,6 @@
 import { useState } from "react";
 import HeaderSearchBar from "./HeaderSearchBar";
+import SearchIcon from "@/public/icons/icn_search.svg";
 
 const HeaderSearchButton = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -7,12 +8,7 @@ const HeaderSearchButton = () => {
   return (
     <>
       <button type="button" onClick={() => setIsSearchOpen(true)}>
-        <img
-          src={"/icons/icn_search.svg"}
-          alt="검색 버튼"
-          width={24}
-          height={24}
-        />
+        <SearchIcon width="24px" height="24px" color="#171717" />
       </button>
       {isSearchOpen && (
         <HeaderSearchBar

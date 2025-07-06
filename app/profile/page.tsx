@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import KakaoSigninButton from "../components/KakaoSigninButton";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Logo from "@/public/logos/logo_transparent1.svg";
 
 interface ErrorWithStatus {
   status: number;
@@ -55,12 +56,7 @@ const ProfilePage = () => {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-10 px-4">
         <div className="flex flex-col items-center justify-center gap-6">
-          <img
-            src={"/logos/logo_transparent1.svg"}
-            alt="빌리지 로고"
-            width={200}
-            height={200}
-          />
+          <Logo />
           <span className="text-body-1 text-text-primary">
             트레이너 빌리지에 오신 것을 환영해요!
           </span>

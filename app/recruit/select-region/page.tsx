@@ -18,7 +18,7 @@ const RecruitSelectRegionPage = () => {
   const router = useRouter();
   const { keyword } = useSearchKeywordStore();
 
-  const { data: resultCount } = useRecruitmentCount();
+  const { data: resultCount } = useRecruitmentCount(keyword);
 
   const handleRoute = () => {
     if (keyword) router.push(`/recruit?keyword=${keyword}`);
@@ -42,7 +42,9 @@ const RecruitSelectRegionPage = () => {
       <Button
         color="primary"
         size="lg"
-        disabled={Object.values(selectedDistricts).flat().length === 0}
+        disabled={
+          Object.values(selectedDistricts).flat().length === 0 && !!!keyword
+        }
         onClick={handleRoute}
       >
         <CountUp end={resultCount ?? 0} duration={0.5} separator="," />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DatePickerBottomSheet from "./DatePickerBottomSheet";
 import clsx from "clsx";
+import CalendarIcon from "@/public/icons/icn_calendar.svg";
 
 interface DateInputProps {
   placeholder: string;
@@ -49,12 +50,7 @@ const DateInput = ({
         >
           {!disabled && value ? value : placeholder}
         </span>
-        <img
-          src={"/icons/icn_calendar.svg"}
-          alt="달력"
-          width={20}
-          height={20}
-        />
+        <CalendarIcon width="20px" height="20px" color="#171717" />
       </div>
       {isOpen && (
         <DatePickerBottomSheet
