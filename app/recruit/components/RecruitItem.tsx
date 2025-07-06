@@ -17,11 +17,11 @@ const RecruitItem = ({ recruit, onClick }: RecruitItemProps) => {
           <span className="text-caption-3 text-text-tertiary">
             {recruit.location}
           </span>
-          {recruit.workType.map((f, i) => (
-            <span className="text-caption-3 text-text-tertiary" key={i}>
-              {f}
+          {!recruit.workType.includes("명시 안 됨") && (
+            <span className="text-caption-3 text-text-tertiary">
+              {recruit.workType.join(", ")}
             </span>
-          ))}
+          )}
           {!recruit.workTime.includes("명시 안 됨") && (
             <div className="flex gap-1">
               {recruit.workTime.map((t, i) => (
