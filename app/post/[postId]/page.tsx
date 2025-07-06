@@ -25,6 +25,8 @@ const PostDetailPage = () => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const isLoggedIn = !!accessToken;
 
+  console.log(postData);
+
   useEffect(() => {
     if (postData) {
       setCommentsList(postData?.comments);
@@ -47,7 +49,6 @@ const PostDetailPage = () => {
   ) : (
     <>
       <div className="flex h-full flex-col overflow-y-auto scrollbar-none">
-        {/* type으로 변경 */}
         <div className="px-4 py-3">
           <span className="text-caption-2 w-fit rounded-[4px] bg-neutral-50 p-1 text-center text-text-tertiary">
             {typeof postData?.type === "number" ? types[postData.type] : ""}
