@@ -76,8 +76,9 @@ const ProfileImageSection = ({
                   alt="프로필 사진 미리보기"
                   width={118}
                   height={118}
-                  unoptimized
-                  priority
+                  className="h-[118px] w-[118px]"
+                  placeholder="blur"
+                  blurDataURL="/logos/symbol.svg"
                 />
               </div>
             </>

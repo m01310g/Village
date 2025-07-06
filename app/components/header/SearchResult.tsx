@@ -34,6 +34,9 @@ const SearchResult = ({
             width={40}
             height={40}
             alt={`${nickname}의 프로필 사진`}
+            className="h-10 w-10"
+            placeholder="blur"
+            blurDataURL="/logos/symbol.svg"
           />
         </div>
         <h3 className="text-body-2 text-text-primary">{nickname}</h3>

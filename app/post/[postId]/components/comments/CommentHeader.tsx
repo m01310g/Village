@@ -33,6 +33,9 @@ const CommentHeader = ({
               width={40}
               height={40}
               alt={`${comment.writtenBy.nickname}의 프로필 사진`}
+              placeholder="blur"
+              blurDataURL="/logos/symbol.svg"
+              className="h-10 w-10"
             />
           </div>
           <h3 className="text-title-3">{comment.writtenBy.nickname}</h3>

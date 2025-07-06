@@ -2,9 +2,10 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useQuery } from "@tanstack/react-query";
 import { RecruitmentList } from "../types/recruitmentType";
+import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 
 interface RecruitCountBody {
-  selectedNames?: string;
+  selectedName?: string;
   selectedLocation?: Record<string, string[]>;
 }
 
@@ -38,8 +39,10 @@ const fetchRecruitmentCount = async (
 
 export const useRecruitmentCount = () => {
   const { selectedDistricts } = useRegionFilterStore();
+  const { keyword } = useSearchKeywordStore();
 
   const requestBody: RecruitCountBody = {};
+  if (keyword) requestBody.selectedName = keyword;
   if (Object.keys(selectedDistricts).length > 0) {
     requestBody.selectedLocation = selectedDistricts;
   }
