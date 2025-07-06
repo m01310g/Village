@@ -10,7 +10,7 @@ const ProfileNeighborsByUserIdPage = () => {
   const { data: neighborList } = useNeighborsById(userId);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 overflow-y-auto">
       <div>
         <h3 className="text-title-1 px-4 py-3 text-text-primary">{`이웃 ${neighborList?.neighborNumber}`}</h3>
         {neighborList &&
