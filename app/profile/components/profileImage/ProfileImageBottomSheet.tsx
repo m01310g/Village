@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
 interface ProfileImageBottomSheetProps {
@@ -20,7 +19,7 @@ const ProfileImageBottomSheet = ({
         >
           <div className="flex w-full justify-between text-left">
             <span className="text-body-2">사진 보관함</span>
-            <Image
+            <img
               src={"/icons/chevron-right.svg"}
               alt="사진 보관함"
               width={20}

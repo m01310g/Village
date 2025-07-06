@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const HeaderSettingButton = () => {
@@ -6,7 +5,7 @@ const HeaderSettingButton = () => {
 
   return (
     <button type="button" onClick={() => router.push("/settings")}>
-      <Image
+      <img
         src={"/icons/icn_settings.svg"}
         alt="설정 버튼"
         width={24}
