@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useState } from "react";
 import HeaderSearchBar from "./HeaderSearchBar";
 
@@ -8,7 +7,7 @@ const HeaderSearchButton = () => {
   return (
     <>
       <button type="button" onClick={() => setIsSearchOpen(true)}>
-        <Image
+        <img
           src={"/icons/icn_search.svg"}
           alt="검색 버튼"
           width={24}
