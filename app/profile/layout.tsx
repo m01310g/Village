@@ -42,7 +42,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className={clsx(
-        "overflow-hidden bg-background-primary",
+        "overflow-y-auto bg-background-primary",
         pathname.includes("/profile/edit") ||
           pathname.includes("/neighbors") ||
           (pathname.startsWith("/profile/") && !pathname.endsWith("/neighbors"))
