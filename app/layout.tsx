@@ -2,12 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import QueryProvider from "./providers/QueryProvider";
-import NavigationBar from "./components/NavigationBar";
 import clsx from "clsx";
 import { HeaderProvider } from "./components/header/HeaderContext";
-import HeaderConsumer from "./components/header/HeaderConsumer";
 import { AmplitudeProvider } from "./providers/AmplitudeProvider";
-import { Suspense } from "react";
 import ClientLayout from "./ClientLayout";
 
 const pretendard = localFont({
