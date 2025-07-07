@@ -17,7 +17,7 @@ const UserProfilePage = () => {
   if (!profile) return null;
 
   return (
-    <div className="flex flex-col gap-4 overflow-y-auto">
+    <div className="flex flex-col gap-4">
       <ProfileViewSection profile={profile} isMyProfile={false} />
       <div className="h-[1px] w-full bg-border-tertiary" />
       <PostsSection

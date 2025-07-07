@@ -20,7 +20,7 @@ const RecruitByIdPage = () => {
 
   return (
     <>
-      <main className="h-[calc(100vh-46px)] overflow-y-auto bg-background-primary scrollbar-none">
+      <main className="h-[calc(100dvh-61px-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary scrollbar-none">
         <CenterNameSection
           centerName={recruitment?.centerName ?? ""}
           createdAt={recruitment?.date ?? ""}

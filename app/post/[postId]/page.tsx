@@ -25,8 +25,6 @@ const PostDetailPage = () => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const isLoggedIn = !!accessToken;
 
-  console.log(postData);
-
   useEffect(() => {
     if (postData) {
       setCommentsList(postData?.comments);

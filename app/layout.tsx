@@ -8,6 +8,7 @@ import { HeaderProvider } from "./components/header/HeaderContext";
 import HeaderConsumer from "./components/header/HeaderConsumer";
 import { AmplitudeProvider } from "./providers/AmplitudeProvider";
 import { Suspense } from "react";
+import ClientLayout from "./ClientLayout";
 
 const pretendard = localFont({
   src: "../public/fonts/pretendard/PretendardVariable.woff2",
@@ -35,11 +36,7 @@ export default function RootLayout({
                 "mx-auto flex w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
               )}
             >
-              <Suspense fallback={<div />}>
-                <HeaderConsumer />
-              </Suspense>
-              {children}
-              <NavigationBar />
+              <ClientLayout>{children}</ClientLayout>
             </body>
           </HeaderProvider>
         </QueryProvider>
