@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import HeaderConsumer from "./components/header/HeaderConsumer";
 import NavigationBar from "./components/NavigationBar";
 
@@ -8,7 +9,9 @@ export default function ClientLayout({
 }) {
   return (
     <>
-      <HeaderConsumer />
+      <Suspense fallback={<div />}>
+        <HeaderConsumer />
+      </Suspense>
       {children}
       <NavigationBar />
     </>
