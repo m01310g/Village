@@ -31,6 +31,7 @@ const ProfileImageFooter = ({
       selectedImageUrl,
       croppedAreaPixels,
     );
+
     if (!croppedImageFile) return;
 
     const formData = new FormData();

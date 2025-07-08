@@ -37,6 +37,7 @@ const SearchResult = ({
             className="h-10 w-10"
             placeholder="blur"
             blurDataURL="/logos/symbol.svg"
+            unoptimized
           />
         </div>
         <h3 className="text-body-2 text-text-primary">{nickname}</h3>

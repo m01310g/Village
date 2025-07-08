@@ -38,6 +38,7 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
               placeholder="blur"
               blurDataURL="/logos/symbol.svg"
               className="h-10 w-10"
+              unoptimized
             />
           </div>
           <h3 className="text-title-3">{post.writtenBy.nickname}</h3>
