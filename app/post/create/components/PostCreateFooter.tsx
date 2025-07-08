@@ -4,6 +4,7 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import ModalWrapper from "@/app/components/modal/ModalWrapper";
 import Button from "@/app/components/Button";
+import { resizeImage } from "@/app/lib/resizeImage";
 
 interface PostCreateFooterProps {
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
@@ -35,12 +36,16 @@ const PostCreateFooter = ({ setImages, imageCount }: PostCreateFooterProps) => {
 
     try {
       const formData = new FormData();
-      validFiles.forEach((file) => formData.append("images", file));
+      const resizedFiles = await Promise.all(
+        validFiles.map(async (file) => await resizeImage(file, 375)),
+      );
+      resizedFiles.forEach((file) => {
+        formData.append("images", file);
+      });
 
       const res = await fetchWithAuth(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/uploadBoardImage`,
         {
-          headers: {},
           method: "POST",
           body: formData,
         },

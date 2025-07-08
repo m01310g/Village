@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    domains: ["sehyeon-gym-images.s3.ap-northeast-2.amazonaws.com"],
+    domains: ["https://dwafdfvbqs12m.cloudfront.net"],
   },
 };
 
