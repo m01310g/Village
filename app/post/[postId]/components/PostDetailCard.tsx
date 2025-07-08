@@ -31,6 +31,7 @@ const PostDetailCard = ({ post }: PostDetailCardProps) => {
               height={0}
               placeholder="blur"
               blurDataURL="/logos/symbol.svg"
+              unoptimized
             />
           </div>
         ))}

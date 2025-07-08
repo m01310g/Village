@@ -26,6 +26,7 @@ const SelectedImagesSection = ({
             fill
             sizes="100px"
             className="object-cover"
+            unoptimized
           />
           <button
             className="absolute right-1 top-1 h-5 w-5 rounded-[832.5px] bg-neutral-900/40"

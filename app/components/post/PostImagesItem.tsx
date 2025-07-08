@@ -40,6 +40,7 @@ const PostImagesItem = ({ images }: PostImagesItemProps) => {
             fill
             sizes="100px"
             className="object-cover"
+            unoptimized
           />
         </div>
       ))}

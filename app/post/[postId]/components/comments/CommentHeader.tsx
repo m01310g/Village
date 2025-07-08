@@ -36,6 +36,7 @@ const CommentHeader = ({
               placeholder="blur"
               blurDataURL="/logos/symbol.svg"
               className="h-10 w-10"
+              unoptimized
             />
           </div>
           <h3 className="text-title-3">{comment.writtenBy.nickname}</h3>
