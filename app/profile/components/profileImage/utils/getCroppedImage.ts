@@ -9,8 +9,8 @@ export const getCroppedImage = async (
   await new Promise((resolve) => (image.onload = resolve));
 
   const canvas = document.createElement("canvas");
-  canvas.width = croppedArea.width;
-  canvas.height = croppedArea.height;
+  canvas.width = 118;
+  canvas.height = 118;
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
 
@@ -22,8 +22,8 @@ export const getCroppedImage = async (
     croppedArea.height,
     0,
     0,
-    croppedArea.width,
-    croppedArea.height,
+    118,
+    118,
   );
 
   return new Promise((resolve) =>
