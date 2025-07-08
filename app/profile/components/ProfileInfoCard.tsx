@@ -34,6 +34,7 @@ const ProfileInfoCard = ({
           className="h-20 w-20"
           placeholder="blur"
           blurDataURL="/logos/symbol.svg"
+          unoptimized
         />
       </div>
       <div className="flex flex-1 flex-col gap-2 pl-7">

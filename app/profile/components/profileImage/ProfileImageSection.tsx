@@ -71,7 +71,7 @@ const ProfileImageSection = ({
                 )}
                 <EditIcon color="white" width="18px" height="18px" />
               </label>
-              <div className="relative flex h-[118px] w-[118px] items-center justify-center overflow-hidden rounded-[4px]">
+              <div className="relative flex items-center justify-center overflow-hidden rounded-[4px]">
                 <Image
                   src={image}
                   alt="프로필 사진 미리보기"
@@ -80,6 +80,7 @@ const ProfileImageSection = ({
                   className="h-[118px] w-[118px]"
                   placeholder="blur"
                   blurDataURL="/logos/symbol.svg"
+                  unoptimized
                 />
               </div>
             </>

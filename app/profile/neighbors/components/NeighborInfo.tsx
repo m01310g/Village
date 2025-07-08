@@ -34,6 +34,7 @@ const NeighborInfo = ({
           placeholder="blur"
           blurDataURL="/logos/symbol.svg"
           className="h-10 w-10"
+          unoptimized
         />
       </div>
       <div className="flex items-center gap-[6px]">
