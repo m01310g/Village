@@ -1,12 +1,11 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
 import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
-import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import HeaderRefreshButton from "./HeaderRefreshButton";
 import AlertIcon from "@/public/icons/icn_alert_on.svg";
 import HeaderBackButton from "./HeaderBackButton";
