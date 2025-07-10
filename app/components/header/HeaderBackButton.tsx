@@ -24,16 +24,10 @@ const HeaderBackButton = () => {
     } else if (keyword) {
       setKeyword("");
       router.replace("/recruit");
+    } else if (typeof window !== "undefined" && window.history.length > 2) {
+      router.back();
     } else {
-      if (
-        typeof window !== "undefined" &&
-        document.referrer &&
-        new URL(document.referrer).origin === window.location.origin
-      ) {
-        router.back();
-      } else {
-        router.push("/");
-      }
+      router.push("/");
     }
   };
   return (
