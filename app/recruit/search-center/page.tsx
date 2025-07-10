@@ -15,7 +15,7 @@ const SearchCenterPage = () => {
     if (input.trim() === "") {
       router.push("/recruit");
     } else {
-      router.push(`/recruit?keyword=${encodeURIComponent(input)}`);
+      router.replace(`/recruit?keyword=${encodeURIComponent(input)}`);
     }
   };
 

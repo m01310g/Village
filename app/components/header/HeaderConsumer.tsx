@@ -1,7 +1,8 @@
 "use client";
 
-import Header from "./Header";
+import dynamic from "next/dynamic";
 import { useHeader } from "./HeaderContext";
+const Header = dynamic(() => import("./Header"), { ssr: false });
 
 const HeaderConsumer = () => {
   const header = useHeader();
