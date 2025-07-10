@@ -1,23 +1,16 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { PostType } from "../../types/postType";
 import { useQuery } from "@tanstack/react-query";
+import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 
-const getPostData = async (id: number): Promise<PostType> => {
-  const accessToken = useAuthStore.getState().accessToken;
-
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-  };
-
-  if (accessToken) {
-    headers["Authorization"] = `Bearer ${accessToken}`;
-  }
-
-  const res = await fetch(
+const getPostData = async (
+  isLoggedIn: boolean,
+  id: number,
+): Promise<PostType> => {
+  const res = await (isLoggedIn ? fetchWithAuth : fetch)(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/getBoard`,
     {
       method: "POST",
-      headers,
       body: JSON.stringify({ id }),
     },
   );
@@ -34,10 +27,13 @@ const getPostData = async (id: number): Promise<PostType> => {
 };
 
 export const usePostData = (postId: number) => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const isLoggedIn = !!accessToken;
+
   return useQuery({
-    queryKey: ["postData", postId],
+    queryKey: ["postData", postId, isLoggedIn],
     queryFn: () => {
-      return getPostData(postId);
+      return getPostData(isLoggedIn, postId);
     },
   });
 };
