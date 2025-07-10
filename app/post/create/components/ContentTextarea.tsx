@@ -28,7 +28,7 @@ const ContentTextarea = ({
       <textarea
         name="content-textarea"
         placeholder="새로운 소식이 있나요?"
-        className="placeholder:text-body-3 h-full resize-none text-text-primary placeholder:text-text-tertiary focus:outline-none"
+        className="text-body-4 placeholder:text-body-4 h-full resize-none text-text-primary placeholder:text-text-tertiary focus:outline-none"
         value={content}
         onChange={handleChange}
         maxLength={1000}

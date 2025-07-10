@@ -1,15 +1,14 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import HeaderCreateButton from "./HeaderCreateButton";
 import HeaderMenuButton from "./HeaderMenuButton";
 import HeaderSettingButton from "./HeaderSettingButton";
 import Logo from "@/public/logos/logo_transparent3.svg";
 import HeaderSearchButton from "./HeaderSearchButton";
-import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import HeaderRefreshButton from "./HeaderRefreshButton";
-import BackIcon from "@/public/icons/chevron-left.svg";
 import AlertIcon from "@/public/icons/icn_alert_on.svg";
+import HeaderBackButton from "./HeaderBackButton";
 
 interface HeaderProps {
   title: string;
@@ -43,33 +42,9 @@ const Header = ({
   showCreateButtonProps = { className: "", disabled: true, label: "" },
   onClick,
 }: HeaderProps) => {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const { keyword, setKeyword } = useSearchKeywordStore();
 
   if (pathname === "/neighbors") return null;
-
-  const handleBack = () => {
-    const page = searchParams.get("page");
-
-    if (
-      pathname.startsWith("/recruit/") &&
-      pathname !== "/recruit" &&
-      keyword
-    ) {
-      const query = new URLSearchParams();
-      query.set("keyword", keyword);
-      if (page) query.set("page", page);
-
-      router.push(`/recruit?${query.toString()}`);
-    } else if (keyword) {
-      setKeyword("");
-      router.replace("/recruit");
-    } else {
-      router.back();
-    }
-  };
 
   return (
     <header className="flex h-[46px] shrink-0 items-center justify-between border-b border-border-primary bg-background-primary px-1">
@@ -79,11 +54,7 @@ const Header = ({
         </div>
       )}
       <div className="flex h-full w-[46px] items-center justify-center">
-        {showBackButton && (
-          <button type="button" onClick={handleBack}>
-            <BackIcon width="24px" height="24px" color="#171717" />
-          </button>
-        )}
+        {showBackButton && <HeaderBackButton />}
       </div>
       <div className="flex flex-1 justify-center">
         <h1 className="text-title-2">{title}</h1>
