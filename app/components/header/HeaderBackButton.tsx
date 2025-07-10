@@ -1,12 +1,22 @@
+"use client";
+
 import BackIcon from "@/public/icons/chevron-left.svg";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const HeaderBackButton = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { keyword, setKeyword } = useSearchKeywordStore();
+  const [hasHistory, setHasHistory] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.history.length > 2) {
+      setHasHistory(true);
+    }
+  }, []);
 
   const handleBack = () => {
     const page = searchParams.get("page");
@@ -24,7 +34,7 @@ const HeaderBackButton = () => {
     } else if (keyword) {
       setKeyword("");
       router.replace("/recruit");
-    } else if (typeof window !== "undefined" && window.history.length > 2) {
+    } else if (hasHistory) {
       router.back();
     } else {
       router.push("/");
