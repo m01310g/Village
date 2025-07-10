@@ -21,13 +21,19 @@ const HeaderBackButton = () => {
   const handleBack = () => {
     const page = searchParams.get("page");
 
+    if (keyword) {
+      const query = new URLSearchParams();
+      if (page) query.set("page", page);
+      setKeyword("");
+      router.push(`/recruit?${query.toString()}`);
+      return;
+    }
+
     if (hasHistory) {
       router.back();
     } else if (pathname.startsWith("/recruit/") && pathname !== "/recruit") {
       const query = new URLSearchParams();
-      if (keyword) query.set("keyword", keyword);
       if (page) query.set("page", page);
-
       router.push(`/recruit?${query.toString()}`);
     } else {
       router.push("/");

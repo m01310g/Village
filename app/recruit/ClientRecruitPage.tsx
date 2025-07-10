@@ -37,6 +37,11 @@ const ClientRecruitPage = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const newPage = Number(searchParams.get("page")) || 1;
+    setPage(newPage);
+  }, [searchParams]);
+
   useScrollRestoration(scrollContainerRef);
 
   useEffect(() => {
