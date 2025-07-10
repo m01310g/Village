@@ -28,7 +28,6 @@ interface HeaderProps {
   onClick?: () => void;
 }
 
-// 로고 확정 시 로고 추가
 const Header = ({
   title,
   showLogo = false,
@@ -59,7 +58,6 @@ const Header = ({
       <div className="flex flex-1 justify-center">
         <h1 className="text-title-2">{title}</h1>
       </div>
-      {/* 각 버튼에 onClick 함수 추가 예정 */}
 
       <div className="flex h-full w-[46px] items-center justify-center">
         {showSearchButton && <HeaderSearchButton />}
