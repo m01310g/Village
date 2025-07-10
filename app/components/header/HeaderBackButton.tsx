@@ -3,18 +3,19 @@
 import BackIcon from "@/public/icons/chevron-left.svg";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const HeaderBackButton = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { keyword, setKeyword } = useSearchKeywordStore();
-  const [hasHistory, setHasHistory] = useState(false);
+
+  const hasHistoryRef = useRef(false);
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.history.length > 2) {
-      setHasHistory(true);
+      hasHistoryRef.current = true;
     }
   }, []);
 
@@ -29,7 +30,7 @@ const HeaderBackButton = () => {
       return;
     }
 
-    if (hasHistory) {
+    if (hasHistoryRef.current) {
       router.back();
     } else if (pathname.startsWith("/recruit/") && pathname !== "/recruit") {
       const query = new URLSearchParams();
