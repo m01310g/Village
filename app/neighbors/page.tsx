@@ -29,16 +29,23 @@ const NeighborsPage = () => {
         onClearSearch={handleClearSearch}
       />
       <main className="h-[calc(100dvh-81px-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary">
-        {renderUsers?.map((user) => (
-          <SearchResult
-            key={user.id}
-            id={user.id}
-            nickname={user.nickname}
-            name={user.name}
-            isNeighbor={user.isNeighbor}
-            profileImage={user.profileImage}
-          />
-        ))}
+        {renderUsers && renderUsers.length > 0 ? (
+          renderUsers?.map((user) => (
+            <SearchResult
+              key={user.id}
+              id={user.id}
+              nickname={user.nickname}
+              name={user.name}
+              isNeighbor={user.isNeighbor}
+              profileImage={user.profileImage}
+            />
+          ))
+        ) : (
+          <div className="text-body-2 flex h-full flex-col items-center justify-center text-text-tertiary">
+            <span>검색 결과가 없습니다.</span>
+            <span>다른 이름이나 별명을 입력해보세요.</span>
+          </div>
+        )}
       </main>
     </>
   );
