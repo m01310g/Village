@@ -7,7 +7,7 @@ import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
 import { usePostList } from "./hooks/usePostList";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useScrollStore } from "@/store/useScrollStore";
 
 const Page = () => {
@@ -18,12 +18,14 @@ const Page = () => {
   const [activeFilter, setActiveFilter] = useState(
     () => getActiveFilter(pathname) || "전체",
   );
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page") ?? 1);
 
   useScrollRestoration(scrollRef, activeFilter);
 
   const setHeader = useSetHeader();
   const filters = ["전체", "업계이야기", "채용", "교육"];
-  const { data: postList } = usePostList();
+  const { data: postList } = usePostList(page);
 
   useEffect(() => {
     setHeader({
