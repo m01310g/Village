@@ -60,12 +60,10 @@ const Page = () => {
   }, [page, router]);
 
   useEffect(() => {
-    if (postList?.isLastPage) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (first.isIntersecting) {
+        if (first.isIntersecting && !postList?.isLastPage) {
           loadNextPage();
         }
       },
@@ -76,7 +74,7 @@ const Page = () => {
     return () => {
       if (current) observer.unobserve(current);
     };
-  }, [loadNextPage, postList?.isLastPage]);
+  }, [loadNextPage, postList?.isLastPage, activeFilter]);
 
   return (
     <div className="flex h-full max-w-[375px] flex-col">
