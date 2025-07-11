@@ -1,9 +1,9 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { Board } from "@/app/profile/hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
+import { BoardListType } from "../types/boardListType";
 
-const getPostList = async (isLoggedIn: boolean): Promise<Board[]> => {
+const getPostList = async (isLoggedIn: boolean): Promise<BoardListType> => {
   const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/getFeed`;
   const res = await (isLoggedIn
     ? fetchWithAuth(url, { method: "GET" })
@@ -15,7 +15,7 @@ const getPostList = async (isLoggedIn: boolean): Promise<Board[]> => {
   }
 
   const result = await res.json();
-  const postList: Board[] = result.data;
+  const postList: BoardListType = result.data;
 
   return postList;
 };

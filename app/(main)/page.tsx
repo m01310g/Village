@@ -42,8 +42,8 @@ const Page = () => {
 
   const filteredPosts =
     activeFilter === "전체"
-      ? postList
-      : postList?.filter((post) => {
+      ? postList?.boardList
+      : postList?.boardList.filter((post) => {
           const typeIndex = filters.indexOf(activeFilter) - 1;
           return post.type === typeIndex;
         });
