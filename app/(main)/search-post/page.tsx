@@ -45,8 +45,8 @@ const SearchPostPage = () => {
     <>
       <SearchPostsHeader keyword={keyword} />
       <main className="h-[calc(100dvh-46px-env(safe-area-inset-bottom))] bg-background-primary">
-        {searchedPosts.length > 0 ? (
-          searchedPosts.map((post) => {
+        {searchedPosts && searchedPosts.boardList.length > 0 ? (
+          searchedPosts.boardList.map((post) => {
             const isMyProfile = post.isNeighbor === 4;
             return <PostCard post={post} isMyProfile={isMyProfile} />;
           })

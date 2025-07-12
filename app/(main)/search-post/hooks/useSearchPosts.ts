@@ -1,12 +1,13 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
+import { BoardListType } from "../../types/boardListType";
 
 const fetchSearchPosts = async (
   keyword: string,
   page: number,
   isLoggedIn: boolean,
-) => {
+): Promise<BoardListType> => {
   const res = await (isLoggedIn ? fetchWithAuth : fetch)(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/web-community/search?page=${page}`,
     {
@@ -23,7 +24,7 @@ const fetchSearchPosts = async (
   }
 
   const result = await res.json();
-  const data = result.data;
+  const data: BoardListType = result.data;
 
   return data;
 };
