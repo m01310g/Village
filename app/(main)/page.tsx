@@ -77,8 +77,8 @@ const Page = () => {
   }, [loadNextPage, postList?.isLastPage, activeFilter]);
 
   return (
-    <div className="flex h-full max-w-[375px] flex-col">
-      <div className="flex w-full max-w-[375px] gap-1 bg-background-primary px-4 py-3">
+    <div className="flex h-full max-w-[375px] flex-col bg-background-primary">
+      <div className="flex w-full max-w-[375px] gap-1 px-4 py-3">
         {filters.map((filter, i) => (
           <FilteringButton
             key={i}
