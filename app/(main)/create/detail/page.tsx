@@ -12,6 +12,7 @@ import { convertStatusToNumber } from "../../utils/formUtils";
 import { useAuthStore } from "@/store/useAuthStore";
 import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
 import { useCreateProfile } from "../../hooks/useProfileCreate";
+import { toast } from "react-hot-toast";
 
 const ProfileCreateDetailPage = () => {
   const router = useRouter();
@@ -66,6 +67,11 @@ const ProfileCreateDetailPage = () => {
   }, [isPhoneNumberOpened, updateField]);
 
   const handleSubmit = async () => {
+    if (formData.status !== 2 && formData.phoneOpened === 0) {
+      toast.error("전화번호 공개 여부에 체크해주세요.");
+      return;
+    }
+
     const payload = { ...formData };
     if (payload.profileImage === "") delete payload.profileImage;
     if (payload.introduction === "") delete payload.introduction;

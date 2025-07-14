@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import CompleteButton from "../../create/detail/components/CompleteButton";
 import JobSeekingStatusSection from "../../create/detail/components/JobSeekingStatusSection";
@@ -102,6 +103,11 @@ const ProfileEditDetailPage = () => {
   }, []);
 
   const handleModify = async () => {
+    if (formData.status !== 2 && formData.phoneOpened === 0) {
+      toast.error("전화번호 공개 여부에 체크해주세요.");
+      return;
+    }
+
     const payload = { ...formData };
     if (payload.profileImage === "") delete payload.profileImage;
     if (payload.introduction === "") delete payload.introduction;
