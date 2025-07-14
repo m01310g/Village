@@ -2,7 +2,7 @@ import AddUser from "@/public/icons/icn_user-profile-add-01.svg";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useState } from "react";
 import LoginRequiredModal from "../LoginRequiredModal";
-import { useRequestNeighbor } from "@/app/profile/[userId]/hooks/useRequestNeighbor";
+import { useRequestNeighbor } from "@/app/(main)/[userId]/hooks/useRequestNeighbor";
 
 interface AddNeighborButtonProps {
   id: number;
