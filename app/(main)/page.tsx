@@ -1,138 +1,113 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
-import { useSetHeader } from "../components/header/HeaderContext";
-import FilteringButton from "../components/feed/FilteringButton";
-import PostCard from "../components/post/PostCard";
-import FloatingButton from "../components/post/FloatingButton";
-import { usePostList } from "./hooks/usePostList";
-import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
-import { usePathname } from "next/navigation";
-import { useScrollStore } from "@/store/useScrollStore";
-import { Board } from "../profile/hooks/useUserProfile";
+import ProfileViewSection from "./components/ProfileViewSection";
+import PostsSection from "./components/PostsSection";
+import { useUserProfile } from "./hooks/useUserProfile";
+import { useAuthStore } from "@/store/useAuthStore";
+import KakaoSigninButton from "../components/KakaoSigninButton";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Logo from "@/public/logos/logo_transparent1.svg";
 
-const Page = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
-  const { getActiveFilter, setActiveFilter: saveActiveFilter } =
-    useScrollStore();
-  const pathname = usePathname();
+interface ErrorWithStatus {
+  status: number;
+  message: string;
+}
 
-  const [page, setPage] = useState(1);
-  const [activeFilter, setActiveFilter] = useState(
-    () => getActiveFilter(pathname) || "전체",
-  );
+const ProfilePage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = useUserProfile(isLoggedIn === true);
 
-  const [allPosts, setAllPosts] = useState<Board[]>([]);
-  const { data: postList } = usePostList(page);
+  const router = useRouter();
 
   useEffect(() => {
-    if (postList?.boardList) {
-      setAllPosts((prev) => [...prev, ...postList.boardList]);
+    const { accessToken, user, resetAuth } = useAuthStore.getState();
+
+    if (!accessToken) {
+      setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
     }
-  }, [postList]);
-  useScrollRestoration(scrollRef, activeFilter);
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("page", String(page));
-    const newUrl = `${pathname}?${searchParams.toString()}`;
-    window.history.replaceState(null, "", newUrl);
-  }, [page]);
-
-  const setHeader = useSetHeader();
-
-  useEffect(() => {
-    setHeader({
-      title: "",
-      showBackButton: false,
-      showSearchButton: true,
-      showSettingButton: false,
-      showLogo: true,
-    });
-  }, [setHeader]);
-
-  const handleFilterChange = (filter: string) => {
-    setActiveFilter(filter);
-    saveActiveFilter(pathname, filter);
-  };
-
-  const filters = ["전체", "업계이야기", "채용", "교육"];
-
-  const filteredPosts =
-    activeFilter === "전체"
-      ? allPosts
-      : allPosts.filter((post) => {
-          const typeIndex = filters.indexOf(activeFilter) - 1;
-          return post.type === typeIndex;
-        });
-
-  const loadNextPage = useCallback(() => {
-    setPage((prev) => prev + 1);
+    if (!accessToken && user) {
+      resetAuth();
+      localStorage.removeItem("profile-form-data");
+    }
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (!first.isIntersecting) return;
+    if (error && (error as unknown as ErrorWithStatus).status === 404) {
+      router.push("/create/info");
+    }
+  }, [error, router]);
 
-        if (page === 1 && allPosts.length === 0) return;
+  // 로딩 컴포넌트 구현
+  if (isLoggedIn === null) return null;
 
-        if (!postList?.isLastPage) {
-          loadNextPage();
-        }
-      },
-      { threshold: 0.5, root: scrollRef.current },
+  const sortedPosts = [...(profile?.boards ?? [])].sort(
+    (a, b) => new Date(b.writtenAt).getTime() - new Date(a.writtenAt).getTime(),
+  );
+
+  if (!isLoggedIn) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-10 px-4">
+        <div className="flex flex-col items-center justify-center gap-6">
+          <Logo />
+          <span className="text-body-1 text-text-primary">
+            트레이너 빌리지에 오신 것을 환영해요!
+          </span>
+        </div>
+        <KakaoSigninButton />
+        <span className="text-body-2 text-center text-neutral-300">
+          가입하면 빌리지의
+          <br />
+          <span
+            className="cursor-pointer underline"
+            onClick={() => router.push("/terms")}
+          >
+            이용약관 및 개인정보 처리방침
+          </span>
+          에 동의하게 됩니다.
+        </span>
+      </div>
     );
+  }
 
-    const current = loaderRef.current;
+  if (isLoading) {
+    // 로딩 컴포넌트 구현 예정
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        로딩중...
+      </div>
+    );
+  }
 
-    const timeout = setTimeout(() => {
-      if (current && !postList?.isLastPage) {
-        observer.observe(current);
-      }
-    }, 100);
+  if (error) {
+    // 에러 컴포넌트 구현 예정
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        에러가 발생했습니다.
+      </div>
+    );
+  }
 
-    return () => {
-      clearTimeout(timeout);
-      if (current) observer.unobserve(current);
-    };
-  }, [loadNextPage, postList?.isLastPage, activeFilter, page, allPosts.length]);
+  if (!profile) return null;
 
   return (
-    <div className="flex h-full max-w-[375px] flex-col">
-      <div className="flex w-full max-w-[375px] gap-1 bg-background-primary px-4 py-3">
-        {filters.map((filter, i) => (
-          <FilteringButton
-            key={i}
-            content={filter}
-            isActive={activeFilter === filter}
-            onClick={() => handleFilterChange(filter)}
-          />
-        ))}
-      </div>
-      <div
-        className="h-[calc(100dvh-81px-100px-env(safe-area-inset-bottom))] overflow-y-auto scrollbar-thin"
-        ref={scrollRef}
-      >
-        {filteredPosts &&
-          filteredPosts.map((post) => {
-            return (
-              <PostCard
-                key={post.id}
-                post={post}
-                isMyProfile={post.isNeighbor === 4}
-              />
-            );
-          })}
-        <div ref={loaderRef} className="invisible h-[1px] w-full" />
-      </div>
-      <div className="fixed bottom-[81px] left-1/2 z-40 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
-        <FloatingButton />
-      </div>
+    <div className="flex flex-col gap-4">
+      <ProfileViewSection profile={profile} isMyProfile={true} />
+      <div className="h-[1px] w-full bg-border-tertiary" />
+      <PostsSection
+        nickname={profile.nickname}
+        isMyProfile
+        posts={sortedPosts}
+      />
     </div>
   );
 };
 
-export default Page;
+export default ProfilePage;

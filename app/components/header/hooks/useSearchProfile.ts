@@ -1,5 +1,5 @@
+import { BoardProfile } from "@/app/(main)/hooks/useUserProfile";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { BoardProfile } from "@/app/profile/hooks/useUserProfile";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

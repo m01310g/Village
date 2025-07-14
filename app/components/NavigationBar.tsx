@@ -13,7 +13,9 @@ const NavigationBar = () => {
 
   // 내비게이션 바 숨길 라우트
   const hiddenPatterns = [
-    /^\/profile\/create/,
+    /^\/create/,
+    /^\/edit/,
+    /^\/profile\/neighbors/,
     /^\/signin/,
     /^\/web-auth\/kakao\/callback/,
     /^\/post/,
@@ -23,14 +25,14 @@ const NavigationBar = () => {
     /^\/recruit\/select-region/,
     /^\/recruit\/\d+/,
     /^\/recruit\/search-center/,
-    /^\/search-post/,
+    /^\/community\/search-post/,
   ];
 
   const shouldHideByPattern = hiddenPatterns.some((pattern) =>
     pattern.test(pathname),
   );
 
-  if (shouldHideByPattern || pathname.startsWith("/profile/")) {
+  if (shouldHideByPattern || /^\d+$/.test(pathname.slice(1))) {
     return null;
   }
 
@@ -39,8 +41,13 @@ const NavigationBar = () => {
 
   const navItems = [
     {
-      label: "홈",
+      label: "내 프로필",
       path: "/",
+      Icon: UserProfileIcon,
+    },
+    {
+      label: "커뮤니티",
+      path: "/community",
       Icon: HomeIcon,
     },
     { label: "이웃", path: "/neighbors", Icon: NeighborsIcon },
@@ -48,11 +55,6 @@ const NavigationBar = () => {
       label: "채용공고",
       path: "/recruit",
       Icon: JobListingIcon,
-    },
-    {
-      label: "내 프로필",
-      path: "/profile",
-      Icon: UserProfileIcon,
     },
   ];
 

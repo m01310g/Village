@@ -5,7 +5,7 @@ const HeaderSearchButton = () => {
   const router = useRouter();
 
   return (
-    <button type="button" onClick={() => router.push("/search-post")}>
+    <button type="button" onClick={() => router.push("/community/search-post")}>
       <SearchIcon width="24px" height="24px" color="#171717" />
     </button>
   );

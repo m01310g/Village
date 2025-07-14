@@ -9,7 +9,7 @@ const FloatingButton = () => {
 
   const handleClick = () => {
     if (!user) {
-      router.push("/profile");
+      router.push("/");
       return;
     }
 

@@ -1,10 +1,10 @@
-import { Board } from "@/app/profile/hooks/useUserProfile";
 import PostCardFooter from "./PostCardFooter";
 import PostContent from "./PostContent";
 import PostHeader from "./PostHeader";
 import { getRelativeTime } from "./utils/getRelativeTime";
 import Link from "next/link";
 import PostImagesItem from "./PostImagesItem";
+import { Board } from "@/app/(main)/hooks/useUserProfile";
 
 interface PostCardProps {
   post: Board;
