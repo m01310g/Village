@@ -1,11 +1,13 @@
 import { usePathname } from "next/navigation";
 import AddNeighborButton from "./AddNeighborButton";
 import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Board } from "@/app/(main)/hooks/useUserProfile";
+import { useAuthStore } from "@/store/useAuthStore";
+import LoginRequiredModal from "../LoginRequiredModal";
 
 interface PostHeaderProps {
   post: Board;
@@ -17,14 +19,34 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
   const pathname = usePathname();
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!accessToken);
+  }, [accessToken]);
+
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+
+    if (isMyProfile) {
+      if (pathname !== "/") router.push("/");
+    } else {
+      if (post.writtenBy?.id) {
+        router.push(`/${post.writtenBy.id}`);
+      }
+    }
+  };
 
   return (
     <>
       <header
         className="flex cursor-pointer items-center justify-between"
-        onClick={() =>
-          isMyProfile ? router.push("/") : router.push(`/${post.writtenBy.id}`)
-        }
+        onClick={handleClick}
       >
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
@@ -85,6 +107,9 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
           setIsOpen={setIsPostBottomSheetOpen}
           postId={post.id}
         />
+      )}
+      {isLoginModalOpen && (
+        <LoginRequiredModal setIsModalOpen={setIsLoginModalOpen} />
       )}
     </>
   );
