@@ -18,8 +18,6 @@ const Page = () => {
     useScrollStore();
   const pathname = usePathname();
 
-  useScrollRestoration(scrollRef);
-
   const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState(
     () => getActiveFilter(pathname) || "전체",
@@ -30,20 +28,17 @@ const Page = () => {
 
   useEffect(() => {
     if (postList?.boardList) {
-      setAllPosts((prev) => {
-        const ids = new Set(prev.map((p) => p.id));
-        const newUniquePosts = postList.boardList.filter((p) => !ids.has(p.id));
-        return [...prev, ...newUniquePosts];
-      });
+      setAllPosts((prev) => [...prev, ...postList.boardList]);
     }
   }, [postList]);
+  useScrollRestoration(scrollRef, activeFilter);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("page", String(page));
     const newUrl = `${pathname}?${searchParams.toString()}`;
     window.history.replaceState(null, "", newUrl);
-  }, [page, pathname]);
+  }, [page]);
 
   const setHeader = useSetHeader();
 
@@ -106,8 +101,8 @@ const Page = () => {
   }, [loadNextPage, postList?.isLastPage, activeFilter, page, allPosts.length]);
 
   return (
-    <div className="flex h-full max-w-[375px] flex-col bg-background-primary">
-      <div className="flex w-full max-w-[375px] gap-1 px-4 py-3">
+    <div className="flex h-full max-w-[375px] flex-col">
+      <div className="flex w-full max-w-[375px] gap-1 bg-background-primary px-4 py-3">
         {filters.map((filter, i) => (
           <FilteringButton
             key={i}
@@ -125,7 +120,7 @@ const Page = () => {
           filteredPosts.map((post) => {
             return (
               <PostCard
-                key={`post-${post.id}`}
+                key={post.id}
                 post={post}
                 isMyProfile={post.isNeighbor === 4}
               />
