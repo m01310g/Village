@@ -7,8 +7,9 @@ import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
 import { usePostList } from "./hooks/usePostList";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useScrollStore } from "@/store/useScrollStore";
+import { Board } from "../profile/hooks/useUserProfile";
 
 const Page = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -16,20 +17,30 @@ const Page = () => {
   const { getActiveFilter, setActiveFilter: saveActiveFilter } =
     useScrollStore();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
-  const page = Number(searchParams.get("page") ?? 1);
+  const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState(
     () => getActiveFilter(pathname) || "전체",
   );
 
+  const [allPosts, setAllPosts] = useState<Board[]>([]);
   const { data: postList } = usePostList(page);
 
+  useEffect(() => {
+    if (postList?.boardList) {
+      setAllPosts((prev) => [...prev, ...postList.boardList]);
+    }
+  }, [postList]);
   useScrollRestoration(scrollRef, activeFilter);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("page", String(page));
+    const newUrl = `${pathname}?${searchParams.toString()}`;
+    window.history.replaceState(null, "", newUrl);
+  }, [page]);
+
   const setHeader = useSetHeader();
-  const filters = ["전체", "업계이야기", "채용", "교육"];
 
   useEffect(() => {
     setHeader({
@@ -46,35 +57,48 @@ const Page = () => {
     saveActiveFilter(pathname, filter);
   };
 
+  const filters = ["전체", "업계이야기", "채용", "교육"];
+
   const filteredPosts =
     activeFilter === "전체"
-      ? postList?.boardList
-      : postList?.boardList.filter((post) => {
+      ? allPosts
+      : allPosts.filter((post) => {
           const typeIndex = filters.indexOf(activeFilter) - 1;
           return post.type === typeIndex;
         });
 
   const loadNextPage = useCallback(() => {
-    const nextPage = page + 1;
-    router.push(`?page=${nextPage}`, { scroll: false });
-  }, [page, router]);
+    setPage((prev) => prev + 1);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (first.isIntersecting && !postList?.isLastPage) {
+        if (!first.isIntersecting) return;
+
+        if (page === 1 && allPosts.length === 0) return;
+
+        if (!postList?.isLastPage) {
           loadNextPage();
         }
       },
-      { threshold: 1 },
+      { threshold: 0.5, root: scrollRef.current },
     );
+
     const current = loaderRef.current;
-    if (current) observer.observe(current);
+
+    const timeout = setTimeout(() => {
+      if (current && !postList?.isLastPage) {
+        observer.observe(current);
+      }
+    }, 100);
+
     return () => {
+      clearTimeout(timeout);
       if (current) observer.unobserve(current);
     };
-  }, [loadNextPage, postList?.isLastPage, activeFilter]);
+  }, [loadNextPage, postList?.isLastPage, activeFilter, page, allPosts.length]);
 
   return (
     <div className="flex h-full max-w-[375px] flex-col bg-background-primary">
@@ -102,7 +126,7 @@ const Page = () => {
               />
             );
           })}
-        <div ref={loaderRef} className="h-2" />
+        <div ref={loaderRef} className="invisible h-[1px] w-full" />
       </div>
       <div className="fixed bottom-[81px] left-1/2 z-40 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
         <FloatingButton />
