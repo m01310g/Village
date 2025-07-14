@@ -1,24 +1,13 @@
-import { useState } from "react";
-import HeaderSearchBar from "./HeaderSearchBar";
 import SearchIcon from "@/public/icons/icn_search.svg";
+import { useRouter } from "next/navigation";
 
 const HeaderSearchButton = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const router = useRouter();
 
   return (
-    <>
-      <button type="button" onClick={() => setIsSearchOpen(true)}>
-        <SearchIcon width="24px" height="24px" color="#171717" />
-      </button>
-      {isSearchOpen && (
-        <HeaderSearchBar
-          onClose={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            setIsSearchOpen(false);
-          }}
-        />
-      )}
-    </>
+    <button type="button" onClick={() => router.push("/search-post")}>
+      <SearchIcon width="24px" height="24px" color="#171717" />
+    </button>
   );
 };
 

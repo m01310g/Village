@@ -31,5 +31,6 @@ export const usePostList = (page: number) => {
     queryKey: ["postList", isLoggedIn, page],
     queryFn: () => getPostList(isLoggedIn, page),
     enabled: typeof window !== "undefined",
+    staleTime: 0,
   });
 };
