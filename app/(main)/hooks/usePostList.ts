@@ -28,7 +28,7 @@ export const usePostList = (page: number) => {
   const isLoggedIn = !!accessToken;
 
   return useQuery({
-    queryKey: ["postList", isLoggedIn],
+    queryKey: ["postList", isLoggedIn, page],
     queryFn: () => getPostList(isLoggedIn, page),
     enabled: typeof window !== "undefined",
   });
