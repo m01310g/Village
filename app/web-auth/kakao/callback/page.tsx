@@ -57,7 +57,7 @@ const KakaoCallbackPage = () => {
           if (hasProfile) {
             router.replace("/");
           } else {
-            router.replace("/profile/create/info");
+            router.replace("/create/info");
           }
         } else {
           const error: ErrorResponse = await res.json();

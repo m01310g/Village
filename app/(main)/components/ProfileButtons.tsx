@@ -1,7 +1,7 @@
 import Button from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import ProfileNeighborButton from "./ProfileNeighborButton";
-import { useNeighborsList } from "../neighbors/hooks/useNeighborsList";
+import { useNeighborsList } from "../profile/neighbors/hooks/useNeighborsList";
 
 interface ProfileButtonProps {
   isMyProfile: boolean;
@@ -25,7 +25,7 @@ const ProfileButtons = ({
           <Button
             size="md"
             color="secondaryColor"
-            onClick={() => router.push("/profile/edit/info")}
+            onClick={() => router.push("/edit/info")}
           >
             프로필 수정
           </Button>

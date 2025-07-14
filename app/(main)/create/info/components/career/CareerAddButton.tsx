@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CareerAddBottomSheet from "./CareerAddBottomSheet";
-import { CareerData } from "@/app/profile/types/careerCard";
 import AddIcon from "@/public/icons/plus.svg";
+import { CareerData } from "@/app/(main)/types/careerCard";
 
 interface CareerAddButtonProps {
   onAddCareer: (newCareer: CareerData) => void;

@@ -21,9 +21,7 @@ const NeighborInfo = ({
   return (
     <div
       className="flex cursor-pointer items-center gap-2"
-      onClick={() =>
-        router.push(isMyNeighbor === 4 ? "/profile" : `/profile/${id}`)
-      }
+      onClick={() => router.push(isMyNeighbor === 4 ? "/" : `/${id}`)}
     >
       <div className="flex h-10 w-10 overflow-hidden rounded-full">
         <Image

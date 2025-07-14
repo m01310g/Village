@@ -43,7 +43,8 @@ const Header = ({
 }: HeaderProps) => {
   const pathname = usePathname();
 
-  if (pathname === "/neighbors" || pathname === "/search-post") return null;
+  if (pathname === "/neighbors" || pathname === "/community/search-post")
+    return null;
 
   return (
     <header className="flex h-[46px] shrink-0 items-center justify-between border-b border-border-primary bg-background-primary px-1">

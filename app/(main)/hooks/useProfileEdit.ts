@@ -46,7 +46,7 @@ export const useProfileEdit = () => {
     mutationFn: (formData: ProfileFormData) => editProfile(formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-      router.push("/profile");
+      router.push("/");
     },
     onError: (err) => {
       console.error("프로필 수정 실패:", err);

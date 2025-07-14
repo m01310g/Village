@@ -36,7 +36,7 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
     params.set("keyword", inputValue.trim());
     params.set("page", "1");
 
-    router.push(`/search-post?${params.toString()}`);
+    router.push(`/community/search-post?${params.toString()}`);
   };
 
   const handleClear = () => {
@@ -45,7 +45,7 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
     params.delete("keyword");
     params.delete("page");
 
-    router.replace(`/search-post`);
+    router.replace(`/community/search-post`);
   };
 
   return (

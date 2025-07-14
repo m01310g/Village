@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import DateInput from "./date/DateInput";
 import { v4 as uuidv4 } from "uuid";
 import BottomSheetWrapper from "@/app/components/BottomSheetWrapper";
-import { CareerData } from "@/app/profile/types/careerCard";
 import Checkbox from "@/app/components/Checkbox";
 import clsx from "clsx";
 import CloseIcon from "@/public/icons/close-2.svg";
+import { CareerData } from "@/app/(main)/types/careerCard";
 
 interface CareerAddBottomSheetProps {
   setOpen: (open: boolean) => void;

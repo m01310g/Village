@@ -1,4 +1,4 @@
-import ProfileLabel from "@/app/profile/create/components/ProfileLabel";
+import ProfileLabel from "../../components/ProfileLabel";
 
 interface IntroduceSectionProps {
   introduction: string;

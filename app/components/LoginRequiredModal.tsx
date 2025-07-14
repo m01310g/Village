@@ -17,7 +17,7 @@ const LoginRequiredModal = ({ setIsModalOpen }: LoginRequiredModalProps) => {
       <Button
         onClick={() => {
           setIsModalOpen(false);
-          router.push("/profile");
+          router.push("/");
         }}
       >
         확인

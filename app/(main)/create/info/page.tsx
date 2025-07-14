@@ -69,7 +69,7 @@ const ProfileCreateInfoPage = () => {
           size="lg"
           color="primary"
           disabled={!isFormValid}
-          onClick={() => router.push("/profile/create/detail")}
+          onClick={() => router.push("/create/detail")}
         >
           다음
         </Button>

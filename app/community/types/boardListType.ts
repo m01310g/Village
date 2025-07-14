@@ -1,4 +1,4 @@
-import { Board } from "@/app/profile/hooks/useUserProfile";
+import { Board } from "@/app/(main)/hooks/useUserProfile";
 
 export interface BoardListType {
   boardList: Board[];

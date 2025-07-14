@@ -53,7 +53,7 @@ const ProfileInfoCard = ({
               router.push(
                 isNeighbor === 4 || isNeighbor === undefined
                   ? "/profile/neighbors"
-                  : `/profile/${id}/neighbors`,
+                  : `/${id}/neighbors`,
               )
             }
           >

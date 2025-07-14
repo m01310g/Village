@@ -2,9 +2,9 @@ import CareerAddButton from "./CareerAddButton";
 import CareerCard from "./CareerCard";
 import { useEffect, useState } from "react";
 import CareerAddBottomSheet from "./CareerAddBottomSheet";
-import { CareerData } from "@/app/profile/types/careerCard";
-import { WebCareer } from "@/app/profile/types/webCareer";
 import ProfileLabel from "../../../components/ProfileLabel";
+import { WebCareer } from "@/app/(main)/types/webCareer";
+import { CareerData } from "@/app/(main)/types/careerCard";
 
 interface CareerSectionProps {
   onChangeCareers: (careers: WebCareer[]) => void;

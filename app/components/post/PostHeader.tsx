@@ -4,8 +4,8 @@ import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
-import { Board } from "@/app/profile/hooks/useUserProfile";
 import { useRouter } from "next/navigation";
+import { Board } from "@/app/(main)/hooks/useUserProfile";
 
 interface PostHeaderProps {
   post: Board;
@@ -23,9 +23,7 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
       <header
         className="flex cursor-pointer items-center justify-between"
         onClick={() =>
-          isMyProfile
-            ? router.push("/profile")
-            : router.push(`/profile/${post.writtenBy.id}`)
+          isMyProfile ? router.push("/") : router.push(`/${post.writtenBy.id}`)
         }
       >
         <div className="flex items-center gap-2">
@@ -44,7 +42,7 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
           <h3 className="text-title-3">{post.writtenBy.nickname}</h3>
         </div>
 
-        {pathname === "/profile" ? (
+        {pathname === "/" ? (
           <button
             type="button"
             className="flex h-10 w-10 items-center justify-center"
@@ -55,9 +53,9 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
           >
             <ManageIcon color="#737373" width="24px" height="24px" />
           </button>
-        ) : pathname.startsWith("/profile/") ? (
+        ) : /^\d+$/.test(pathname.slice(1)) ? (
           <div className="h-10 w-10" />
-        ) : pathname === "/" ? (
+        ) : pathname === "/community" ? (
           isMyProfile ? (
             <div className="h-10 w-10" />
           ) : (

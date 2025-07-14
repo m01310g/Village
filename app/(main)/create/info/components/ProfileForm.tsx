@@ -3,8 +3,8 @@ import NameSection from "./NameSection";
 import NicknameSection from "./NicknameSection";
 import CareerSection from "./career/CareerSection";
 import IntroduceSection from "./IntroduceSection";
-import { WebCareer } from "@/app/profile/types/webCareer";
-import ProfileImageSection from "@/app/profile/components/profileImage/ProfileImageSection";
+import { WebCareer } from "@/app/(main)/types/webCareer";
+import ProfileImageSection from "@/app/(main)/components/profileImage/ProfileImageSection";
 
 interface ProfileFormProps {
   formData: {

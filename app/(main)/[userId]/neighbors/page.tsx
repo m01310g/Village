@@ -1,8 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import NeighborCard from "../../neighbors/components/NeighborCard";
 import { useNeighborsById } from "../hooks/useNeighborsById";
+import NeighborCard from "../../profile/neighbors/components/NeighborCard";
 
 const ProfileNeighborsByUserIdPage = () => {
   const params = useParams();

@@ -1,4 +1,4 @@
-import { CareerCardProps } from "@/app/profile/types/careerCard";
+import { CareerCardProps } from "@/app/(main)/types/careerCard";
 import EditIcon from "@/public/icons/icn_edit1.svg";
 import TrashIcon from "@/public/icons/icn_trash.svg";
 

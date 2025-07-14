@@ -6,7 +6,7 @@ import { useSearchPosts } from "./hooks/useSearchPosts";
 import { useEffect, useRef, useState } from "react";
 import PostCard from "@/app/components/post/PostCard";
 import { usePostList } from "../hooks/usePostList";
-import { Board } from "@/app/profile/hooks/useUserProfile";
+import { Board } from "@/app/(main)/hooks/useUserProfile";
 
 const ClientSearchPostPage = () => {
   const [searchPage, setSearchPage] = useState(1);
