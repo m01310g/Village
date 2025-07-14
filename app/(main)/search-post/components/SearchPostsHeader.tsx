@@ -17,7 +17,11 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
   }, [keyword]);
 
   const handleBack = () => {
-    router.back();
+    if (document.referrer === "" || window.history.length <= 1) {
+      router.replace("/");
+    } else {
+      router.back();
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +30,22 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!inputValue.trim()) return;
+
+    const params = new URLSearchParams();
+    params.set("keyword", inputValue.trim());
+    params.set("page", "1");
+
+    router.push(`/search-post?${params.toString()}`);
   };
 
   const handleClear = () => {
     setInputValue("");
+    const params = new URLSearchParams(window.location.search);
+    params.delete("keyword");
+    params.delete("page");
+
+    router.replace(`/search-post`);
   };
 
   return (
@@ -46,7 +62,7 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
           className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"
           value={inputValue}
           onChange={handleInputChange}
-          placeholder="게시글 검색"
+          placeholder="[채용]을 검색해보세요"
         />
         {inputValue.length > 0 ? (
           <button
@@ -59,7 +75,7 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
             </div>
           </button>
         ) : (
-          <button type="submit" className="flex items-center justify-center">
+          <button type="button" className="flex items-center justify-center">
             <SearchIcon color="#171717" width="24px" height="24px" />
           </button>
         )}

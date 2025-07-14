@@ -18,6 +18,8 @@ const Page = () => {
     useScrollStore();
   const pathname = usePathname();
 
+  useScrollRestoration(scrollRef);
+
   const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState(
     () => getActiveFilter(pathname) || "전체",
@@ -28,17 +30,20 @@ const Page = () => {
 
   useEffect(() => {
     if (postList?.boardList) {
-      setAllPosts((prev) => [...prev, ...postList.boardList]);
+      setAllPosts((prev) => {
+        const ids = new Set(prev.map((p) => p.id));
+        const newUniquePosts = postList.boardList.filter((p) => !ids.has(p.id));
+        return [...prev, ...newUniquePosts];
+      });
     }
   }, [postList]);
-  useScrollRestoration(scrollRef, activeFilter);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("page", String(page));
     const newUrl = `${pathname}?${searchParams.toString()}`;
     window.history.replaceState(null, "", newUrl);
-  }, [page]);
+  }, [page, pathname]);
 
   const setHeader = useSetHeader();
 
@@ -120,7 +125,7 @@ const Page = () => {
           filteredPosts.map((post) => {
             return (
               <PostCard
-                key={post.id}
+                key={`post-${post.id}`}
                 post={post}
                 isMyProfile={post.isNeighbor === 4}
               />
