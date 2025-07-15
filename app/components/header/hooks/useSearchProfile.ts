@@ -1,7 +1,7 @@
 import { BoardProfile } from "@/app/(main)/hooks/useUserProfile";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export interface SearchResultType extends BoardProfile {
@@ -52,8 +52,7 @@ const searchProfile = async (
 
 export const useSearchProfile = (keyword: string) => {
   const queryClient = useQueryClient();
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
 
   return useMutation({
     mutationFn: () => searchProfile(keyword, isLoggedIn),

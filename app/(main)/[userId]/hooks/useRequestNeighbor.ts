@@ -1,6 +1,6 @@
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const requestNeighbor = async (userId: number) => {
@@ -35,8 +35,7 @@ const requestNeighbor = async (userId: number) => {
 
 export const useRequestNeighbor = (userId: number) => {
   const queryClient = useQueryClient();
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
 
   return useMutation({
     mutationFn: () => requestNeighbor(userId),

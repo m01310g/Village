@@ -1,7 +1,7 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { BoardListType } from "../types/boardListType";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const getPostList = async (
   isLoggedIn: boolean,
@@ -24,8 +24,7 @@ const getPostList = async (
 };
 
 export const usePostList = (page: number) => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["postList", isLoggedIn, page],
