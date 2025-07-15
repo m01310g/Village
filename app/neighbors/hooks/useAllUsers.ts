@@ -2,7 +2,7 @@ import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { NeighborType } from "../types/neighborType";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const fetchAllUsers = async (isLoggedIn: boolean): Promise<NeighborType[]> => {
   const res = await (isLoggedIn ? fetchWithAuth : fetch)(
@@ -25,8 +25,7 @@ const fetchAllUsers = async (isLoggedIn: boolean): Promise<NeighborType[]> => {
 };
 
 export const useAllUsers = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["users", isLoggedIn],

@@ -6,8 +6,9 @@ import { useUserProfile } from "./hooks/useUserProfile";
 import { useAuthStore } from "@/store/useAuthStore";
 import KakaoSigninButton from "../components/KakaoSigninButton";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Logo from "@/public/logos/logo_transparent1.svg";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 interface ErrorWithStatus {
   status: number;
@@ -15,38 +16,25 @@ interface ErrorWithStatus {
 }
 
 const ProfilePage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-  const {
-    data: profile,
-    isLoading,
-    error,
-  } = useUserProfile(isLoggedIn === true);
+  const isLoggedIn = useIsLoggedIn();
+  const { data: profile, isLoading, error } = useUserProfile(isLoggedIn);
 
   const router = useRouter();
 
   useEffect(() => {
-    const { accessToken, user, resetAuth } = useAuthStore.getState();
+    const { resetAuth } = useAuthStore.getState();
 
-    if (!accessToken) {
-      setIsLoggedIn(false);
-    } else {
-      setIsLoggedIn(true);
-    }
-
-    if (!accessToken && user) {
+    if (!isLoggedIn) {
       resetAuth();
       localStorage.removeItem("profile-form-data");
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (error && (error as unknown as ErrorWithStatus).status === 404) {
       router.push("/create/info");
     }
   }, [error, router]);
-
-  // 로딩 컴포넌트 구현
-  if (isLoggedIn === null) return null;
 
   const sortedPosts = [...(profile?.boards ?? [])].sort(
     (a, b) => new Date(b.writtenAt).getTime() - new Date(a.writtenAt).getTime(),

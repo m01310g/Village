@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
-import { useSetHeader } from "../components/header/HeaderContext";
+import { useRef, useCallback, useState } from "react";
 import FilteringButton from "../components/feed/FilteringButton";
 import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
@@ -9,108 +8,68 @@ import { usePostList } from "./hooks/usePostList";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
 import { usePathname } from "next/navigation";
 import { useScrollStore } from "@/store/useScrollStore";
-import { Board } from "../(main)/hooks/useUserProfile";
+import { Board, useUserProfile } from "../(main)/hooks/useUserProfile";
+import { usePostInfiniteScroll } from "./hooks/usePostInfiniteScroll";
+import { useFilteredPosts } from "./hooks/useFilteredPosts";
+import { POST_FILTERS } from "./constants/postFilters";
+import { useCommunityHeader } from "./hooks/useCommunityHeader";
+import { useSyncPageToSearchParam } from "./hooks/useSyncPageToSearchParam";
+import { usePostAccumulator } from "./hooks/usePostAccumulator";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
+import { useProfileModalTrigger } from "./hooks/useProfileModalTrigger";
+import ProfileRegisterModal from "./components/ProfileRegisterModal";
 
 const Page = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null!);
+  const loaderRef = useRef<HTMLDivElement>(null!);
+  const isLoggedIn = useIsLoggedIn();
   const { getActiveFilter, setActiveFilter: saveActiveFilter } =
     useScrollStore();
   const pathname = usePathname();
-
-  useScrollRestoration(scrollRef);
-
   const [page, setPage] = useState(1);
   const [activeFilter, setActiveFilter] = useState(
     () => getActiveFilter(pathname) || "전체",
   );
-
   const [allPosts, setAllPosts] = useState<Board[]>([]);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const { data: postList } = usePostList(page);
+  const { data: user } = useUserProfile(isLoggedIn);
 
-  useEffect(() => {
-    if (postList?.boardList) {
-      setAllPosts((prev) => {
-        const ids = new Set(prev.map((p) => p.id));
-        const newUniquePosts = postList.boardList.filter((p) => !ids.has(p.id));
-        return [...prev, ...newUniquePosts];
-      });
-    }
-  }, [postList]);
+  useScrollRestoration(scrollRef);
+  usePostAccumulator({ postList, setAllPosts });
+  useCommunityHeader();
+  useSyncPageToSearchParam(page);
+  useProfileModalTrigger(user, setShowProfileModal);
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("page", String(page));
-    const newUrl = `${pathname}?${searchParams.toString()}`;
-    window.history.replaceState(null, "", newUrl);
-  }, [page, pathname]);
+  const filteredPosts = useFilteredPosts(allPosts, activeFilter);
 
-  const setHeader = useSetHeader();
+  const loadNextPage = useCallback(() => {
+    setPage((prev) => prev + 1);
+  }, []);
 
-  useEffect(() => {
-    setHeader({
-      title: "",
-      showBackButton: false,
-      showSearchButton: true,
-      showSettingButton: false,
-      showLogo: true,
-    });
-  }, [setHeader]);
+  usePostInfiniteScroll({
+    loaderRef,
+    scrollRef,
+    isLastPage: postList?.isLastPage,
+    onLoadMore: loadNextPage,
+    page,
+    allPostsLength: allPosts.length,
+  });
 
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
     saveActiveFilter(pathname, filter);
   };
 
-  const filters = ["전체", "업계이야기", "채용", "교육"];
-
-  const filteredPosts =
-    activeFilter === "전체"
-      ? allPosts
-      : allPosts.filter((post) => {
-          const typeIndex = filters.indexOf(activeFilter) - 1;
-          return post.type === typeIndex;
-        });
-
-  const loadNextPage = useCallback(() => {
-    setPage((prev) => prev + 1);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (!first.isIntersecting) return;
-
-        if (page === 1 && allPosts.length === 0) return;
-
-        if (!postList?.isLastPage) {
-          loadNextPage();
-        }
-      },
-      { threshold: 0.5, root: scrollRef.current },
-    );
-
-    const current = loaderRef.current;
-
-    const timeout = setTimeout(() => {
-      if (current && !postList?.isLastPage) {
-        observer.observe(current);
-      }
-    }, 100);
-
-    return () => {
-      clearTimeout(timeout);
-      if (current) observer.unobserve(current);
-    };
-  }, [loadNextPage, postList?.isLastPage, activeFilter, page, allPosts.length]);
-
   return (
     <div className="flex h-full max-w-[375px] flex-col bg-background-primary">
+      {showProfileModal && (
+        <ProfileRegisterModal setShowModal={setShowProfileModal} />
+      )}
       <div className="flex w-full max-w-[375px] gap-1 px-4 py-3">
-        {filters.map((filter, i) => (
+        {POST_FILTERS.map((filter) => (
           <FilteringButton
-            key={i}
+            key={filter}
             content={filter}
             isActive={activeFilter === filter}
             onClick={() => handleFilterChange(filter)}

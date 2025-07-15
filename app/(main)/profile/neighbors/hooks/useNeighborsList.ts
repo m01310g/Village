@@ -1,7 +1,7 @@
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { NeighborType } from "@/app/neighbors/types/neighborType";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 
 interface NeighborsList {
@@ -36,8 +36,7 @@ const getNeighbors = async (): Promise<NeighborsList> => {
 };
 
 export const useNeighborsList = () => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["neighbors"],
