@@ -45,7 +45,7 @@ const Page = () => {
 
   const loadNextPage = useCallback(() => {
     setPage(page + 1);
-  }, []);
+  }, [page, setPage]);
 
   usePostInfiniteScroll({
     loaderRef,

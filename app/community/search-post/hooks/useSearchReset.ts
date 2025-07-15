@@ -1,4 +1,3 @@
-import { Board } from "@/app/(main)/hooks/useUserProfile";
 import { useEffect } from "react";
 import { useSearchStore } from "../store/useSearchStore";
 
@@ -10,6 +9,6 @@ export const useSearchReset = ({ keyword }: UseSearchResetOptions) => {
   const { reset } = useSearchStore();
 
   useEffect(() => {
-    if (!keyword) reset();
-  }, [keyword]);
+    reset();
+  }, [keyword, reset]);
 };

@@ -33,5 +33,5 @@ export const useFallbackPosts = ({
         return [...prev, ...newPosts];
       });
     }
-  }, [allPosts, keyword, searchedPosts, feedPage]);
+  }, [allPosts, keyword, searchedPosts, feedPage, setAllFallbackPosts]);
 };
