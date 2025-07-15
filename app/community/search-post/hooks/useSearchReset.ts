@@ -1,19 +1,15 @@
 import { Board } from "@/app/(main)/hooks/useUserProfile";
 import { useEffect } from "react";
+import { useSearchStore } from "../store/useSearchStore";
 
 interface UseSearchResetOptions {
   keyword: string;
-  setSearchPage: (page: number) => void;
-  setAllSearchedPosts: (posts: Board[]) => void;
 }
 
-export const useSearchReset = ({
-  keyword,
-  setSearchPage,
-  setAllSearchedPosts,
-}: UseSearchResetOptions) => {
+export const useSearchReset = ({ keyword }: UseSearchResetOptions) => {
+  const { reset } = useSearchStore();
+
   useEffect(() => {
-    setSearchPage(1);
-    setAllSearchedPosts([]);
+    if (!keyword) reset();
   }, [keyword]);
 };

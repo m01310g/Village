@@ -12,14 +12,17 @@ import { useFallbackPosts } from "./hooks/useFallbackPosts";
 import { usePostAccumulator } from "../hooks/usePostAccumulator";
 import { useSyncSearchOrFeedPage } from "./hooks/useSyncSearchOrFeedPage";
 import { useSearchPostInfiniteScroll } from "./hooks/useSearchPostInfiniteScroll";
+import { useScrollRestoration } from "@/app/lib/hooks/useScrollRestoration";
+import { useSearchStore } from "./store/useSearchStore";
 
 const ClientSearchPostPage = () => {
-  const [searchPage, setSearchPage] = useState(1);
-  const [feedPage, setFeedPage] = useState(1);
   const searchParams = useSearchParams();
-  const [allSearchedPosts, setAllSearchedPosts] = useState<Board[]>([]);
+  const { allSearchedPosts, appendSearchedPosts, searchPage, setSearchPage } =
+    useSearchStore();
   const [allFallbackPosts, setAllFallbackPosts] = useState<Board[]>([]);
   const keyword = searchParams.get("keyword") ?? "";
+  const initialPage = Number(searchParams.get("page") ?? "1");
+  const [feedPage, setFeedPage] = useState(initialPage);
 
   const { data: allPosts } = usePostList(feedPage);
   const { data: searchedPosts } = useSearchPosts(keyword, searchPage);
@@ -29,11 +32,15 @@ const ClientSearchPostPage = () => {
     feedPage,
     searchParams,
     searchedPosts,
+    setSearchPage,
+    setFeedPage,
   });
   const observerRef = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null!);
+  useScrollRestoration(scrollRef);
 
-  useSearchReset({ keyword, setSearchPage, setAllSearchedPosts });
+  useSearchReset({ keyword });
   useFallbackPosts({
     keyword,
     searchedPosts,
@@ -48,18 +55,22 @@ const ClientSearchPostPage = () => {
     allFallbackPosts,
     lastElementRef,
     observerRef,
+    searchPage,
     setSearchPage,
     setFeedPage,
   });
   usePostAccumulator({
     postList: searchedPosts,
-    setAllPosts: setAllSearchedPosts,
+    setAllPosts: appendSearchedPosts,
   });
 
   return (
     <>
       <SearchPostsHeader keyword={keyword} />
-      <main className="h-[calc(100dvh-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary">
+      <main
+        className="h-[calc(100dvh-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary"
+        ref={scrollRef}
+      >
         {keyword ? (
           allSearchedPosts.length > 0 ? (
             allSearchedPosts.map((post) => (

@@ -1,4 +1,3 @@
-import { Board } from "@/app/(main)/hooks/useUserProfile";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { BoardListType } from "../../types/boardListType";
@@ -9,6 +8,8 @@ interface UseSyncSearchOrFeedPageOptions {
   feedPage: number;
   searchParams: ReadonlyURLSearchParams;
   searchedPosts: BoardListType | undefined;
+  setSearchPage: (page: number) => void;
+  setFeedPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const useSyncSearchOrFeedPage = ({
@@ -17,7 +18,23 @@ export const useSyncSearchOrFeedPage = ({
   feedPage,
   searchParams,
   searchedPosts,
+  setSearchPage,
+  setFeedPage,
 }: UseSyncSearchOrFeedPageOptions) => {
+  useEffect(() => {
+    const pageParam = Number(searchParams.get("page") ?? "1");
+
+    if (keyword) {
+      if (searchPage !== pageParam) {
+        setSearchPage(pageParam);
+      }
+    } else {
+      if (feedPage !== pageParam) {
+        setFeedPage(pageParam);
+      }
+    }
+  }, [searchParams, keyword]);
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     if (keyword) {

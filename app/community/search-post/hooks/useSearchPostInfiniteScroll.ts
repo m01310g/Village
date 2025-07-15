@@ -9,7 +9,8 @@ interface UseSearchPostInfiteScroll {
   allFallbackPosts: Board[];
   lastElementRef: RefObject<HTMLElement | null>;
   observerRef: RefObject<IntersectionObserver | null>;
-  setSearchPage: React.Dispatch<React.SetStateAction<number>>;
+  searchPage: number;
+  setSearchPage: (page: number) => void;
   setFeedPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -20,6 +21,7 @@ export const useSearchPostInfiniteScroll = ({
   allFallbackPosts,
   lastElementRef,
   observerRef,
+  searchPage,
   setSearchPage,
   setFeedPage,
 }: UseSearchPostInfiteScroll) => {
@@ -45,7 +47,7 @@ export const useSearchPostInfiniteScroll = ({
           allFallbackPosts.length > 0;
 
         if (hasKeyword && hasSearchResults && !searchedPosts?.isLastPage) {
-          setSearchPage((prev) => prev + 1);
+          setSearchPage(searchPage + 1);
         } else if (isFallbackMode) {
           setFeedPage((prev) => prev + 1);
         }
