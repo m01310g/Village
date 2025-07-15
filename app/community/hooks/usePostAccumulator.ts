@@ -7,7 +7,7 @@ interface PostList {
 
 interface UsePostAccumulatorOptions {
   postList?: PostList;
-  setAllPosts: React.Dispatch<React.SetStateAction<Board[]>>;
+  setAllPosts: (posts: Board[] | ((prev: Board[]) => Board[])) => void;
 }
 
 export const usePostAccumulator = ({

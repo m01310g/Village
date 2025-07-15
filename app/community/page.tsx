@@ -8,7 +8,7 @@ import { usePostList } from "./hooks/usePostList";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
 import { usePathname } from "next/navigation";
 import { useScrollStore } from "@/store/useScrollStore";
-import { Board, useUserProfile } from "../(main)/hooks/useUserProfile";
+import { useUserProfile } from "../(main)/hooks/useUserProfile";
 import { usePostInfiniteScroll } from "./hooks/usePostInfiniteScroll";
 import { useFilteredPosts } from "./hooks/useFilteredPosts";
 import { POST_FILTERS } from "./constants/postFilters";
@@ -18,6 +18,7 @@ import { usePostAccumulator } from "./hooks/usePostAccumulator";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 import { useProfileModalTrigger } from "./hooks/useProfileModalTrigger";
 import ProfileRegisterModal from "./components/ProfileRegisterModal";
+import { useCommunityStore } from "./store/useCommunityStore";
 
 const Page = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
@@ -26,11 +27,10 @@ const Page = () => {
   const { getActiveFilter, setActiveFilter: saveActiveFilter } =
     useScrollStore();
   const pathname = usePathname();
-  const [page, setPage] = useState(1);
+  const { page, setPage, allPosts, setAllPosts } = useCommunityStore();
   const [activeFilter, setActiveFilter] = useState(
     () => getActiveFilter(pathname) || "전체",
   );
-  const [allPosts, setAllPosts] = useState<Board[]>([]);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const { data: postList } = usePostList(page);
   const { data: user } = useUserProfile(isLoggedIn);
@@ -44,8 +44,8 @@ const Page = () => {
   const filteredPosts = useFilteredPosts(allPosts, activeFilter);
 
   const loadNextPage = useCallback(() => {
-    setPage((prev) => prev + 1);
-  }, []);
+    setPage(page + 1);
+  }, [page, setPage]);
 
   usePostInfiniteScroll({
     loaderRef,

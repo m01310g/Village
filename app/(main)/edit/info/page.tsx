@@ -80,7 +80,7 @@ const ProfileEditInfoPage = () => {
         <Button
           size="lg"
           color="primary"
-          onClick={() => router.push("/profile/edit/detail")}
+          onClick={() => router.push("/edit/detail")}
         >
           다음
         </Button>
