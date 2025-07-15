@@ -67,5 +67,8 @@ export const useSearchPostInfiniteScroll = ({
     searchedPosts,
     lastElementRef,
     observerRef,
+    searchPage,
+    setSearchPage,
+    setFeedPage,
   ]);
 };
