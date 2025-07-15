@@ -32,6 +32,7 @@ const PostCard = ({ post, isMyProfile }: PostCardProps) => {
           likeCount={post.likeNumber || 0}
           commentCount={post.commentNumber || 0}
           createdAt={getRelativeTime(post.writtenAt)}
+          tag={post.type || 0}
         />
       </Link>
     </div>
