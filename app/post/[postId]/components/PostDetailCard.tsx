@@ -1,9 +1,9 @@
 import PostHeader from "@/app/components/post/PostHeader";
 import PostDetailContent from "./PostDetailContent";
 import PostDetailFooter from "./PostDetailFooter";
-import { Board } from "@/app/profile/hooks/useUserProfile";
 import { getRelativeTime } from "@/app/components/post/utils/getRelativeTime";
 import Image from "next/image";
+import { Board } from "@/app/(main)/hooks/useUserProfile";
 
 interface PostDetailCardProps {
   post: Board;

@@ -23,9 +23,7 @@ const SearchResult = ({
   return (
     <div
       className="flex cursor-pointer items-center justify-between gap-2 border-b-[1px] border-border-primary px-4 py-3"
-      onClick={() =>
-        isMyProfile ? router.push("/profile") : router.push(`/profile/${id}`)
-      }
+      onClick={() => (isMyProfile ? router.push("/") : router.push(`/${id}`))}
     >
       <div className="flex items-center gap-2">
         <div className="h-10 w-10 overflow-hidden rounded-full">

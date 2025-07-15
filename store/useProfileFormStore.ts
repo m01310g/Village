@@ -1,5 +1,5 @@
-import { ProfileFormData } from "@/app/profile/types/profileFormData";
-import { WebCareer } from "@/app/profile/types/webCareer";
+import { ProfileFormData } from "@/app/(main)/types/profileFormData";
+import { WebCareer } from "@/app/(main)/types/webCareer";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

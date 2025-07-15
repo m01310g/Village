@@ -1,12 +1,12 @@
 "use client";
 
 import Button from "@/app/components/Button";
-import WorkRegionSection from "@/app/profile/create/detail/components/WorkRegionSection";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 import { useRouter } from "next/navigation";
 import { useRecruitmentCount } from "../hooks/useRecruitmentCount";
 import CountUp from "react-countup";
 import { useSearchKeywordStore } from "@/store/useSearchKeywordStore";
+import WorkRegionSection from "@/app/(main)/create/detail/components/WorkRegionSection";
 
 const RecruitSelectRegionPage = () => {
   const selectedDistricts = useRegionFilterStore(

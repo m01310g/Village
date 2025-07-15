@@ -4,8 +4,10 @@ import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
-import { Board } from "@/app/profile/hooks/useUserProfile";
 import { useRouter } from "next/navigation";
+import { Board } from "@/app/(main)/hooks/useUserProfile";
+import LoginRequiredModal from "../LoginRequiredModal";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 interface PostHeaderProps {
   post: Board;
@@ -15,18 +17,32 @@ interface PostHeaderProps {
 
 const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
   const pathname = usePathname();
-  const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
+  const isLoggedIn = useIsLoggedIn();
+
+  const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+
+    if (isMyProfile) {
+      if (pathname !== "/") router.push("/");
+    } else {
+      if (post.writtenBy?.id) {
+        router.push(`/${post.writtenBy.id}`);
+      }
+    }
+  };
 
   return (
     <>
       <header
         className="flex cursor-pointer items-center justify-between"
-        onClick={() =>
-          isMyProfile
-            ? router.push("/profile")
-            : router.push(`/profile/${post.writtenBy.id}`)
-        }
+        onClick={handleClick}
       >
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
@@ -44,7 +60,7 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
           <h3 className="text-title-3">{post.writtenBy.nickname}</h3>
         </div>
 
-        {pathname === "/profile" ? (
+        {pathname === "/" ? (
           <button
             type="button"
             className="flex h-10 w-10 items-center justify-center"
@@ -55,9 +71,9 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
           >
             <ManageIcon color="#737373" width="24px" height="24px" />
           </button>
-        ) : pathname.startsWith("/profile/") ? (
+        ) : /^\d+$/.test(pathname.slice(1)) ? (
           <div className="h-10 w-10" />
-        ) : pathname === "/" ? (
+        ) : pathname === "/community" ? (
           isMyProfile ? (
             <div className="h-10 w-10" />
           ) : (
@@ -87,6 +103,9 @@ const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
           setIsOpen={setIsPostBottomSheetOpen}
           postId={post.id}
         />
+      )}
+      {isLoginModalOpen && (
+        <LoginRequiredModal setIsModalOpen={setIsLoginModalOpen} />
       )}
     </>
   );

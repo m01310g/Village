@@ -50,7 +50,7 @@ const NeighborsHeader = ({
       >
         <input
           type="text"
-          placeholder="사용자 검색"
+          placeholder="사용자 이름/별명을 입력해주세요."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           className="text-body-3 w-full bg-transparent text-text-primary placeholder:text-text-tertiary focus:outline-none"

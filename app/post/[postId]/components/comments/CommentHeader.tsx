@@ -24,7 +24,7 @@ const CommentHeader = ({
     <>
       <header
         className="flex cursor-pointer items-center justify-between"
-        onClick={() => router.push(`/profile/${comment.writtenBy.id}`)}
+        onClick={() => router.push(`/${comment.writtenBy.id}`)}
       >
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">

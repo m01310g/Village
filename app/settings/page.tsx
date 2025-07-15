@@ -1,24 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
-import { useUserProfile } from "../profile/hooks/useUserProfile";
 import UserDeleteButton from "../components/UserDeleteButton";
 import SignoutButton from "../components/SignoutButton";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useUserProfile } from "../(main)/hooks/useUserProfile";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 const SettingsPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const setHeader = useSetHeader();
+  const isLoggedIn = useIsLoggedIn();
   const { data: profile } = useUserProfile(isLoggedIn);
   const nickname = profile?.nickname;
   const router = useRouter();
-
-  useEffect(() => {
-    const accessToken = useAuthStore.getState().accessToken;
-    setIsLoggedIn(!!accessToken);
-  }, []);
 
   useEffect(() => {
     setHeader({

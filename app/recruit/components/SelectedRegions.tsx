@@ -1,4 +1,4 @@
-import DistrictItem from "@/app/profile/create/detail/components/DistrictItem";
+import DistrictItem from "@/app/(main)/create/detail/components/DistrictItem";
 import { useRegionFilterStore } from "@/store/useRegionFilterStore";
 
 interface SelectedRegionsProps {

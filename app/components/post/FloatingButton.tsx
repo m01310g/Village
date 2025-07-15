@@ -9,7 +9,7 @@ const FloatingButton = () => {
 
   const handleClick = () => {
     if (!user) {
-      router.push("/profile");
+      router.push("/");
       return;
     }
 
@@ -19,7 +19,7 @@ const FloatingButton = () => {
   return (
     <>
       <div className="flex-end ml-auto flex items-end">
-        <div className="absolute bottom-full right-4 mb-[13px] w-max rounded-[999px] bg-background-inverse px-3 py-2 text-sm text-text-onprimary">
+        <div className="text-body-3 absolute bottom-full right-4 mb-[13px] w-max rounded-[999px] bg-background-inverse px-3 py-2 text-text-onprimary">
           여러분의 이야기를 들려주세요.
           <svg
             className="absolute -bottom-2.5 right-[17px]"
