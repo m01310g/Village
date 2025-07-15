@@ -9,7 +9,7 @@ export const useProfileModalTrigger = (
   const isLoggedIn = useIsLoggedIn();
 
   useEffect(() => {
-    if (user && isLoggedIn && !user.webCareers) {
+    if (user && isLoggedIn && user.webCareers.length === 0) {
       setShowModal(true);
     }
   }, [user, setShowModal, isLoggedIn]);
