@@ -3,10 +3,15 @@
 import SearchPostsHeader from "./components/SearchPostsHeader";
 import { useSearchParams } from "next/navigation";
 import { useSearchPosts } from "./hooks/useSearchPosts";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import PostCard from "@/app/components/post/PostCard";
 import { usePostList } from "../hooks/usePostList";
 import { Board } from "@/app/(main)/hooks/useUserProfile";
+import { useSearchReset } from "./hooks/useSearchReset";
+import { useFallbackPosts } from "./hooks/useFallbackPosts";
+import { usePostAccumulator } from "../hooks/usePostAccumulator";
+import { useSyncSearchOrFeedPage } from "./hooks/useSyncSearchOrFeedPage";
+import { useSearchPostInfiniteScroll } from "./hooks/useSearchPostInfiniteScroll";
 
 const ClientSearchPostPage = () => {
   const [searchPage, setSearchPage] = useState(1);
@@ -18,93 +23,38 @@ const ClientSearchPostPage = () => {
 
   const { data: allPosts } = usePostList(feedPage);
   const { data: searchedPosts } = useSearchPosts(keyword, searchPage);
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (keyword) {
-      params.set("page", String(searchPage));
-    } else {
-      params.set("page", String(feedPage));
-    }
-    window.history.replaceState(null, "", `?${params.toString()}`);
-  }, [searchPage, feedPage, keyword, searchParams, searchedPosts]);
+  useSyncSearchOrFeedPage({
+    keyword,
+    searchPage,
+    feedPage,
+    searchParams,
+    searchedPosts,
+  });
   const observerRef = useRef<IntersectionObserver | null>(null);
   const lastElementRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    setSearchPage(1);
-    setAllSearchedPosts([]);
-  }, [keyword]);
-
-  useEffect(() => {
-    const noSearchResults = keyword && searchedPosts?.boardList?.length === 0;
-
-    const shouldShowFallback =
-      (!keyword && allPosts?.boardList?.length) ||
-      (keyword &&
-        (searchedPosts === undefined || noSearchResults) &&
-        allPosts?.boardList?.length);
-
-    if (shouldShowFallback) {
-      setAllFallbackPosts((prev) => {
-        const ids = new Set(prev.map((p) => p.id));
-        const newPosts = allPosts.boardList.filter((p) => !ids.has(p.id));
-        return [...prev, ...newPosts];
-      });
-    }
-  }, [allPosts, keyword, searchedPosts, feedPage]);
-
-  useEffect(() => {
-    if (!lastElementRef.current) return;
-    if (observerRef.current) observerRef.current.disconnect();
-
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry.isIntersecting) return;
-
-        const hasKeyword = !!keyword;
-        const hasSearchResults = (searchedPosts?.boardList?.length ?? 0) > 0;
-        const hasNoResults =
-          searchedPosts !== undefined && searchedPosts.boardList.length === 0;
-
-        const isSearchingButNoResult = hasKeyword && hasNoResults;
-
-        const isFallbackMode =
-          (!hasKeyword || isSearchingButNoResult) &&
-          !allPosts?.isLastPage &&
-          allFallbackPosts.length > 0;
-
-        if (hasKeyword && hasSearchResults && !searchedPosts?.isLastPage) {
-          setSearchPage((prev) => prev + 1);
-        } else if (isFallbackMode) {
-          setFeedPage((prev) => prev + 1);
-        }
-      },
-      { threshold: 0.5 },
-    );
-
-    observerRef.current.observe(lastElementRef.current);
-
-    return () => observerRef.current?.disconnect();
-  }, [
+  useSearchReset({ keyword, setSearchPage, setAllSearchedPosts });
+  useFallbackPosts({
     keyword,
-    searchedPosts?.isLastPage,
-    searchedPosts?.boardList?.length,
-    allFallbackPosts.length,
-    allPosts?.isLastPage,
     searchedPosts,
-  ]);
-
-  useEffect(() => {
-    if (searchedPosts?.boardList) {
-      setAllSearchedPosts((prev) => {
-        const ids = new Set(prev.map((p) => p.id));
-        const newPosts = searchedPosts.boardList.filter((p) => !ids.has(p.id));
-        return [...prev, ...newPosts];
-      });
-    }
-  }, [searchedPosts]);
+    allPosts,
+    setAllFallbackPosts,
+    feedPage,
+  });
+  useSearchPostInfiniteScroll({
+    keyword,
+    searchedPosts,
+    allPosts,
+    allFallbackPosts,
+    lastElementRef,
+    observerRef,
+    setSearchPage,
+    setFeedPage,
+  });
+  usePostAccumulator({
+    postList: searchedPosts,
+    setAllPosts: setAllSearchedPosts,
+  });
 
   return (
     <>
