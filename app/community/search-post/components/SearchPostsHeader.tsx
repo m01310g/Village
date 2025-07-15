@@ -18,7 +18,7 @@ const SearchPostsHeader = ({ keyword }: SearchPostsHeaderProps) => {
 
   const handleBack = () => {
     if (document.referrer === "" || window.history.length <= 1) {
-      router.replace("/");
+      router.replace("/community");
     } else {
       router.back();
     }

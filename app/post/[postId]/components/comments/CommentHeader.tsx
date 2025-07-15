@@ -4,6 +4,8 @@ import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
 import Image from "next/image";
 import { CommentType } from "./types/commentType";
 import { useRouter } from "next/navigation";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
+import LoginRequiredModal from "@/app/components/LoginRequiredModal";
 
 interface CommentHeaderProps {
   comment: CommentType;
@@ -19,12 +21,22 @@ const CommentHeader = ({
   const [isCommentBottomSheetOpen, setIsCommentBottomSheetOpen] =
     useState(false);
   const router = useRouter();
+  const isLoggedIn = useIsLoggedIn();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleClick = () => {
+    if (isLoggedIn) {
+      router.push(`/${comment.writtenBy.id}`);
+    } else {
+      setShowLoginModal(true);
+    }
+  };
 
   return (
     <>
       <header
         className="flex cursor-pointer items-center justify-between"
-        onClick={() => router.push(`/${comment.writtenBy.id}`)}
+        onClick={handleClick}
       >
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 overflow-hidden rounded-full">
@@ -63,6 +75,9 @@ const CommentHeader = ({
           setIsOpen={setIsCommentBottomSheetOpen}
           setComments={setComments}
         />
+      )}
+      {showLoginModal && (
+        <LoginRequiredModal setIsModalOpen={setShowLoginModal} />
       )}
     </>
   );
