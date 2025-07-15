@@ -12,5 +12,5 @@ export const useProfileModalTrigger = (
     if (user && isLoggedIn && !user.webCareers) {
       setShowModal(true);
     }
-  }, [user, setShowModal]);
+  }, [user, setShowModal, isLoggedIn]);
 };

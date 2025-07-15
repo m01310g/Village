@@ -1,8 +1,8 @@
 import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { BoardListType } from "../../types/boardListType";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const fetchSearchPosts = async (
   keyword: string,
@@ -36,8 +36,8 @@ const fetchSearchPosts = async (
 };
 
 export const useSearchPosts = (keyword: string, page: number) => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
+
   return useQuery({
     queryKey: ["searchPosts", keyword, page],
     queryFn: () => fetchSearchPosts(keyword, page, isLoggedIn),

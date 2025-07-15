@@ -7,11 +7,11 @@ import { useInputValidation } from "../../hooks/useInputValidation";
 import { useRouter } from "next/navigation";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
 import ProfileForm from "../../create/info/components/ProfileForm";
-import { useAuthStore } from "@/store/useAuthStore";
 import Button from "@/app/components/Button";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const ProfileEditInfoPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useIsLoggedIn();
   const { data: profile } = useUserProfile(isLoggedIn);
   const {
     formData,
@@ -25,11 +25,6 @@ const ProfileEditInfoPage = () => {
   const nicknameInput = useInputValidation("nickname");
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const handleChange = createFormFieldChangeHandler(updateField);
-
-  useEffect(() => {
-    const accessToken = useAuthStore.getState().accessToken;
-    setIsLoggedIn(!!accessToken);
-  }, []);
 
   useEffect(() => {
     resetFormData();

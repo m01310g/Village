@@ -1,13 +1,13 @@
 import { usePathname } from "next/navigation";
 import AddNeighborButton from "./AddNeighborButton";
 import ManageIcon from "@/public/icons/icn_dot-horizontal.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PostManageBottomSheet from "./PostManageBottomSheet";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Board } from "@/app/(main)/hooks/useUserProfile";
-import { useAuthStore } from "@/store/useAuthStore";
 import LoginRequiredModal from "../LoginRequiredModal";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 interface PostHeaderProps {
   post: Board;
@@ -17,15 +17,11 @@ interface PostHeaderProps {
 
 const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
   const pathname = usePathname();
-  const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const router = useRouter();
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const isLoggedIn = useIsLoggedIn();
 
-  useEffect(() => {
-    setIsLoggedIn(!!accessToken);
-  }, [accessToken]);
+  const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const handleClick = () => {
     if (!isLoggedIn) {

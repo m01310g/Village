@@ -2,7 +2,7 @@ import { fetchWithAuth } from "@/app/lib/api/fetchWithAuth";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { UserProfile } from "../../hooks/useUserProfile";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const getProfileById = async (
   userId: number,
@@ -43,8 +43,7 @@ const getProfileById = async (
 };
 
 export const useProfileById = (userId: number) => {
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["profileById", userId, isLoggedIn],

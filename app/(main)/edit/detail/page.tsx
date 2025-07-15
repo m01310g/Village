@@ -8,14 +8,14 @@ import PhoneNumberSection from "../../create/detail/components/PhoneNumberSectio
 import PhoneNumberVisibilitySection from "../../create/detail/components/PhoneNumberVisibilitySeciton";
 import WorkRegionSection from "../../create/detail/components/WorkRegionSection";
 import { useUserProfile } from "../../hooks/useUserProfile";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { convertStatusToNumber } from "../../utils/formUtils";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
 import { useProfileEdit } from "../../hooks/useProfileEdit";
+import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const ProfileEditDetailPage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useIsLoggedIn();
   const { data: profile } = useUserProfile(isLoggedIn);
   const {
     formData,
@@ -96,11 +96,6 @@ const ProfileEditDetailPage = () => {
     Object.keys(selectedDistricts).length > 0 &&
     phoneNumber !== "" &&
     phoneNumberError === "";
-
-  useEffect(() => {
-    const accessToken = useAuthStore.getState().accessToken;
-    setIsLoggedIn(!!accessToken);
-  }, []);
 
   const handleModify = async () => {
     if (formData.status !== 2 && formData.phoneOpened === 0) {
