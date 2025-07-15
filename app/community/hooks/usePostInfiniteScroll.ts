@@ -43,9 +43,9 @@ export const usePostInfiniteScroll = ({
       }
     }, 100);
 
+    const current = loaderRef.current;
     return () => {
       clearTimeout(timeout);
-      const current = loaderRef.current;
       if (current) observer.unobserve(current);
     };
   }, [

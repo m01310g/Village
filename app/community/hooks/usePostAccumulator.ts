@@ -22,5 +22,5 @@ export const usePostAccumulator = ({
         return [...prev, ...newUniquePosts];
       });
     }
-  }, [postList]);
+  }, [postList, setAllPosts]);
 };
