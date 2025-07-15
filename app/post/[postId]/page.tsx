@@ -22,7 +22,7 @@ const PostDetailPage = () => {
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);
   const [commentCount, setCommentCount] = useState(0);
-  const types = ["업계정보", "채용", "교육"];
+  const types = ["업계이야기", "채용", "교육"];
   const isLoggedIn = useIsLoggedIn();
 
   useEffect(() => {
