@@ -87,6 +87,7 @@ const ProfileCreateDetailPage = () => {
           담당자에게는 공개되지 않습니다.
         </div>
         <WorkRegionSection
+          showLabel
           selectedDistricts={selectedDistricts}
           setSelectedDistricts={setSelectedDistricts}
         />
