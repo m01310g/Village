@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
 import clsx from "clsx";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
+import { Toaster } from "react-hot-toast";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -41,7 +42,8 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
     <main
       className={clsx(
         "overflow-y-auto bg-background-primary",
-        pathname.includes("/edit") ||
+        pathname.includes("/create") ||
+          pathname.includes("/edit") ||
           pathname === "/profile/neighbors" ||
           /^\d+$/.test(pathname.slice(1))
           ? "h-[calc(100dvh-46px-env(safe-area-inset-bottom))]"
@@ -49,6 +51,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
       )}
       ref={scrollRef}
     >
+      <Toaster position="bottom-center" reverseOrder={false} />
       {children}
     </main>
   );

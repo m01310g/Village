@@ -29,9 +29,9 @@ export const usePostInfiniteScroll = ({
 
         if (page === 1 && allPostsLength === 0) return;
 
-        if (!isLastPage) {
-          onLoadMore();
-        }
+        if (isLastPage) return;
+
+        onLoadMore();
       },
       { threshold: 0.5, root: scrollRef.current },
     );
