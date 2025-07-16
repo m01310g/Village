@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { useSetHeader } from "../components/header/HeaderContext";
 import clsx from "clsx";
 import { useScrollRestoration } from "../lib/hooks/useScrollRestoration";
+import { Toaster } from "react-hot-toast";
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -50,6 +51,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
       )}
       ref={scrollRef}
     >
+      <Toaster position="bottom-center" reverseOrder={false} />
       {children}
     </main>
   );
