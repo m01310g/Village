@@ -4,6 +4,7 @@ interface UsePostInfiniteScrollOptions {
   loaderRef: RefObject<HTMLElement>;
   scrollRef: RefObject<HTMLElement>;
   isLastPage?: boolean;
+  isFetching: boolean;
   onLoadMore: () => void;
   enabled?: boolean;
   page: number;
@@ -14,13 +15,19 @@ export const usePostInfiniteScroll = ({
   loaderRef,
   scrollRef,
   isLastPage,
+  isFetching,
   onLoadMore,
   enabled = true,
   page,
   allPostsLength,
 }: UsePostInfiniteScrollOptions) => {
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || isFetching) return;
+
+    const loaderTarget = loaderRef.current;
+    const scrollTarget = scrollRef.current;
+
+    if (!loaderTarget) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -29,24 +36,20 @@ export const usePostInfiniteScroll = ({
 
         if (page === 1 && allPostsLength === 0) return;
 
-        if (isLastPage) return;
-
         onLoadMore();
       },
-      { threshold: 0.5, root: scrollRef.current },
+      { threshold: 1.0, root: scrollTarget },
     );
 
     const timeout = setTimeout(() => {
-      const current = loaderRef.current;
-      if (current && !isLastPage) {
-        observer.observe(current);
+      if (loaderTarget && !isLastPage) {
+        observer.observe(loaderTarget);
       }
     }, 100);
 
-    const current = loaderRef.current;
     return () => {
       clearTimeout(timeout);
-      if (current) observer.unobserve(current);
+      observer.disconnect();
     };
   }, [
     loaderRef,
@@ -56,5 +59,6 @@ export const usePostInfiniteScroll = ({
     enabled,
     page,
     allPostsLength,
+    isFetching,
   ]);
 };

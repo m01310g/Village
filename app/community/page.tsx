@@ -32,8 +32,10 @@ const Page = () => {
     () => getActiveFilter(pathname) || "전체",
   );
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const { data: postList } = usePostList(page);
+  const { data, fetchNextPage, hasNextPage, isFetching } = usePostList();
   const { data: user } = useUserProfile(isLoggedIn);
+
+  const postList = data?.pages.flatMap((page) => page.boardList) || [];
 
   useScrollRestoration(scrollRef);
   usePostAccumulator({ postList, setAllPosts });
@@ -44,13 +46,17 @@ const Page = () => {
   const filteredPosts = useFilteredPosts(allPosts, activeFilter);
 
   const loadNextPage = useCallback(() => {
-    setPage(page + 1);
-  }, [page, setPage]);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+      setPage((prev) => prev + 1);
+    }
+  }, [hasNextPage, isFetching, setPage, fetchNextPage]);
 
   usePostInfiniteScroll({
     loaderRef,
     scrollRef,
-    isLastPage: postList?.isLastPage,
+    isLastPage: !hasNextPage,
+    isFetching,
     onLoadMore: loadNextPage,
     page,
     allPostsLength: allPosts.length,
