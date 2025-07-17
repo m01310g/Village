@@ -1,14 +1,12 @@
 "use client";
 
 import { useInputValidation } from "../../hooks/useInputValidation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createFormFieldChangeHandler } from "../../utils/formUtils";
 import Button from "@/app/components/Button";
 import { useProfileFormStore } from "@/store/useProfileFormStore";
 import ProfileForm from "./components/ProfileForm";
-import { useAuthStore } from "@/store/useAuthStore";
-import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
 
 const ProfileCreateInfoPage = () => {
   const nameInput = useInputValidation("name");
@@ -16,7 +14,6 @@ const ProfileCreateInfoPage = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const { formData, updateField } = useProfileFormStore();
   const router = useRouter();
-  const { accessToken } = useAuthStore();
 
   const isFormValid =
     !!formData.name &&
@@ -27,17 +24,6 @@ const ProfileCreateInfoPage = () => {
     !nicknameInput.isComposing;
 
   const handleChange = createFormFieldChangeHandler(updateField);
-
-  useEffect(() => {
-    if (!accessToken) return;
-    const checkWebProfile = async () => {
-      const hasProfile = await checkHasWebProfile(accessToken);
-
-      if (hasProfile) router.replace("/");
-    };
-
-    checkWebProfile();
-  }, [accessToken, router]);
 
   return (
     <div className="flex h-full flex-col items-center">
