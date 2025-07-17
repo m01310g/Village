@@ -50,7 +50,7 @@ const Page = () => {
       fetchNextPage();
       setPage((prev) => prev + 1);
     }
-  }, [data, hasNextPage, isFetching, setPage]);
+  }, [hasNextPage, isFetching, setPage, fetchNextPage]);
 
   usePostInfiniteScroll({
     loaderRef,

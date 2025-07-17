@@ -24,7 +24,8 @@ const ClientSearchPostPage = () => {
   const initialPage = Number(searchParams.get("page") ?? "1");
   const [feedPage, setFeedPage] = useState(initialPage);
 
-  const { data: allPosts } = usePostList(feedPage);
+  const { data } = usePostList();
+  const allPosts = data?.pages[data.pages.length - 1];
   const { data: searchedPosts } = useSearchPosts(keyword, searchPage);
   useSyncSearchOrFeedPage({
     keyword,
@@ -60,7 +61,7 @@ const ClientSearchPostPage = () => {
     setFeedPage,
   });
   usePostAccumulator({
-    postList: searchedPosts,
+    postList: searchedPosts?.boardList,
     setAllPosts: appendSearchedPosts,
   });
 

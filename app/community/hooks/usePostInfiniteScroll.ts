@@ -22,7 +22,7 @@ export const usePostInfiniteScroll = ({
   allPostsLength,
 }: UsePostInfiniteScrollOptions) => {
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || isFetching) return;
 
     const loaderTarget = loaderRef.current;
     const scrollTarget = scrollRef.current;
@@ -59,5 +59,6 @@ export const usePostInfiniteScroll = ({
     enabled,
     page,
     allPostsLength,
+    isFetching,
   ]);
 };

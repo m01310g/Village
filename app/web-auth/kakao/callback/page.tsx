@@ -1,5 +1,10 @@
 "use client";
 
+import { useAuthStore } from "@/store/useAuthStore";
+import { ErrorResponse } from "@/app/types/ErrorResponse";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 interface SigninResponse {
   message: string;
   statusCode: number;
@@ -15,12 +20,6 @@ interface SigninResponse {
     };
   };
 }
-
-import { useAuthStore } from "@/store/useAuthStore";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
 
 const KakaoCallbackPage = () => {
   const router = useRouter();
