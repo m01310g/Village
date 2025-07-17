@@ -33,23 +33,23 @@ export const usePostInfiniteScroll = ({
 
         onLoadMore();
       },
-      { threshold: 0.5, root: scrollRef.current },
+      { threshold: 1.0, root: scrollRef.current },
     );
 
+    const target = loaderRef.current;
+
     const timeout = setTimeout(() => {
-      const current = loaderRef.current;
-      if (current && !isLastPage) {
-        observer.observe(current);
+      if (target && !isLastPage) {
+        observer.observe(target);
       }
     }, 100);
 
-    const current = loaderRef.current;
     return () => {
       clearTimeout(timeout);
-      if (current) observer.unobserve(current);
+      if (target) observer.unobserve(target);
     };
   }, [
-    loaderRef,
+    loaderRef.current,
     scrollRef,
     isLastPage,
     onLoadMore,
