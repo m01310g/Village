@@ -4,8 +4,10 @@ import { useParams } from "next/navigation";
 import { useProfileById } from "./hooks/useProfileById";
 import ProfileViewSection from "../components/ProfileViewSection";
 import PostsSection from "../components/PostsSection";
+import { useCheckIsLoggedIn } from "./hooks/useCheckIsLoggedIn";
 
 const UserProfilePage = () => {
+  useCheckIsLoggedIn();
   const params = useParams();
   const profileId = Number(params.userId);
   const { data: profile } = useProfileById(profileId);
@@ -22,7 +24,7 @@ const UserProfilePage = () => {
       <div className="h-[1px] w-full bg-border-tertiary" />
       <PostsSection
         nickname={profile.nickname}
-        isMyProfile
+        isMyProfile={profile.isNeighbor === 4}
         posts={sortedPosts}
       />
     </div>
