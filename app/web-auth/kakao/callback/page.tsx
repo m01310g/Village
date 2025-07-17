@@ -51,7 +51,7 @@ const KakaoCallbackPage = () => {
 
           localStorage.removeItem("profile-form-data");
 
-          router.replace("/");
+          router.replace("/create/info");
         } else {
           const error: ErrorResponse = await res.json();
 
