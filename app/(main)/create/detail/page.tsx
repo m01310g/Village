@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 import PhoneNumberSection from "./components/PhoneNumberSection";
 import PhoneNumberVisibilitySection from "./components/PhoneNumberVisibilitySeciton";
 import { convertStatusToNumber } from "../../utils/formUtils";
-import { useAuthStore } from "@/store/useAuthStore";
-import { checkHasWebProfile } from "@/app/lib/api/checkHasProfile";
 import { useCreateProfile } from "../../hooks/useProfileCreate";
 import { toast } from "react-hot-toast";
 
@@ -24,7 +22,6 @@ const ProfileCreateDetailPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [isPhoneNumberOpened, setIsPhoneNumberOpened] = useState(0);
-  const { accessToken } = useAuthStore();
   const createProfileMutation = useCreateProfile();
 
   const isFormValid =
@@ -32,17 +29,6 @@ const ProfileCreateDetailPage = () => {
     Object.keys(selectedDistricts).length > 0 &&
     phoneNumber !== "" &&
     phoneNumberError === "";
-
-  useEffect(() => {
-    if (!accessToken) return;
-    const checkWebProfile = async () => {
-      const hasProfile = await checkHasWebProfile(accessToken);
-
-      if (hasProfile) router.replace("/");
-    };
-
-    checkWebProfile();
-  }, [accessToken, router]);
 
   useEffect(() => {
     if (status !== "구직 상태 선택") {
