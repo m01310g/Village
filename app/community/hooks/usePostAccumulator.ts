@@ -1,12 +1,8 @@
 import { Board } from "@/app/(main)/hooks/useUserProfile";
-import { useEffect } from "react";
-
-interface PostList {
-  boardList: Board[];
-}
+import { useEffect, useRef } from "react";
 
 interface UsePostAccumulatorOptions {
-  postList?: PostList;
+  postList?: Board[];
   setAllPosts: (posts: Board[] | ((prev: Board[]) => Board[])) => void;
 }
 
@@ -14,13 +10,18 @@ export const usePostAccumulator = ({
   postList,
   setAllPosts,
 }: UsePostAccumulatorOptions) => {
+  const lastPostIdsRef = useRef<Set<string>>(new Set());
+
   useEffect(() => {
-    if (postList?.boardList) {
-      setAllPosts((prev) => {
-        const ids = new Set(prev.map((p) => p.id));
-        const newUniquePosts = postList.boardList.filter((p) => !ids.has(p.id));
-        return [...prev, ...newUniquePosts];
-      });
+    if (!postList || postList.length === 0) return;
+
+    const newPosts = postList.filter(
+      (p) => !lastPostIdsRef.current.has(String(p.id)),
+    );
+
+    if (newPosts.length > 0) {
+      newPosts.forEach((p) => lastPostIdsRef.current.add(String(p.id)));
+      setAllPosts((prev) => [...prev, ...newPosts]);
     }
   }, [postList, setAllPosts]);
 };
