@@ -52,13 +52,7 @@ const KakaoCallbackPage = () => {
 
           localStorage.removeItem("profile-form-data");
 
-          const hasProfile = await checkHasWebProfile(result.data.accessToken);
-
-          if (hasProfile) {
-            router.replace("/");
-          } else {
-            router.replace("/create/info");
-          }
+          router.replace("/");
         } else {
           const error: ErrorResponse = await res.json();
 
