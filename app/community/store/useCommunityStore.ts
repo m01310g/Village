@@ -6,7 +6,7 @@ interface CommunityStore {
   setAllPosts: (posts: Board[] | ((prev: Board[]) => Board[])) => void;
   appendPosts: (posts: Board[] | ((prev: Board[]) => Board[])) => void;
   page: number;
-  setPage: (page: number) => void;
+  setPage: (page: number | ((prev: number) => number)) => void;
   reset: () => void;
 }
 
@@ -24,7 +24,10 @@ export const useCommunityStore = create<CommunityStore>((set) => ({
           : [...state.allPosts, ...posts],
     })),
   page: 1,
-  setPage: (page) => set({ page }),
+  setPage: (page: number | ((prev: number) => number)) =>
+    set((state) => ({
+      page: typeof page === "function" ? page(state.page) : page,
+    })),
   reset: () =>
     set({
       allPosts: [],
