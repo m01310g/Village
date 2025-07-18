@@ -22,11 +22,6 @@ const HeaderBackButton = () => {
   const handleBack = () => {
     const page = searchParams.get("page");
 
-    if (pathname === "/create/info") {
-      router.replace("/");
-      return;
-    }
-
     if (keyword) {
       const query = new URLSearchParams();
       if (page) query.set("page", page);
