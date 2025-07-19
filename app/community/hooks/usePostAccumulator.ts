@@ -21,7 +21,11 @@ export const usePostAccumulator = ({
 
     if (newPosts.length > 0) {
       newPosts.forEach((p) => lastPostIdsRef.current.add(String(p.id)));
-      setAllPosts((prev) => [...prev, ...newPosts]);
+      setAllPosts((prev) => {
+        const prevIds = new Set(prev.map((p) => p.id));
+        const uniqueNewPosts = newPosts.filter((p) => !prevIds.has(p.id));
+        return [...prev, ...uniqueNewPosts];
+      });
     }
   }, [postList, setAllPosts]);
 };
