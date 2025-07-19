@@ -24,7 +24,7 @@ export const useScrollRestoration = (
   }, [pathnameKey, setScroll, scrollRef]);
 
   useEffect(() => {
-    const y = getScroll(pathnameKey);
+    const y = getScroll(pathnameKey) ?? 0;
 
     if (y !== undefined) {
       setTimeout(() => {

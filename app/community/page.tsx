@@ -37,7 +37,7 @@ const Page = () => {
 
   const postList = data?.pages.flatMap((page) => page.boardList) || [];
 
-  useScrollRestoration(scrollRef);
+  useScrollRestoration(scrollRef, activeFilter);
   usePostAccumulator({ postList, setAllPosts });
   useCommunityHeader();
   useSyncPageToSearchParam(page);
