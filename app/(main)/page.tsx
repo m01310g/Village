@@ -16,13 +16,14 @@ interface ErrorWithStatus {
 }
 
 const ProfilePage = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn, hasHydrated } = useIsLoggedIn();
   const { data: profile, isLoading, error } = useUserProfile(isLoggedIn);
+  const resetAuth = useAuthStore((state) => state.resetAuth);
 
   const router = useRouter();
 
   useEffect(() => {
-    const { resetAuth } = useAuthStore.getState();
+    if (!hasHydrated) return;
 
     if (!isLoggedIn) {
       resetAuth();

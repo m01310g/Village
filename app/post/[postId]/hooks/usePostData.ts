@@ -30,7 +30,7 @@ const getPostData = async (
 };
 
 export const usePostData = (postId: number) => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["postData", postId, isLoggedIn],
