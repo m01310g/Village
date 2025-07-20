@@ -39,7 +39,7 @@ const getNeighborById = async (
 };
 
 export const useNeighborsById = (userId: number) => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useQuery<NeighborById>({
     queryKey: ["neighbors", userId],

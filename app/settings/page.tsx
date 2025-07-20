@@ -10,7 +10,7 @@ import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 const SettingsPage = () => {
   const setHeader = useSetHeader();
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
   const { data: profile } = useUserProfile(isLoggedIn);
   const nickname = profile?.nickname;
   const router = useRouter();

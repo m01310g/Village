@@ -21,7 +21,7 @@ const CommentHeader = ({
   const [isCommentBottomSheetOpen, setIsCommentBottomSheetOpen] =
     useState(false);
   const router = useRouter();
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleClick = () => {

@@ -17,6 +17,7 @@ interface AuthState {
   setAccessToken: (token: string | null) => void;
   setRefreshToken: (token: string | null) => void;
   resetAuth: () => void;
+  _hasHydrated?: boolean;
 }
 
 export const useAuthStore = create(
@@ -33,6 +34,7 @@ export const useAuthStore = create(
     }),
     {
       name: "auth-storage",
+      onRehydrateStorage: () => (state) => state && (state._hasHydrated = true),
       partialize: (state) =>
         ({
           user: state.user,

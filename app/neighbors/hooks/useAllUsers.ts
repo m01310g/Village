@@ -25,7 +25,7 @@ const fetchAllUsers = async (isLoggedIn: boolean): Promise<NeighborType[]> => {
 };
 
 export const useAllUsers = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["users", isLoggedIn],

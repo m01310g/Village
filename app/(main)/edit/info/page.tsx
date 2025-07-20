@@ -11,7 +11,7 @@ import Button from "@/app/components/Button";
 import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const ProfileEditInfoPage = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
   const { data: profile } = useUserProfile(isLoggedIn);
   const {
     formData,

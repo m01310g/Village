@@ -23,7 +23,7 @@ const PostDetailPage = () => {
   const [commentsList, setCommentsList] = useState<CommentType[]>([]);
   const [commentCount, setCommentCount] = useState(0);
   const types = ["업계이야기", "채용", "교육"];
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   useEffect(() => {
     if (postData) {

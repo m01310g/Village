@@ -6,7 +6,7 @@ export const useProfileModalTrigger = (
   user: UserProfile | undefined,
   setShowModal: (visible: boolean) => void,
 ) => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   useEffect(() => {
     if (user && isLoggedIn && user.webCareers.length === 0) {
