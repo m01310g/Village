@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export const useCheckIsLoggedIn = () => {
   const router = useRouter();
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   useEffect(() => {
     if (!isLoggedIn) {

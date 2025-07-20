@@ -1,7 +1,14 @@
 import { useAuthStore } from "@/store/useAuthStore";
 
-export const useIsLoggedIn = (): boolean => {
+export const useIsLoggedIn = (): {
+  isLoggedIn: boolean;
+  hasHydrated: boolean;
+} => {
   const accessToken = useAuthStore((state) => state.accessToken);
+  const hasHydrated = useAuthStore((state) => state._hasHydrated);
 
-  return !!accessToken;
+  return {
+    isLoggedIn: !!accessToken,
+    hasHydrated: !!hasHydrated,
+  };
 };

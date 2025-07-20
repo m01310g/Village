@@ -35,7 +35,7 @@ const requestNeighbor = async (userId: number) => {
 
 export const useRequestNeighbor = (userId: number) => {
   const queryClient = useQueryClient();
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useMutation({
     mutationFn: () => requestNeighbor(userId),
