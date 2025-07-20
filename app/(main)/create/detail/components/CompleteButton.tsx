@@ -14,7 +14,7 @@ const CompleteButton = ({
   onBack,
 }: CompleteButtonProps) => {
   return (
-    <div className="sticky bottom-0 left-1/2 flex w-full max-w-[375px] gap-[6px] bg-background-primary px-4 py-3">
+    <div className="sticky bottom-0 left-1/2 flex w-full max-w-[500px] gap-[6px] bg-background-primary px-4 py-3">
       <Button size="lg" color="secondaryColor" onClick={onBack}>
         이전
       </Button>

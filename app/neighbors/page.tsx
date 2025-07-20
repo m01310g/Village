@@ -28,7 +28,7 @@ const NeighborsPage = () => {
         onSearchResult={handleSearchResult}
         onClearSearch={handleClearSearch}
       />
-      <main className="h-[calc(100dvh-81px-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary">
+      <main className="h-[calc(100dvh-81px-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary scrollbar-thin">
         {renderUsers && renderUsers.length > 0 ? (
           renderUsers?.map((user) => (
             <SearchResult

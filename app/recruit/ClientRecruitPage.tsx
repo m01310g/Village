@@ -82,7 +82,7 @@ const ClientRecruitPage = () => {
 
   return (
     <main
-      className="flex h-[calc(100dvh-81px-46px-env(safe-area-inset-bottom))] max-w-[375px] flex-col gap-3 overflow-y-auto bg-background-primary py-4 text-text-primary"
+      className="flex h-[calc(100dvh-81px-46px-env(safe-area-inset-bottom))] max-w-[500px] flex-col gap-3 overflow-y-auto bg-background-primary py-4 text-text-primary scrollbar-thin"
       ref={scrollContainerRef}
     >
       <div className="flex flex-col gap-3 px-4">

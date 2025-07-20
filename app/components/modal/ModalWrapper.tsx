@@ -6,7 +6,7 @@ interface ModalWrapperProps {
 const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
   return (
     <div
-      className="fixed inset-0 z-50 m-auto flex max-w-[375px] items-center justify-center bg-neutral-950/45"
+      className="fixed inset-0 z-50 m-auto flex max-w-[500px] items-center justify-center bg-neutral-950/45"
       onClick={onClose}
     >
       <div

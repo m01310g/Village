@@ -25,7 +25,7 @@ const SettingsPage = () => {
   useEffect(() => {});
 
   return (
-    <main className="h-[calc(100vh-46px)] bg-background-primary">
+    <main className="h-[calc(100vh-46px-env(safe-area-inset-bottom))] bg-background-primary">
       <h2 className="text-title-1 px-4 pb-5 pt-3">
         <span className="text-text-onsecondary">{nickname}님</span> 안녕하세요!
       </h2>

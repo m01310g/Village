@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, useState } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import FilteringButton from "../components/feed/FilteringButton";
 import PostCard from "../components/post/PostCard";
 import FloatingButton from "../components/post/FloatingButton";
@@ -34,6 +34,14 @@ const Page = () => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const { data, fetchNextPage, hasNextPage, isFetching } = usePostList();
   const { data: user } = useUserProfile(isLoggedIn);
+  const [modalHeight, setModalHeight] = useState(0);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (modalRef.current) {
+      setModalHeight(modalRef.current.offsetHeight);
+    }
+  }, [showProfileModal]);
 
   const postList = data?.pages.flatMap((page) => page.boardList) || [];
 
@@ -68,11 +76,14 @@ const Page = () => {
   };
 
   return (
-    <div className="flex h-full max-w-[375px] flex-col bg-background-primary">
+    <div className="flex h-full max-w-[500px] flex-col bg-background-primary">
       {showProfileModal && (
-        <ProfileRegisterModal setShowModal={setShowProfileModal} />
+        <ProfileRegisterModal
+          ref={modalRef}
+          setShowModal={setShowProfileModal}
+        />
       )}
-      <div className="flex w-full max-w-[375px] gap-1 px-4 py-3">
+      <div className="flex w-full max-w-[500px] gap-1 px-4 py-3">
         {POST_FILTERS.map((filter) => (
           <FilteringButton
             key={filter}
@@ -83,7 +94,12 @@ const Page = () => {
         ))}
       </div>
       <div
-        className="h-[calc(100dvh-81px-100px-env(safe-area-inset-bottom))] overflow-y-auto scrollbar-thin"
+        className="overflow-y-auto scrollbar-thin"
+        style={{
+          height: showProfileModal
+            ? `calc(100dvh - 81px - 100px - ${modalHeight}px - env(safe-area-inset-bottom))`
+            : `calc(100dvh - 81px - 100px - env(safe-area-inset-bottom))`,
+        }}
         ref={scrollRef}
       >
         {filteredPosts &&
@@ -98,7 +114,7 @@ const Page = () => {
           })}
         <div ref={loaderRef} className="invisible h-[1px] w-full" />
       </div>
-      <div className="fixed bottom-[81px] left-1/2 z-40 flex w-full max-w-[375px] -translate-x-1/2 px-4 pb-4">
+      <div className="fixed bottom-[81px] left-1/2 z-40 flex w-full max-w-[500px] -translate-x-1/2 px-4 pb-4">
         <FloatingButton />
       </div>
     </div>

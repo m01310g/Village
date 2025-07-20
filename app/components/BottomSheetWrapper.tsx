@@ -14,12 +14,12 @@ const BottomSheetWrapper = ({
   return (
     <div className="fixed inset-0 z-50 flex h-full items-end justify-center">
       <div
-        className="absolute z-0 h-full w-full max-w-[375px] bg-neutral-950/45"
+        className="absolute z-0 h-full w-full max-w-[500px] bg-neutral-950/45"
         onClick={onClose}
       />
       <div
         className={clsx(
-          "relative z-10 w-full max-w-[375px] rounded-t-[20px] bg-background-primary",
+          "relative z-10 w-full max-w-[500px] rounded-t-[20px] bg-background-primary",
           className,
         )}
         onClick={(e) => e.stopPropagation()}

@@ -29,14 +29,14 @@ const DatePicker = <T extends number>({
   return (
     <div
       ref={ref}
-      className="scrollbar-hide h-[141px] flex-1 snap-y snap-mandatory overflow-y-scroll"
+      className="scrollbar-hide h-[8.8125rem] flex-1 snap-y snap-mandatory overflow-y-scroll"
       onScroll={handleScroll}
     >
       {[undefined, ...items, undefined].map((item, idx) => (
         <div
           key={item ?? `empty-${idx}`}
           className={clsx(
-            "text-body-1 flex h-[47px] cursor-default snap-start items-center justify-center py-3",
+            "text-body-1 flex h-[2.9375rem] cursor-default snap-start items-center justify-center py-3",
             item === value ? "text-text-primary" : "text-neutral-200",
           )}
           onClick={() => item !== undefined && onChange(item)}

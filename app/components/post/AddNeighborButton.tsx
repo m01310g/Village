@@ -26,7 +26,7 @@ const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
   return isNeighbor === 0 ? (
     <>
       <button
-        className="flex h-8 items-center justify-center gap-1 px-2 py-[9px]"
+        className="flex h-8 items-center justify-center gap-1 px-2 py-[0.5625rem]"
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
@@ -40,7 +40,7 @@ const AddNeighborButton = ({ id, isNeighbor }: AddNeighborButtonProps) => {
     </>
   ) : isNeighbor === 2 ? (
     <button
-      className="flex h-8 cursor-default items-center justify-center gap-1 px-2 py-[9px]"
+      className="flex h-8 cursor-default items-center justify-center gap-1 px-2 py-[0.5625rem]"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
