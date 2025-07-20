@@ -35,7 +35,7 @@ const NeighborInfo = ({
           unoptimized
         />
       </div>
-      <div className="flex items-center gap-[6px]">
+      <div className="flex items-center gap-[0.375rem]">
         <span className="text-body-2 text-text-primary">{nickname}</span>
         <div className="h-4 w-[1px] bg-neutral-400" />
         <span className="text-body-2 text-neutral-400">{name}</span>

@@ -25,7 +25,7 @@ const PostForm = ({
   const types = ["업계이야기", "채용", "교육"];
 
   return (
-    <div className="flex h-full max-w-[375px] flex-col overflow-hidden">
+    <div className="flex h-full max-w-[500px] flex-col overflow-hidden">
       <div className="flex flex-grow flex-col gap-5 px-4 py-3">
         <div className="border-b-[1px] border-border-primary pb-3">
           {types.map((type, i) => (

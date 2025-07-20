@@ -18,9 +18,9 @@ const Button = ({
   showDot = false,
 }: ButtonProps) => {
   const sizeClasses = {
-    sm: "inline-flex items-center justify-center h-[32px] px-[14px] py-[9px] rounded-[4px] text-title-4",
-    md: "w-[167.5px] h-[40px] px-5 py-3 rounded-[8px] text-title-3",
-    lg: "h-[45px] w-full px-2 py-3 rounded-[8px] text-title-3",
+    sm: "inline-flex items-center justify-center h-8 px-[0.875rem] py-[0.5625rem] rounded-[4px] text-title-4",
+    md: "w-[10.4688rem] h-[2.5rem] px-5 py-3 rounded-[8px] text-title-3",
+    lg: "h-[2.8125rem] w-full px-2 py-3 rounded-[8px] text-title-3",
   };
 
   const colorClasses = {
@@ -55,7 +55,7 @@ const Button = ({
       <span className="relative flex items-center justify-center">
         <span className="inline-block">{children}</span>
         {showDot && (
-          <span className="bg-border-danger absolute -right-2 top-0.5 h-[4px] w-[4px] rounded-full" />
+          <span className="absolute -right-2 top-0.5 h-[4px] w-[4px] rounded-full bg-border-danger" />
         )}
       </span>
     </button>

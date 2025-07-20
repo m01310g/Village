@@ -12,7 +12,7 @@ const SelectedImagesSection = ({
 }: SelectedImagesSectionProps) => {
   return (
     <section
-      className="flex h-[112px] min-h-[112px] w-full max-w-[375px] gap-1 overflow-x-auto"
+      className="flex h-[112px] min-h-[112px] w-full max-w-[500px] gap-1 overflow-x-auto"
       style={{ scrollbarWidth: "thin", msOverflowStyle: "none" }}
     >
       {images.map((image, i) => (

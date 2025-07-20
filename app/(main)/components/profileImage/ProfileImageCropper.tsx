@@ -36,7 +36,7 @@ const ProfileImageCropper = ({
       const imgWidth = image.naturalWidth;
       const imgHeight = image.naturalHeight;
 
-      const containerWidth = containerRef.current?.offsetWidth ?? 375;
+      const containerWidth = containerRef.current?.offsetWidth ?? 500;
       const containerHeight = containerRef.current?.offsetHeight ?? 666;
 
       const imageAspectRatio = imgWidth / imgHeight;
@@ -62,7 +62,7 @@ const ProfileImageCropper = ({
   }, [selectedImageUrl]);
 
   return (
-    <div className="fixed inset-0 z-50 mx-auto flex max-w-[375px] flex-col bg-background-primary">
+    <div className="fixed inset-0 z-50 mx-auto flex max-w-[500px] flex-col bg-background-primary">
       <Header title="사진 자르기" showBackButton />
       <main className="relative flex-1" ref={containerRef}>
         <Cropper

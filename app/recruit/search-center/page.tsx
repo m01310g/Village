@@ -20,7 +20,7 @@ const SearchCenterPage = () => {
   };
 
   return (
-    <main className="h-[calc(100vh-46px)] bg-background-primary p-4">
+    <main className="h-[calc(100vh-46px-env(safe-area-inset-bottom))] bg-background-primary p-4">
       <RecruitSearchBar
         keyword={input}
         setKeyword={setInput}

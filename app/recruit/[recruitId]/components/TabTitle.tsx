@@ -21,7 +21,7 @@ const TabTitle = ({ tabs, activeTab, onTabChange }: TabTitleProps) => {
           <button
             key={tab.key}
             onClick={() => onTabChange(tab.key)}
-            className="relative flex w-full items-center justify-center py-[10px]"
+            className="relative flex w-full items-center justify-center py-[0.625rem]"
           >
             <span
               className={clsx(

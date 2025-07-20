@@ -59,7 +59,7 @@ const NavigationBar = () => {
   ];
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 mx-auto flex h-[81px] max-w-[375px] justify-between gap-2.5 bg-background-primary px-4 py-3">
+    <footer className="fixed bottom-0 left-0 right-0 mx-auto flex h-[81px] max-w-[500px] justify-between gap-2.5 bg-background-primary px-4 py-3">
       {navItems.map(({ label, path, Icon }) => {
         const isActive = pathname === path || pathname.startsWith(path + "/");
 

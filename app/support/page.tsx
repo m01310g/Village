@@ -27,7 +27,7 @@ const SupportPage = () => {
   }, [setHeader]);
 
   return (
-    <main className="h-[calc(100vh-46px)] overflow-y-auto bg-background-primary pb-5">
+    <main className="h-[calc(100vh-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary pb-5">
       <h2 className="text-title-1 px-4 pb-5 pt-3 text-neutral-900">
         빌리지의 궁금한 점 다 알려드릴게요.
       </h2>
