@@ -26,7 +26,7 @@ const RecruitSelectRegionPage = () => {
   };
 
   return (
-    <main className="flex h-[calc(100vh-46px)] flex-col justify-between bg-background-primary px-4 py-5">
+    <main className="flex h-[calc(100vh-46px-env(safe-area-inset-bottom))] flex-col justify-between bg-background-primary px-4 py-5">
       <div className="flex w-full flex-col gap-3">
         <label className="text-title-3 text-text-primary">근무 지역</label>
         <WorkRegionSection

@@ -75,7 +75,7 @@ const ProfileImageFooter = ({
     onClose();
   };
   return (
-    <footer className="flex items-center justify-center gap-[6px] px-4 py-5">
+    <footer className="flex items-center justify-center gap-[0.375rem] px-4 py-5">
       <Button size="md" color="secondaryColor" onClick={onClose}>
         취소
       </Button>

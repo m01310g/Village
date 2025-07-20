@@ -30,7 +30,7 @@ export default function RootLayout({
             <body
               className={clsx(
                 pretendard.variable,
-                "mx-auto flex w-[375px] flex-col bg-background-tertiary antialiased shadow-md",
+                "mx-auto flex max-w-[500px] flex-col bg-background-tertiary antialiased shadow-md",
               )}
             >
               <ClientLayout>{children}</ClientLayout>

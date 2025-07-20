@@ -31,7 +31,7 @@ const TermsPage = () => {
   }, [setHeader]);
 
   return (
-    <main className="h-[calc(100vh-46px)] overflow-y-auto bg-background-primary py-5">
+    <main className="h-[calc(100vh-46px-env(safe-area-inset-bottom))] overflow-y-auto bg-background-primary py-5">
       <ul>
         <ListItem title="서비스이용약관" content={serviceTerms} />
         <div className="h-[1px] w-full bg-border-secondary" />

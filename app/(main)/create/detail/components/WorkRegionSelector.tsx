@@ -55,18 +55,18 @@ const WorkRegionSelector = ({
   return (
     <div>
       <div className="text-body-2 flex w-full rounded-t-[8px] border-x border-t border-border-tertiary bg-neutral-50 text-neutral-400">
-        <div className="max-h-[246px] w-[100px] overflow-y-auto border-r border-border-tertiary px-[10px] py-2 text-center">
+        <div className="max-h-[15.375rem] w-[6.25rem] overflow-y-auto border-r border-border-tertiary px-[0.625rem] py-2 text-center">
           시·도
         </div>
-        <div className="flex-1 px-[10px] py-2 text-center">시·군·구</div>
+        <div className="flex-1 px-[0.625rem] py-2 text-center">시·군·구</div>
       </div>
       <div className="flex rounded-b-[8px] border-x border-b border-border-tertiary">
-        <div className="h-[246px] w-[100px] overflow-y-auto border-r">
+        <div className="h-[15.375rem] w-[6.25rem] overflow-y-auto border-r border-border-tertiary">
           {regions.map((region) => (
             <div
               key={region.name}
               className={clsx(
-                "text-body-2 cursor-pointer p-[10px]",
+                "text-body-2 cursor-pointer p-[0.625rem]",
                 selectedSido === region.name
                   ? "bg-background-brand text-white"
                   : "text-neutral-400",
@@ -78,12 +78,12 @@ const WorkRegionSelector = ({
           ))}
         </div>
 
-        <div className="h-[246px] flex-1 overflow-y-auto">
+        <div className="h-[15.375rem] flex-1 overflow-y-auto scrollbar-thin">
           {selectedRegion?.districts.map((district) => (
             <div
               key={district}
               className={clsx(
-                "text-body-2 flex cursor-pointer items-center justify-between p-[10px]",
+                "text-body-2 flex cursor-pointer items-center justify-between p-[0.625rem]",
                 selectedDistricts[selectedSido]?.includes(district)
                   ? "text-text-brand"
                   : "text-neutral-400",

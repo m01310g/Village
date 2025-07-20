@@ -53,7 +53,7 @@ const ProfileForm = ({
   initialImage,
 }: ProfileFormProps) => {
   return (
-    <form className="flex w-full max-w-[375px] flex-1 flex-col gap-8 overflow-y-auto p-4">
+    <form className="flex w-full max-w-[500px] flex-1 flex-col gap-8 overflow-y-auto p-4">
       <ProfileImageSection
         isBottomSheetOpen={isBottomSheetOpen}
         setIsBottomSheetOpen={setIsBottomSheetOpen}

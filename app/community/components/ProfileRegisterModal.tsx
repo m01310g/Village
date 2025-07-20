@@ -2,12 +2,17 @@ import DefaultProfile from "@/public/icons/default-profile.svg";
 import CloseIcon from "@/public/icons/close-2.svg";
 import Button from "@/app/components/Button";
 import { useRouter } from "next/navigation";
+import { RefObject } from "react";
 
 interface ProfileRegisterModalProps {
+  ref: RefObject<HTMLDivElement | null>;
   setShowModal: (visible: boolean) => void;
 }
 
-const ProfileRegisterModal = ({ setShowModal }: ProfileRegisterModalProps) => {
+const ProfileRegisterModal = ({
+  ref,
+  setShowModal,
+}: ProfileRegisterModalProps) => {
   const router = useRouter();
 
   const handleClose = () => {
@@ -19,7 +24,7 @@ const ProfileRegisterModal = ({ setShowModal }: ProfileRegisterModalProps) => {
   };
 
   return (
-    <div className="w-full gap-2 px-4">
+    <div className="w-full gap-2 px-4" ref={ref}>
       <div className="flex flex-col gap-4 rounded-[12px] bg-background-brandSecondary p-3">
         <button className="flex w-full justify-end" onClick={handleClose}>
           <CloseIcon color="#171717" width="24px" height="24px" />
