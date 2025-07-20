@@ -41,7 +41,7 @@ const RecruitSearchBar = ({
       <input
         type="text"
         className={clsx(
-          "text-body-3 flex w-full px-[10px] text-text-primary placeholder:text-neutral-300 focus:outline-none",
+          "text-body-3 flex w-full px-[0.625rem] text-text-primary placeholder:text-neutral-300 focus:outline-none",
           onClick && "cursor-pointer",
         )}
         onClick={

@@ -6,7 +6,7 @@ import WorkingConditionSection from "./WorkingConditionSection";
 
 const RecruitmentInfo = (recruitment: RecruitmentById) => {
   return (
-    <div className="flex flex-col gap-[14px] px-4 py-5">
+    <div className="flex flex-col gap-[0.875rem] px-4 py-5">
       <SalaryConditionSection
         salary={recruitment.salary}
         maxClassFee={recruitment.maxClassFee}

@@ -59,14 +59,14 @@ const CareerAddBottomSheet = ({
 
   return (
     <BottomSheetWrapper onClose={() => setOpen(false)} className="h-full">
-      <div className="relative flex h-full w-full max-w-[375px] flex-col gap-3 rounded-t-[20px] bg-background-primary px-4 pb-10 pt-5">
+      <div className="relative flex h-full w-full max-w-[500px] flex-col gap-3 rounded-t-[20px] bg-background-primary px-4 pb-10 pt-5">
         <header className="flex w-full gap-2 py-2">
           <button onClick={handleCloseButton}>
             <CloseIcon width="24px" height="24px" color="#171717" />
           </button>
           <h2 className="text-title-1 text-text-primary">경력사항</h2>
         </header>
-        <main className="flex flex-col gap-[6px]">
+        <main className="flex flex-col gap-[0.375rem]">
           <div className="flex flex-col items-center justify-center gap-4">
             <Input
               label=""
@@ -93,7 +93,7 @@ const CareerAddBottomSheet = ({
               />
             </div>
           </div>
-          <div className="flex items-center justify-end gap-2 py-[5.5px]">
+          <div className="flex items-center justify-end gap-2 py-[0.3438rem]">
             <Checkbox
               disabled={!startDate}
               isChecked={isChecked}
@@ -115,19 +115,19 @@ const CareerAddBottomSheet = ({
             </span>
           </div>
         </main>
-        <div className="fixed bottom-0 flex justify-center gap-[6px] py-5">
-          <Button size="md" color="secondaryColor" onClick={handleCloseButton}>
-            취소
-          </Button>
-          <Button
-            size="md"
-            color="primary"
-            onClick={handleSave}
-            disabled={!isCareerValid}
-          >
-            저장
-          </Button>
-        </div>
+      </div>
+      <div className="fixed bottom-0 flex w-full justify-center gap-[0.375rem] px-4 py-5">
+        <Button size="lg" color="secondaryColor" onClick={handleCloseButton}>
+          취소
+        </Button>
+        <Button
+          size="lg"
+          color="primary"
+          onClick={handleSave}
+          disabled={!isCareerValid}
+        >
+          저장
+        </Button>
       </div>
     </BottomSheetWrapper>
   );

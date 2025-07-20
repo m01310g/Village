@@ -49,7 +49,7 @@ const CommentCreateSection = ({
     <>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="fixed bottom-0 flex w-full max-w-[375px] items-center justify-center gap-1 bg-background-primary px-4 py-[11px]"
+        className="fixed bottom-0 flex w-full max-w-[500px] items-center justify-center gap-1 bg-background-primary px-4 py-[11px]"
       >
         <input
           type="text"

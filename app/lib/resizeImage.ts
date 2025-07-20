@@ -1,4 +1,4 @@
-export const resizeImage = (file: File, maxWidth = 375): Promise<File> => {
+export const resizeImage = (file: File, maxWidth = 500): Promise<File> => {
   return new Promise((resolve, reject) => {
     const image = new Image();
     const reader = new FileReader();

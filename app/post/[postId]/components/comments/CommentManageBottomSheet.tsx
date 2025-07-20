@@ -20,7 +20,7 @@ const CommentManageBottomSheet = ({
     <>
       <BottomSheetWrapper onClose={() => setIsOpen(false)}>
         <div
-          className="fixed bottom-0 z-50 w-full max-w-[375px] rounded-t-[20px] bg-background-primary py-5"
+          className="fixed bottom-0 z-50 w-full max-w-[500px] rounded-t-[20px] bg-background-primary py-5"
           onClick={(e) => e.stopPropagation()}
         >
           <button

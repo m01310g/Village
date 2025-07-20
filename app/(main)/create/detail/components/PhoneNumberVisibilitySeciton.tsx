@@ -14,7 +14,7 @@ const PhoneNumberVisibilitySection = ({
   return (
     <section className="flex flex-col gap-3">
       <ProfileLabel label="전화번호 공개 여부" bold />
-      <div className="flex h-[31px] w-full items-center gap-2">
+      <div className="flex h-[1.9375rem] w-full items-center gap-2">
         <Checkbox
           isChecked={isPhoneNumberOpened === 1}
           onClick={() => {

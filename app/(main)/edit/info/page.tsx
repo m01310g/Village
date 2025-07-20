@@ -76,7 +76,7 @@ const ProfileEditInfoPage = () => {
         setIsBottomSheetOpen={setIsBottomSheetOpen}
         initialImage={profile?.profileImage}
       />
-      <div className="sticky bottom-0 left-1/2 w-full max-w-[375px] bg-background-primary px-4 py-3">
+      <div className="sticky bottom-0 left-1/2 w-full max-w-[500px] bg-background-primary px-4 py-3">
         <Button
           size="lg"
           color="primary"

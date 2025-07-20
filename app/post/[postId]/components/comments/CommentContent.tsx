@@ -1,10 +1,10 @@
 import Linkify from "linkify-react";
 
-interface CommetnContentProps {
+interface CommentContentProps {
   content: string;
 }
 
-const CommetnContent = ({ content }: CommetnContentProps) => {
+const CommentContent = ({ content }: CommentContentProps) => {
   return (
     <main className="text-body-4 h-full max-w-[90%] whitespace-pre-line break-words text-text-primary">
       <Linkify
@@ -16,4 +16,4 @@ const CommetnContent = ({ content }: CommetnContentProps) => {
   );
 };
 
-export default CommetnContent;
+export default CommentContent;

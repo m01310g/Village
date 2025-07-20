@@ -64,7 +64,7 @@ const DatePickerBottomSheet = ({
         </h2>
       </header>
       <main className="relative">
-        <div className="pointer-events-none absolute left-0 right-0 top-[calc(50%-23.5px)] h-[47px] bg-neutral-50" />
+        <div className="pointer-events-none absolute left-0 right-0 top-[calc(50%-1.4688rem)] h-[2.9375rem] bg-neutral-50" />
         <div className="relative z-0 flex justify-between px-6 py-4 text-center text-xl font-bold text-text-primary">
           <DatePicker
             items={years}
