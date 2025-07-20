@@ -36,7 +36,7 @@ const fetchSearchPosts = async (
 };
 
 export const useSearchPosts = (keyword: string, page: number) => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["searchPosts", keyword, page],

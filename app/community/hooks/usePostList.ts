@@ -24,7 +24,7 @@ const getPostList = async (
 };
 
 export const usePostList = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useInfiniteQuery({
     queryKey: ["postList", isLoggedIn],

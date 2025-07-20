@@ -15,7 +15,7 @@ import { useProfileEdit } from "../../hooks/useProfileEdit";
 import { useIsLoggedIn } from "@/app/hooks/useIsLoggedIn";
 
 const ProfileEditDetailPage = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
   const { data: profile } = useUserProfile(isLoggedIn);
   const {
     formData,

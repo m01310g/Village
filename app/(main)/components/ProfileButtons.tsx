@@ -19,18 +19,18 @@ const ProfileButtons = ({
   const received = neighbors?.receiveds;
 
   return (
-    <div className="flex gap-2">
+    <div className="flex w-full gap-2">
       {isMyProfile ? (
         <>
           <Button
-            size="md"
+            size="lg"
             color="secondaryColor"
             onClick={() => router.push("/edit/info")}
           >
             프로필 수정
           </Button>
           <Button
-            size="md"
+            size="lg"
             color="primary"
             showDot={received && received.length > 0}
             onClick={() => router.push("/profile/neighbors")}

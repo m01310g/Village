@@ -22,7 +22,7 @@ const SearchResult = ({
 }: SearchResultProps) => {
   const router = useRouter();
   const isMyProfile = isNeighbor === 4;
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleClick = () => {

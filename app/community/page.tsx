@@ -23,7 +23,7 @@ import { useCommunityStore } from "./store/useCommunityStore";
 const Page = () => {
   const scrollRef = useRef<HTMLDivElement>(null!);
   const loaderRef = useRef<HTMLDivElement>(null!);
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
   const { getActiveFilter, setActiveFilter: saveActiveFilter } =
     useScrollStore();
   const pathname = usePathname();

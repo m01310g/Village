@@ -36,7 +36,7 @@ const getNeighbors = async (): Promise<NeighborsList> => {
 };
 
 export const useNeighborsList = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["neighbors"],

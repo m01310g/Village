@@ -18,7 +18,7 @@ interface PostHeaderProps {
 const PostHeader = ({ post, isMyProfile, isNeighbor }: PostHeaderProps) => {
   const pathname = usePathname();
   const router = useRouter();
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   const [isPostBottomSheetOpen, setIsPostBottomSheetOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);

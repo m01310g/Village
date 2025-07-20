@@ -52,7 +52,7 @@ const searchProfile = async (
 
 export const useSearchProfile = (keyword: string) => {
   const queryClient = useQueryClient();
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useMutation({
     mutationFn: () => searchProfile(keyword, isLoggedIn),

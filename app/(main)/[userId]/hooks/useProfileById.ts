@@ -43,7 +43,7 @@ const getProfileById = async (
 };
 
 export const useProfileById = (userId: number) => {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useIsLoggedIn();
 
   return useQuery({
     queryKey: ["profileById", userId, isLoggedIn],
