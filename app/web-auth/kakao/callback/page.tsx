@@ -4,6 +4,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { logSignUpEvent } from "@/app/lib/amplitude";
 
 interface SigninResponse {
   message: string;
@@ -48,6 +49,7 @@ const KakaoCallbackPage = () => {
           setUser(result.data.webUser);
           setAccessToken(result.data.accessToken);
           setRefreshToken(result.data.refreshToken);
+          logSignUpEvent(result.data.webUser.id);
 
           localStorage.removeItem("profile-form-data");
 
