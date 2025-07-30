@@ -18,21 +18,31 @@
 📁 root/
 ├── 📁 app/                         # App Router 기반 라우팅 디렉토리
 │   ├── 📁 (main)/                  # 메인 라우트 그룹
-│   ├── 📁 components/              # 공통 컴포넌트
-│   ├── 📁 lib/                     # 클라이언트 전용 유틸 / 로직 함수
-│   ├── 📁 post/                    # 게시글 관련 라우트
-│   ├── 📁 profile/                 # 프로필 관련 라우트
-│   ├── 📁 providers/               # Provider 구성용 디렉토리
-│   ├── 📁 recruit/                 # 채용 공고 페이지
-│   ├── 📁 settings/                # 설정 관련 라우트
-│   ├── 📁 support/                 # 고객 지원
-│   ├── 📁 terms/                   # 약관 관련
-│   ├── 📁 types/                   # 타입 유틸 관련
+│   │   ├── 📁 [userId]/            # 유저 프로필 페이지 / 이웃
+│   │   ├── 📁 create/              # 프로필 생성
+│   │   ├── 📁 edit/                # 프로필 수정
+│   │   ├── 📁 hooks/               # 프로필 관련 훅
+│   │   ├── 📁 profile/             # 프로필 상세 / 이웃 목록
+│   │   ├── 📁 types/               # 프로필 관련 타입 정의
+│   │   └── 📁 utils/               # 프로필 관련 유틸 함수
+│   ├── 📁 community/               # 커뮤니티 피드, 검색, 스토어
+│   ├── 📁 components/              # 앱 전역 UI 컴포넌트(헤더, 모달 등)
+│   ├── 📁 hooks/                   # 전역 훅
+│   ├── 📁 lib/                     # API, Amplitude, 이미지 리사이즈 등 유틸
+│   ├── 📁 neighbors/               # 이웃 관련 페이지
+│   ├── 📁 post/                    # 게시글 상세/작성
+│   ├── 📁 providers/               # Query / Amplitude Provider
+│   ├── 📁 recruit/                 # 채용 공고 / 검색 페이지
+│   ├── 📁 settings/                # 설정 페이지
+│   ├── 📁 support/                 # 고객 지원 페이지
+│   ├── 📁 terms/                   # 약관 페이지
+│   ├── 📁 types/                   # 전역 타입 정의
 │   ├── 📁 web-auth/                # 소셜 로그인 인증 처리
+│   │   └── 📁 kakao/callback/      # 카카오 로그인 콜백
 │   ├── 📄 favicon.ico              # 파비콘
 │   ├── 📄 globals.css              # 전역 스타일 (Tailwind 등)
 │   └── 📄 layout.tsx               # 전체 레이아웃
-├── 📁 constants/                   # 상수 파일 정의(지역 등)
+├── 📁 constants/                   # 상수 파일 정의(지역, 필터 등)
 ├── 📁 public/                      # 정적 파일 제공 폴더
 ├── 📁 store/                       # Zustand 상태 관리
 ├── 📄 postcss.config.js            # PostCSS 설정
